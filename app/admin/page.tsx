@@ -1,5 +1,5 @@
-import { KeyRound, Plus, Save, ShieldCheck } from "lucide-react";
-import { changeUserPasswordAction, createUserAction, updateResultAction } from "@/app/actions";
+import { KeyRound, Plus, Save, ShieldCheck, Trash2 } from "lucide-react";
+import { changeUserPasswordAction, createUserAction, deleteUserAction, updateResultAction, updateUserDisplayNameAction } from "@/app/actions";
 import { AppShell } from "@/components/AppShell";
 import { TeamName } from "@/components/TeamName";
 import { requireAdmin } from "@/lib/auth";
@@ -38,14 +38,28 @@ export default async function AdminPage() {
                   <strong>{item.display_name}</strong>
                   <p className="muted">{item.username} · {item.role}</p>
                 </div>
-                <form action={changeUserPasswordAction} className="password-form">
-                  <input type="hidden" name="userId" value={item.id} />
-                  <input className="compact-input" name="password" type="password" minLength={6} placeholder="nouveau mdp" required />
-                  <button className="button secondary" type="submit" title="Changer le mot de passe">
-                    <KeyRound size={17} />
-                    Changer
-                  </button>
-                </form>
+                <div className="user-admin-actions">
+                  <form action={updateUserDisplayNameAction} className="inline-admin-form">
+                    <input type="hidden" name="userId" value={item.id} />
+                    <input className="compact-input" name="displayName" defaultValue={item.display_name} placeholder="nom affiché" required />
+                    <button className="icon-button neutral" type="submit" title="Modifier le nom affiché">
+                      <Save size={17} />
+                    </button>
+                  </form>
+                  <form action={changeUserPasswordAction} className="inline-admin-form">
+                    <input type="hidden" name="userId" value={item.id} />
+                    <input className="compact-input" name="password" type="password" minLength={6} placeholder="nouveau mdp" required />
+                    <button className="icon-button neutral" type="submit" title="Changer le mot de passe">
+                      <KeyRound size={17} />
+                    </button>
+                  </form>
+                  <form action={deleteUserAction}>
+                    <input type="hidden" name="userId" value={item.id} />
+                    <button className="icon-button danger" disabled={item.id === user.id} type="submit" title={item.id === user.id ? "Impossible de supprimer ton propre compte" : "Supprimer le joueur"}>
+                      <Trash2 size={17} />
+                    </button>
+                  </form>
+                </div>
               </div>
             ))}
           </div>

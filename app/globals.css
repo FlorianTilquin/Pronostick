@@ -432,7 +432,7 @@ th {
 
 .user-admin-row {
   display: grid;
-  grid-template-columns: minmax(180px, 1fr) minmax(280px, 1.4fr);
+  grid-template-columns: 1fr;
   gap: 14px;
   align-items: center;
   padding: 14px;
@@ -445,14 +445,20 @@ th {
   margin: 4px 0 0;
 }
 
-.password-form,
+.user-admin-actions,
+.inline-admin-form,
 .create-user-form {
   display: grid;
   gap: 10px;
 }
 
-.password-form {
-  grid-template-columns: minmax(160px, 1fr) auto;
+.user-admin-actions {
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+
+.inline-admin-form {
+  grid-template-columns: minmax(0, 1fr) auto;
 }
 
 .create-user-form {
@@ -527,6 +533,21 @@ th {
   background: var(--green);
   color: white;
   cursor: pointer;
+}
+
+.icon-button.neutral {
+  background: #e8eee6;
+  color: var(--ink);
+}
+
+.icon-button.danger {
+  background: #f8e7e7;
+  color: var(--red);
+}
+
+.icon-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
 .team-name {
@@ -664,7 +685,8 @@ th {
     grid-template-columns: 1fr;
   }
 
-  .password-form {
+  .user-admin-actions,
+  .inline-admin-form {
     grid-template-columns: 1fr;
   }
 

@@ -171,6 +171,28 @@ export function changeUserPassword(userId: number, password: string) {
   });
 }
 
+export function updateUserDisplayName(userId: number, displayName: string) {
+  updateStore((store) => {
+    const user = store.users.find((item) => item.id === userId);
+    if (!user) return;
+    user.display_name = displayName;
+  });
+}
+
+export function deleteUser(userId: number) {
+  updateStore((store) => {
+    const user = store.users.find((item) => item.id === userId);
+    if (!user) return;
+    const adminCount = store.users.filter((item) => item.role === "admin").length;
+    if (user.role === "admin" && adminCount <= 1) return;
+
+    store.users = store.users.filter((item) => item.id !== userId);
+    store.predictions = store.predictions.filter((item) => item.user_id !== userId);
+    store.submissions = store.submissions.filter((item) => item.user_id !== userId);
+    store.special_predictions = store.special_predictions.filter((item) => item.user_id !== userId);
+  });
+}
+
 export function upsertPrediction(userId: number, matchId: number, homeScore: number, awayScore: number) {
   updateStore((store) => {
     const existing = store.predictions.find((item) => item.user_id === userId && item.match_id === matchId);

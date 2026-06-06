@@ -8,6 +8,7 @@ import { createSession, destroySession, requireAdmin, requireUser } from "@/lib/
 import {
   addUser,
   changeUserPassword,
+  deleteUser,
   getMatches,
   getPredictions,
   getSpecialPredictions,
@@ -15,6 +16,7 @@ import {
   hasSubmitted,
   submitUser,
   updateMatchResult,
+  updateUserDisplayName,
   upsertPrediction,
   upsertSpecialPrediction
 } from "@/lib/db";
@@ -106,4 +108,27 @@ export async function changeUserPasswordAction(formData: FormData) {
   if (password.length < 6) return;
   changeUserPassword(userId, password);
   revalidatePath("/admin");
+}
+
+export async function updateUserDisplayNameAction(formData: FormData) {
+  await requireAdmin();
+  const userId = z.coerce.number().int().parse(formData.get("userId"));
+  const displayName = String(formData.get("displayName") ?? "").trim();
+  if (!displayName) return;
+  updateUserDisplayName(userId, displayName);
+  revalidatePath("/admin");
+  revalidatePath("/classement");
+  revalidatePath("/tableau");
+  revalidatePath("/graphiques");
+}
+
+export async function deleteUserAction(formData: FormData) {
+  const admin = await requireAdmin();
+  const userId = z.coerce.number().int().parse(formData.get("userId"));
+  if (userId === admin.id) return;
+  deleteUser(userId);
+  revalidatePath("/admin");
+  revalidatePath("/classement");
+  revalidatePath("/tableau");
+  revalidatePath("/graphiques");
 }
