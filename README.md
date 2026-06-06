@@ -31,18 +31,31 @@ Si `data/pronostick.json` existe déjà, l’app considère que la base est init
 
 ## Déploiement Unraid
 
-1. Copier le dossier sur ton NAS.
-2. Modifier `docker-compose.yml` :
-   - `APP_URL`
-   - `AUTH_SECRET`
-   - port si besoin
-3. Lancer :
+1. Cloner le repo sur ton NAS.
+2. Construire l’image :
 
 ```bash
-docker compose up -d --build
+docker build -t pronostick .
 ```
 
-Le volume `./data:/app/data` conserve les données et la config.
+3. Lancer le conteneur. Pour tester en HTTP local sur le LAN, garde `COOKIE_SECURE=false` :
+
+```bash
+docker run -d \
+  --name pronostick \
+  --restart unless-stopped \
+  -p 3000:3000 \
+  -e APP_URL="http://IP_DU_NAS:3000" \
+  -e AUTH_SECRET="une-longue-valeur-aleatoire" \
+  -e STORE_PATH="/app/data/pronostick.json" \
+  -e COOKIE_SECURE="false" \
+  -v /mnt/user/appdata/pronostick/data:/app/data \
+  pronostick
+```
+
+Quand l’app passe derrière Cloudflare en HTTPS, utilise `APP_URL=https://pronostick.tondomaine.com` et `COOKIE_SECURE=true`.
+
+Le volume `/mnt/user/appdata/pronostick/data:/app/data` conserve les données et la config.
 
 ## Données dans Git
 

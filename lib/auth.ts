@@ -10,6 +10,12 @@ function secret() {
   return new TextEncoder().encode(process.env.AUTH_SECRET ?? "dev-secret-change-me");
 }
 
+function secureCookie() {
+  if (process.env.COOKIE_SECURE === "true") return true;
+  if (process.env.COOKIE_SECURE === "false") return false;
+  return process.env.APP_URL?.startsWith("https://") ?? process.env.NODE_ENV === "production";
+}
+
 export async function createSession(user: User) {
   const token = await new SignJWT({ sub: String(user.id), role: user.role })
     .setProtectedHeader({ alg: "HS256" })
@@ -20,7 +26,7 @@ export async function createSession(user: User) {
   (await cookies()).set(cookieName, token, {
     httpOnly: true,
     sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
+    secure: secureCookie(),
     path: "/",
     maxAge: 60 * 60 * 24 * 30
   });
