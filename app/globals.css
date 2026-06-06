@@ -682,6 +682,20 @@ th {
     grid-template-columns: 1fr;
   }
 
+  .content {
+    padding: 16px;
+    overflow-x: hidden;
+  }
+
+  .panel {
+    padding: 14px;
+  }
+
+  .topline {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
   .sidebar {
     position: static;
   }
@@ -709,8 +723,76 @@ th {
   }
 
   .result-row {
-    grid-template-columns: 38px 1fr 44px 14px 44px 1fr 38px;
-    gap: 6px;
+    grid-template-columns: minmax(0, 1fr) 44px 14px 44px minmax(0, 1fr);
+    grid-template-areas:
+      "number number number number action"
+      "home home home away away"
+      "homeScore separator awayScore away away";
+    gap: 8px;
+    padding: 12px 0;
+  }
+
+  .prediction-row {
+    grid-template-areas:
+      "number number number number number"
+      "home home home away away"
+      ". homeScore separator awayScore .";
+  }
+
+  .result-row .match-no {
+    grid-area: number;
+  }
+
+  .result-row .result-team:first-of-type {
+    grid-area: home;
+  }
+
+  .result-row input:first-of-type {
+    grid-area: homeScore;
+  }
+
+  .result-row .muted {
+    grid-area: separator;
+    text-align: center;
+  }
+
+  .result-row input:last-of-type {
+    grid-area: awayScore;
+  }
+
+  .result-row .result-team.away {
+    grid-area: away;
+  }
+
+  .result-row .icon-button {
+    grid-area: action;
+    justify-self: end;
+  }
+
+  .result-team {
+    overflow-wrap: normal;
+  }
+
+  .result-team.away {
+    text-align: left;
+  }
+
+  .team-name,
+  .team-name.right {
+    justify-content: flex-start;
+    line-height: 1.12;
+  }
+
+  .team-name span:last-child {
+    min-width: 0;
+    word-break: normal;
+    overflow-wrap: normal;
+  }
+
+  .result-row input {
+    width: 44px;
+    height: 38px;
+    padding: 6px;
   }
 
   .login-hero {
@@ -746,5 +828,35 @@ th {
 
   .tableau-predictions {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .result-group {
+    padding: 12px;
+  }
+
+  .result-row {
+    grid-template-columns: minmax(0, 1fr) 44px 14px 44px minmax(0, 1fr);
+    grid-template-areas:
+      "number number number number action"
+      "home home home home home"
+      "homeScore separator awayScore away away";
+  }
+
+  .prediction-row {
+    grid-template-areas:
+      "number number number number number"
+      "home home home home home"
+      ". homeScore separator awayScore ."
+      "away away away away away";
+  }
+
+  .result-team.away {
+    text-align: left;
+  }
+
+  .tableau-predictions {
+    grid-template-columns: 1fr;
   }
 }
