@@ -401,6 +401,24 @@ th {
   align-items: start;
 }
 
+.prediction-layout > aside {
+  align-self: stretch;
+  align-content: start;
+}
+
+.prediction-side.has-sticky-actions {
+  padding-top: 394px;
+}
+
+.sticky-actions {
+  position: fixed;
+  top: 24px;
+  right: 30px;
+  width: clamp(280px, 28vw, 360px);
+  display: grid;
+  gap: 18px;
+}
+
 .admin-layout {
   display: grid;
   grid-template-columns: minmax(360px, 1fr) minmax(300px, 0.8fr);
@@ -706,6 +724,15 @@ th {
 
   .login-copy h1 {
     font-size: clamp(48px, 17vw, 80px);
+  }
+
+  .sticky-actions {
+    position: static;
+    width: auto;
+  }
+
+  .prediction-side.has-sticky-actions {
+    padding-top: 0;
   }
 
   .tableau-match,

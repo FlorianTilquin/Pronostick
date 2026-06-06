@@ -4,6 +4,7 @@ import { AppShell } from "@/components/AppShell";
 import { TeamName } from "@/components/TeamName";
 import { requireUser } from "@/lib/auth";
 import { getMatches, getPredictions, getSpecialPredictions, hasSubmitted } from "@/lib/db";
+import { specialBets } from "@/lib/specials";
 
 export default async function PredictPage() {
   const user = await requireUser();
@@ -13,7 +14,7 @@ export default async function PredictPage() {
   const specials = getSpecialPredictions(user.id);
   const specialMap = new Map(specials.map((item) => [item.category, item.value]));
   const completed = predictions.size;
-  const canSubmit = completed === matches.length && specials.length === 3 && !submitted;
+  const canSubmit = completed === matches.length && specials.length === specialBets.length && !submitted;
   const groups = Array.from(new Set(matches.map((match) => match.group_name)));
 
   return (
@@ -86,38 +87,36 @@ export default async function PredictPage() {
           </div>
         </section>
 
-        <aside className="grid">
+        <aside className={`grid prediction-side${!submitted ? " has-sticky-actions" : ""}`}>
+          {!submitted ? (
+            <div className="sticky-actions">
+              <section className="panel">
+                <h2>Sauvegarde</h2>
+                <p className="muted">Garde tes scores et tes paris bonus même si tu quittes la page.</p>
+                <button className="button" type="submit">
+                  <Save size={18} />
+                  Sauvegarder
+                </button>
+              </section>
+              <section className="panel">
+                <h2>Validation</h2>
+                <p className="muted">Une fois soumis, tes pronostics sont verrouillés et tu peux voir ceux des autres.</p>
+                <button formAction={submitPredictionsAction} className="button warn" disabled={!canSubmit} type="submit">
+                  <CheckCircle2 size={18} />
+                  Soumettre tous mes pronos
+                </button>
+              </section>
+            </div>
+          ) : null}
           <section className="panel specials">
             <h2>Paris bonus</h2>
-            <label>
-              <span className="muted">Meilleur buteur</span>
-              <input disabled={submitted} className="compact-input" name="topScorer" defaultValue={specialMap.get("topScorer") ?? ""} />
-            </label>
-            <label>
-              <span className="muted">Meilleure défense</span>
-              <input disabled={submitted} className="compact-input" name="bestDefense" defaultValue={specialMap.get("bestDefense") ?? ""} />
-            </label>
-            <label>
-              <span className="muted">Meilleure attaque</span>
-              <input disabled={submitted} className="compact-input" name="bestAttack" defaultValue={specialMap.get("bestAttack") ?? ""} />
-            </label>
-            {!submitted ? (
-              <button className="button" type="submit">
-                <Save size={18} />
-                Sauvegarder
-              </button>
-            ) : null}
+            {specialBets.map((bet) => (
+              <label key={bet.category}>
+                <span className="muted">{bet.label}</span>
+                <input disabled={submitted} className="compact-input" name={bet.category} defaultValue={specialMap.get(bet.category) ?? ""} />
+              </label>
+            ))}
           </section>
-          {!submitted ? (
-            <section className="panel">
-              <h2>Validation</h2>
-              <p className="muted">Une fois soumis, tes pronostics sont verrouillés et tu peux voir ceux des autres.</p>
-              <button formAction={submitPredictionsAction} className="button warn" disabled={!canSubmit} type="submit">
-                <CheckCircle2 size={18} />
-                Soumettre tous mes pronos
-              </button>
-            </section>
-          ) : null}
         </aside>
       </form>
     </AppShell>

@@ -29,4 +29,4 @@ export type Prediction = {
   updated_at: string;
 };
 
-export type SpecialCategory = "topScorer" | "bestDefense" | "bestAttack";
+export type SpecialCategory = "topScorer" | "bestDefense" | "bestAttack" | "firstTeamCriticizedByTrump" | "messiOrRonaldoFewestGoals";

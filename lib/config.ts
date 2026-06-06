@@ -29,6 +29,8 @@ export type AppConfig = {
       topScorer: number;
       bestDefense: number;
       bestAttack: number;
+      firstTeamCriticizedByTrump?: number;
+      messiOrRonaldoFewestGoals?: number;
     };
   };
   groups: Array<{ name: string; teams: string[] }>;

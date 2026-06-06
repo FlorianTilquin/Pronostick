@@ -33,7 +33,9 @@
     "specials": {
       "topScorer": 8,
       "bestDefense": 6,
-      "bestAttack": 6
+      "bestAttack": 6,
+      "firstTeamCriticizedByTrump": 4,
+      "messiOrRonaldoFewestGoals": 4
     }
   },
   "groups": [

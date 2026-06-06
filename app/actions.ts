@@ -20,7 +20,7 @@ import {
   upsertPrediction,
   upsertSpecialPrediction
 } from "@/lib/db";
-import type { SpecialCategory } from "@/lib/types";
+import { specialBets } from "@/lib/specials";
 
 const score = z.coerce.number().int().min(0).max(30);
 
@@ -56,7 +56,7 @@ export async function savePredictionsAction(formData: FormData) {
     }
   }
 
-  for (const category of ["topScorer", "bestDefense", "bestAttack"] as SpecialCategory[]) {
+  for (const { category } of specialBets) {
     const value = String(formData.get(category) ?? "").trim();
     if (value) {
       upsertSpecialPrediction(user.id, category, value);
@@ -70,7 +70,7 @@ export async function submitPredictionsAction() {
   const totalMatches = getMatches().length;
   const count = getPredictions(user.id).length;
   const specials = getSpecialPredictions(user.id).length;
-  if (count === totalMatches && specials === 3) {
+  if (count === totalMatches && specials === specialBets.length) {
     submitUser(user.id);
   }
   revalidatePath("/");

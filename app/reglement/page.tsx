@@ -70,6 +70,16 @@ export default async function ReglementPage() {
               <td className="score">{scoring.specials.bestAttack}</td>
               <td>Equipe ayant marqué le plus de buts selon ta règle finale.</td>
             </tr>
+            <tr>
+              <td>1e équipe critiquée par Trump</td>
+              <td className="score">{scoring.specials.firstTeamCriticizedByTrump ?? 4}</td>
+              <td>Pari bonus à arbitrer entre vous pendant le tournoi.</td>
+            </tr>
+            <tr>
+              <td>Messi ou CR7 : moins de buts</td>
+              <td className="score">{scoring.specials.messiOrRonaldoFewestGoals ?? 4}</td>
+              <td>Choisir celui qui termine avec le plus petit total de buts.</td>
+            </tr>
           </tbody>
         </table>
       </section>
