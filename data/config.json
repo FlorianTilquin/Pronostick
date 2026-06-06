@@ -1,0 +1,53 @@
+{
+  "competition": {
+    "name": "Coupe du Monde 2026",
+    "timezone": "Europe/Paris",
+    "predictionLockMinutesBeforeKickoff": 0
+  },
+  "initialUsers": [
+    {
+      "username": "admin",
+      "displayName": "Admin",
+      "password": "change-me",
+      "role": "admin"
+    },
+    {
+      "username": "ami1",
+      "displayName": "Ami 1",
+      "password": "change-me",
+      "role": "player"
+    }
+  ],
+  "scoring": {
+    "exactScore": 8,
+    "correctOutcome": 3,
+    "correctGoalDifference": 2,
+    "correctTeamGoals": 1,
+    "maxGoalDistancePenalty": 3,
+    "oddsBonus": {
+      "enabled": true,
+      "maxBonus": 4,
+      "minBonus": 0,
+      "basis": "outcome"
+    },
+    "specials": {
+      "topScorer": 8,
+      "bestDefense": 6,
+      "bestAttack": 6
+    }
+  },
+  "groups": [
+    { "name": "A", "teams": ["Mexique", "Afrique du Sud", "Corée du Sud", "Tchéquie"] },
+    { "name": "B", "teams": ["Canada", "Suisse", "Qatar", "Bosnie-Herzégovine"] },
+    { "name": "C", "teams": ["Brésil", "Maroc", "Haïti", "Écosse"] },
+    { "name": "D", "teams": ["États-Unis", "Paraguay", "Australie", "Turquie"] },
+    { "name": "E", "teams": ["Allemagne", "Curaçao", "Côte d’Ivoire", "Équateur"] },
+    { "name": "F", "teams": ["Pays-Bas", "Japon", "Tunisie", "Suède"] },
+    { "name": "G", "teams": ["Belgique", "Égypte", "Iran", "Nouvelle-Zélande"] },
+    { "name": "H", "teams": ["Espagne", "Cap-Vert", "Arabie saoudite", "Uruguay"] },
+    { "name": "I", "teams": ["France", "Sénégal", "Norvège", "Irak"] },
+    { "name": "J", "teams": ["Argentine", "Algérie", "Autriche", "Jordanie"] },
+    { "name": "K", "teams": ["Portugal", "Ouzbékistan", "Colombie", "RD Congo"] },
+    { "name": "L", "teams": ["Angleterre", "Croatie", "Ghana", "Panama"] }
+  ]
+}

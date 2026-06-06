@@ -1,0 +1,13 @@
+services:
+  pronostick:
+    build: .
+    container_name: pronostick
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      APP_URL: "https://pronostick.example.com"
+      AUTH_SECRET: "change-me-before-deploying"
+      STORE_PATH: "/app/data/pronostick.json"
+    volumes:
+      - ./data:/app/data
