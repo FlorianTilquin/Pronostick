@@ -1,8 +1,8 @@
 "use client";
 
-import { Area, ComposedChart, Legend, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Area, CartesianGrid, ComposedChart, Legend, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
-const colors = ["#157f57", "#2454a6", "#c94c4c", "#7c4dff", "#f0b429", "#0f766e"];
+const colors = ["#34d399", "#60a5fa", "#fb7185", "#a78bfa", "#facc15", "#2dd4bf"];
 const bandLabels = new Set(["Hasard 1%-99%", "Hasard 5%-95%"]);
 
 type TimelineRow = Record<string, number | string | [number, number]>;
@@ -17,6 +17,17 @@ function formatTooltipValue(value: unknown, name: string) {
 export function TimelineChart({ data, names }: { data: TimelineRow[]; names: string[] }) {
   const bandNames = names.filter((name) => bandLabels.has(name));
   const playerNames = names.filter((name) => !bandLabels.has(name));
+  const maxValue = data.reduce((max, row) => {
+    return Math.max(
+      max,
+      ...names.map((name) => {
+        const value = row[name];
+        return Array.isArray(value) ? value[1] : typeof value === "number" ? value : 0;
+      })
+    );
+  }, 0);
+  const yMax = Math.max(50, Math.ceil(maxValue / 50) * 50);
+  const yTicks = Array.from({ length: yMax / 50 + 1 }, (_, index) => index * 50);
 
   return (
     <div className="chart-frame">
@@ -24,22 +35,23 @@ export function TimelineChart({ data, names }: { data: TimelineRow[]; names: str
         <ComposedChart data={data} margin={{ left: 0, right: 16, top: 18, bottom: 4 }}>
           <defs>
             <linearGradient id="randomWide" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stopColor="#94a3b8" stopOpacity={0.22} />
-              <stop offset="100%" stopColor="#94a3b8" stopOpacity={0.05} />
+              <stop offset="0%" stopColor="#f8fafc" stopOpacity={0.18} />
+              <stop offset="100%" stopColor="#f8fafc" stopOpacity={0.04} />
             </linearGradient>
             <linearGradient id="randomCore" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stopColor="#2454a6" stopOpacity={0.24} />
-              <stop offset="100%" stopColor="#2454a6" stopOpacity={0.08} />
+              <stop offset="0%" stopColor="#60a5fa" stopOpacity={0.24} />
+              <stop offset="100%" stopColor="#60a5fa" stopOpacity={0.08} />
             </linearGradient>
           </defs>
           <XAxis dataKey="match" hide />
-          <YAxis allowDecimals={false} axisLine={false} tickLine={false} width={42} />
+          <YAxis allowDecimals={false} axisLine={false} domain={[0, yMax]} tick={{ fill: "#d1d5db", fontWeight: 800 }} ticks={yTicks} tickLine={false} width={46} />
+          <CartesianGrid stroke="#ffffff" strokeDasharray="4 8" strokeOpacity={0.32} vertical={false} />
           <Tooltip
-            contentStyle={{ border: "1px solid #dbe3d8", borderRadius: 8, boxShadow: "0 18px 50px rgb(24 33 27 / 10%)" }}
+            contentStyle={{ background: "#0b1110", border: "1px solid rgb(255 255 255 / 18%)", borderRadius: 8, boxShadow: "0 18px 50px rgb(0 0 0 / 30%)", color: "#f8fafc" }}
             formatter={formatTooltipValue}
             labelFormatter={(label) => String(label)}
           />
-          <Legend align="left" iconType="circle" verticalAlign="top" wrapperStyle={{ paddingBottom: 12 }} />
+          <Legend align="left" iconType="circle" verticalAlign="top" wrapperStyle={{ color: "#f8fafc", paddingBottom: 12 }} />
           {bandNames.includes("Hasard 1%-99%") ? (
             <Area
               dataKey="Hasard 1%-99%"
@@ -47,8 +59,8 @@ export function TimelineChart({ data, names }: { data: TimelineRow[]; names: str
               isAnimationActive={false}
               legendType="rect"
               name="Zone hasard 1%-99%"
-              stroke="#94a3b8"
-              strokeOpacity={0.35}
+              stroke="#e5e7eb"
+              strokeOpacity={0.26}
               type="monotone"
             />
           ) : null}
@@ -59,8 +71,8 @@ export function TimelineChart({ data, names }: { data: TimelineRow[]; names: str
               isAnimationActive={false}
               legendType="rect"
               name="Zone hasard 5%-95%"
-              stroke="#2454a6"
-              strokeOpacity={0.3}
+              stroke="#93c5fd"
+              strokeOpacity={0.34}
               type="monotone"
             />
           ) : null}
