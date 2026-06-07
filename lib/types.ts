@@ -5,6 +5,8 @@ export type User = {
   username: string;
   display_name: string;
   role: Role;
+  is_system?: boolean;
+  system_type?: "model";
 };
 
 export type Match = {

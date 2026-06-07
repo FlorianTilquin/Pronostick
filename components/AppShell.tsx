@@ -1,4 +1,4 @@
-import { BarChart3, ClipboardList, Gauge, Settings, Table2, Trophy } from "lucide-react";
+import { BarChart3, BrainCircuit, ClipboardList, Gauge, Settings, Table2, Trophy } from "lucide-react";
 import Link from "next/link";
 import { logoutAction } from "@/app/actions";
 import type { User } from "@/lib/types";
@@ -9,6 +9,7 @@ export function AppShell({ user, children }: { user: User; children: React.React
     { href: "/tableau", label: "Tableau", icon: Table2 },
     { href: "/classement", label: "Scores", icon: Trophy },
     { href: "/graphiques", label: "Graphiques", icon: BarChart3 },
+    { href: "/modele", label: "Modèle", icon: BrainCircuit },
     { href: "/reglement", label: "Barème", icon: Gauge }
   ];
 

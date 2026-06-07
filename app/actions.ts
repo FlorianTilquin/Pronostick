@@ -28,7 +28,7 @@ export async function loginAction(_: unknown, formData: FormData) {
   const username = String(formData.get("username") ?? "").trim();
   const password = String(formData.get("password") ?? "");
   const user = getUserByUsername(username);
-  if (!user || !bcrypt.compareSync(password, user.password_hash)) {
+  if (!user || user.is_system || !bcrypt.compareSync(password, user.password_hash)) {
     return { error: "Identifiants incorrects." };
   }
   await createSession(user);

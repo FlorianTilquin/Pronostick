@@ -9,7 +9,7 @@ import { getMatches, getUsers } from "@/lib/db";
 export default async function AdminPage() {
   const user = await requireAdmin();
   const matches = getMatches();
-  const users = getUsers();
+  const users = getUsers().filter((item) => !item.is_system);
   const groups = Array.from(new Set(matches.map((match) => match.group_name)));
 
   return (

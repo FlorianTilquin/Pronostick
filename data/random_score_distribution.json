@@ -1,0 +1,551 @@
+{
+  "seed": 20260611,
+  "simulations": 10000,
+  "source": {
+    "file": "/Users/floriantilquin/Documents/New project 2/data/raw/international_results.csv",
+    "description": "International tournament matches since 1990, excluding friendlies and qualification matches.",
+    "matches": 8937,
+    "start": "1990-01-29",
+    "end": "2026-06-01",
+    "tournaments": 130,
+    "top_tournaments": {
+      "UEFA Nations League": 658,
+      "African Cup of Nations": 642,
+      "FIFA World Cup": 552,
+      "CECAFA Cup": 422,
+      "CONCACAF Nations League": 422,
+      "Gold Cup": 420,
+      "Island Games": 384,
+      "Copa América": 378,
+      "COSAFA Cup": 354,
+      "UEFA Euro": 323,
+      "AFC Asian Cup": 298,
+      "AFF Championship": 291,
+      "Gulf Cup": 259,
+      "CFU Caribbean Cup": 210,
+      "UNCAF Cup": 164,
+      "SAFF Cup": 162,
+      "Confederations Cup": 140,
+      "EAFF Championship": 130,
+      "Asian Games": 120,
+      "WAFF Championship": 114
+    }
+  },
+  "scorelines": [
+    {
+      "home": 1,
+      "away": 0,
+      "count": 927
+    },
+    {
+      "home": 1,
+      "away": 1,
+      "count": 864
+    },
+    {
+      "home": 0,
+      "away": 0,
+      "count": 763
+    },
+    {
+      "home": 2,
+      "away": 1,
+      "count": 715
+    },
+    {
+      "home": 0,
+      "away": 1,
+      "count": 707
+    },
+    {
+      "home": 2,
+      "away": 0,
+      "count": 694
+    },
+    {
+      "home": 1,
+      "away": 2,
+      "count": 507
+    },
+    {
+      "home": 0,
+      "away": 2,
+      "count": 440
+    },
+    {
+      "home": 3,
+      "away": 0,
+      "count": 396
+    },
+    {
+      "home": 2,
+      "away": 2,
+      "count": 337
+    },
+    {
+      "home": 3,
+      "away": 1,
+      "count": 307
+    },
+    {
+      "home": 4,
+      "away": 0,
+      "count": 222
+    },
+    {
+      "home": 0,
+      "away": 3,
+      "count": 192
+    },
+    {
+      "home": 3,
+      "away": 2,
+      "count": 168
+    },
+    {
+      "home": 2,
+      "away": 3,
+      "count": 166
+    },
+    {
+      "home": 1,
+      "away": 3,
+      "count": 159
+    },
+    {
+      "home": 4,
+      "away": 1,
+      "count": 153
+    },
+    {
+      "home": 0,
+      "away": 4,
+      "count": 122
+    },
+    {
+      "home": 5,
+      "away": 0,
+      "count": 106
+    },
+    {
+      "home": 1,
+      "away": 4,
+      "count": 88
+    },
+    {
+      "home": 4,
+      "away": 2,
+      "count": 82
+    },
+    {
+      "home": 5,
+      "away": 1,
+      "count": 72
+    },
+    {
+      "home": 3,
+      "away": 3,
+      "count": 67
+    },
+    {
+      "home": 6,
+      "away": 0,
+      "count": 60
+    },
+    {
+      "home": 0,
+      "away": 5,
+      "count": 57
+    },
+    {
+      "home": 2,
+      "away": 4,
+      "count": 46
+    },
+    {
+      "home": 6,
+      "away": 1,
+      "count": 41
+    },
+    {
+      "home": 7,
+      "away": 0,
+      "count": 37
+    },
+    {
+      "home": 1,
+      "away": 5,
+      "count": 36
+    },
+    {
+      "home": 0,
+      "away": 6,
+      "count": 35
+    },
+    {
+      "home": 4,
+      "away": 3,
+      "count": 30
+    },
+    {
+      "home": 5,
+      "away": 2,
+      "count": 27
+    },
+    {
+      "home": 8,
+      "away": 0,
+      "count": 26
+    },
+    {
+      "home": 1,
+      "away": 6,
+      "count": 20
+    },
+    {
+      "home": 10,
+      "away": 0,
+      "count": 17
+    },
+    {
+      "home": 0,
+      "away": 7,
+      "count": 16
+    },
+    {
+      "home": 9,
+      "away": 0,
+      "count": 16
+    },
+    {
+      "home": 3,
+      "away": 4,
+      "count": 15
+    },
+    {
+      "home": 2,
+      "away": 5,
+      "count": 13
+    },
+    {
+      "home": 11,
+      "away": 0,
+      "count": 12
+    },
+    {
+      "home": 0,
+      "away": 8,
+      "count": 10
+    },
+    {
+      "home": 7,
+      "away": 1,
+      "count": 10
+    },
+    {
+      "home": 0,
+      "away": 9,
+      "count": 9
+    },
+    {
+      "home": 1,
+      "away": 7,
+      "count": 8
+    },
+    {
+      "home": 2,
+      "away": 6,
+      "count": 8
+    },
+    {
+      "home": 4,
+      "away": 4,
+      "count": 8
+    },
+    {
+      "home": 6,
+      "away": 2,
+      "count": 6
+    },
+    {
+      "home": 7,
+      "away": 2,
+      "count": 6
+    },
+    {
+      "home": 2,
+      "away": 7,
+      "count": 5
+    },
+    {
+      "home": 3,
+      "away": 5,
+      "count": 5
+    },
+    {
+      "home": 5,
+      "away": 3,
+      "count": 5
+    },
+    {
+      "home": 9,
+      "away": 1,
+      "count": 5
+    },
+    {
+      "home": 12,
+      "away": 0,
+      "count": 5
+    },
+    {
+      "home": 0,
+      "away": 10,
+      "count": 4
+    },
+    {
+      "home": 0,
+      "away": 15,
+      "count": 4
+    },
+    {
+      "home": 0,
+      "away": 18,
+      "count": 4
+    },
+    {
+      "home": 8,
+      "away": 1,
+      "count": 4
+    },
+    {
+      "home": 12,
+      "away": 1,
+      "count": 4
+    },
+    {
+      "home": 0,
+      "away": 12,
+      "count": 3
+    },
+    {
+      "home": 0,
+      "away": 13,
+      "count": 3
+    },
+    {
+      "home": 2,
+      "away": 9,
+      "count": 3
+    },
+    {
+      "home": 5,
+      "away": 4,
+      "count": 3
+    },
+    {
+      "home": 9,
+      "away": 2,
+      "count": 3
+    },
+    {
+      "home": 10,
+      "away": 1,
+      "count": 3
+    },
+    {
+      "home": 13,
+      "away": 0,
+      "count": 3
+    },
+    {
+      "home": 16,
+      "away": 0,
+      "count": 3
+    },
+    {
+      "home": 0,
+      "away": 11,
+      "count": 2
+    },
+    {
+      "home": 0,
+      "away": 20,
+      "count": 2
+    },
+    {
+      "home": 1,
+      "away": 8,
+      "count": 2
+    },
+    {
+      "home": 1,
+      "away": 17,
+      "count": 2
+    },
+    {
+      "home": 4,
+      "away": 5,
+      "count": 2
+    },
+    {
+      "home": 8,
+      "away": 2,
+      "count": 2
+    },
+    {
+      "home": 15,
+      "away": 0,
+      "count": 2
+    },
+    {
+      "home": 17,
+      "away": 0,
+      "count": 2
+    },
+    {
+      "home": 0,
+      "away": 14,
+      "count": 1
+    },
+    {
+      "home": 0,
+      "away": 16,
+      "count": 1
+    },
+    {
+      "home": 0,
+      "away": 19,
+      "count": 1
+    },
+    {
+      "home": 0,
+      "away": 21,
+      "count": 1
+    },
+    {
+      "home": 1,
+      "away": 9,
+      "count": 1
+    },
+    {
+      "home": 1,
+      "away": 10,
+      "count": 1
+    },
+    {
+      "home": 1,
+      "away": 16,
+      "count": 1
+    },
+    {
+      "home": 2,
+      "away": 8,
+      "count": 1
+    },
+    {
+      "home": 2,
+      "away": 10,
+      "count": 1
+    },
+    {
+      "home": 2,
+      "away": 12,
+      "count": 1
+    },
+    {
+      "home": 3,
+      "away": 11,
+      "count": 1
+    },
+    {
+      "home": 4,
+      "away": 6,
+      "count": 1
+    },
+    {
+      "home": 6,
+      "away": 3,
+      "count": 1
+    },
+    {
+      "home": 6,
+      "away": 4,
+      "count": 1
+    },
+    {
+      "home": 6,
+      "away": 5,
+      "count": 1
+    },
+    {
+      "home": 7,
+      "away": 3,
+      "count": 1
+    },
+    {
+      "home": 8,
+      "away": 3,
+      "count": 1
+    },
+    {
+      "home": 10,
+      "away": 2,
+      "count": 1
+    },
+    {
+      "home": 11,
+      "away": 1,
+      "count": 1
+    },
+    {
+      "home": 13,
+      "away": 1,
+      "count": 1
+    },
+    {
+      "home": 14,
+      "away": 0,
+      "count": 1
+    },
+    {
+      "home": 14,
+      "away": 1,
+      "count": 1
+    },
+    {
+      "home": 15,
+      "away": 1,
+      "count": 1
+    },
+    {
+      "home": 18,
+      "away": 0,
+      "count": 1
+    },
+    {
+      "home": 19,
+      "away": 0,
+      "count": 1
+    },
+    {
+      "home": 20,
+      "away": 1,
+      "count": 1
+    },
+    {
+      "home": 21,
+      "away": 0,
+      "count": 1
+    },
+    {
+      "home": 21,
+      "away": 1,
+      "count": 1
+    },
+    {
+      "home": 22,
+      "away": 0,
+      "count": 1
+    }
+  ]
+}

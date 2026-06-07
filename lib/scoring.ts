@@ -11,7 +11,11 @@ function outcome(home: number, away: number) {
   return "D";
 }
 
-export function scorePrediction(prediction: Prediction, match: Match, allPredictions: Prediction[]) {
+function oddsEligibleUserIds() {
+  return new Set(getUsers().filter((user) => !user.is_system).map((user) => user.id));
+}
+
+export function scorePrediction(prediction: Prediction, match: Match, allPredictions: Prediction[], eligibleOddsUsers = oddsEligibleUserIds()) {
   if (match.home_score === null || match.away_score === null || match.status !== "finished") {
     return { base: 0, odds: 0, total: 0, details: "En attente" };
   }
@@ -45,7 +49,7 @@ export function scorePrediction(prediction: Prediction, match: Match, allPredict
 
   let odds = 0;
   if (cfg.oddsBonus.enabled && actualOutcome === predictedOutcome) {
-    const matchPredictions = allPredictions.filter((item) => item.match_id === match.id);
+    const matchPredictions = allPredictions.filter((item) => item.match_id === match.id && eligibleOddsUsers.has(item.user_id));
     const sameOutcome = matchPredictions.filter((item) => outcome(item.home_score, item.away_score) === predictedOutcome).length;
     if (matchPredictions.length > 0) {
       const rarity = 1 - sameOutcome / matchPredictions.length;
@@ -61,13 +65,14 @@ export function leaderboard() {
   const matches = getMatches();
   const predictions = getPredictions();
   const submitted = getSubmittedUserIds();
+  const eligibleOddsUsers = oddsEligibleUserIds();
   const rows = users
     .filter((user) => user.role === "player" || submitted.has(user.id))
     .map((user) => {
       const userPredictions = predictions.filter((prediction) => prediction.user_id === user.id);
       const total = userPredictions.reduce((sum, prediction) => {
         const match = matches.find((item) => item.id === prediction.match_id);
-        return match ? sum + scorePrediction(prediction, match, predictions).total : sum;
+        return match ? sum + scorePrediction(prediction, match, predictions, eligibleOddsUsers).total : sum;
       }, 0);
       return { user, total, predictions: userPredictions.length, submitted: submitted.has(user.id) };
     })
@@ -80,6 +85,7 @@ export function timeline() {
   const users = getUsers().filter((user) => user.role === "player");
   const matches = getMatches().filter((match) => match.status === "finished");
   const predictions = getPredictions();
+  const eligibleOddsUsers = oddsEligibleUserIds();
   const cumul = new Map<number, number>(users.map((user) => [user.id, 0]));
 
   return matches.map((match) => {
@@ -87,7 +93,7 @@ export function timeline() {
     for (const user of users) {
       const prediction = predictions.find((item) => item.user_id === user.id && item.match_id === match.id);
       if (prediction) {
-        cumul.set(user.id, (cumul.get(user.id) ?? 0) + scorePrediction(prediction, match, predictions).total);
+        cumul.set(user.id, (cumul.get(user.id) ?? 0) + scorePrediction(prediction, match, predictions, eligibleOddsUsers).total);
       }
       row[user.display_name] = cumul.get(user.id) ?? 0;
     }

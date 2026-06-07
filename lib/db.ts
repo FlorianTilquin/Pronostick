@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import bcrypt from "bcryptjs";
 import { readConfig } from "@/lib/config";
+import { readModelReport } from "@/lib/model";
 import type { Match, Prediction, Role, SpecialCategory, User } from "@/lib/types";
 
 type DbUser = User & { password_hash: string; created_at: string };
@@ -27,6 +28,73 @@ function storePath() {
 
 function now() {
   return new Date().toISOString();
+}
+
+function syncSystemModel(store: Store) {
+  const model = readModelReport();
+  if (!model) return false;
+
+  let changed = false;
+  let user = store.users.find((item) => item.username === model.username);
+  if (!user) {
+    store.counters.users += 1;
+    user = {
+      id: store.counters.users,
+      username: model.username,
+      display_name: model.display_name,
+      role: "player",
+      is_system: true,
+      system_type: "model",
+      password_hash: bcrypt.hashSync(`disabled-${model.username}-${model.metadata.generated_on}`, 10),
+      created_at: model.metadata.generated_on
+    };
+    store.users.push(user);
+    changed = true;
+  } else {
+    if (user.display_name !== model.display_name) {
+      user.display_name = model.display_name;
+      changed = true;
+    }
+    if (user.role !== "player") {
+      user.role = "player";
+      changed = true;
+    }
+    if (!user.is_system || user.system_type !== "model") {
+      user.is_system = true;
+      user.system_type = "model";
+      changed = true;
+    }
+  }
+
+  for (const item of model.matches) {
+    const existing = store.predictions.find((prediction) => prediction.user_id === user.id && prediction.match_id === item.match_id);
+    if (existing) {
+      if (existing.home_score !== item.prediction_home_score || existing.away_score !== item.prediction_away_score) {
+        existing.home_score = item.prediction_home_score;
+        existing.away_score = item.prediction_away_score;
+        existing.updated_at = model.metadata.generated_on;
+        changed = true;
+      }
+    } else {
+      store.counters.predictions += 1;
+      store.predictions.push({
+        id: store.counters.predictions,
+        user_id: user.id,
+        match_id: item.match_id,
+        home_score: item.prediction_home_score,
+        away_score: item.prediction_away_score,
+        updated_at: model.metadata.generated_on
+      });
+      changed = true;
+    }
+  }
+
+  if (!store.submissions.some((item) => item.user_id === user.id)) {
+    store.submissions.push({ user_id: user.id, submitted_at: model.metadata.generated_on });
+    changed = true;
+  }
+
+  return changed;
 }
 
 function initialStore(): Store {
@@ -91,10 +159,15 @@ export function readStore(): Store {
   fs.mkdirSync(path.dirname(file), { recursive: true });
   if (!fs.existsSync(file)) {
     const created = initialStore();
+    syncSystemModel(created);
     writeStore(created);
     return created;
   }
-  return JSON.parse(fs.readFileSync(file, "utf8")) as Store;
+  const store = JSON.parse(fs.readFileSync(file, "utf8")) as Store;
+  if (syncSystemModel(store)) {
+    writeStore(store);
+  }
+  return store;
 }
 
 export function writeStore(store: Store) {
@@ -166,7 +239,7 @@ export function addUser(username: string, displayName: string, password: string,
 export function changeUserPassword(userId: number, password: string) {
   updateStore((store) => {
     const user = store.users.find((item) => item.id === userId);
-    if (!user) return;
+    if (!user || user.is_system) return;
     user.password_hash = bcrypt.hashSync(password, 10);
   });
 }
@@ -174,7 +247,7 @@ export function changeUserPassword(userId: number, password: string) {
 export function updateUserDisplayName(userId: number, displayName: string) {
   updateStore((store) => {
     const user = store.users.find((item) => item.id === userId);
-    if (!user) return;
+    if (!user || user.is_system) return;
     user.display_name = displayName;
   });
 }
@@ -182,7 +255,7 @@ export function updateUserDisplayName(userId: number, displayName: string) {
 export function deleteUser(userId: number) {
   updateStore((store) => {
     const user = store.users.find((item) => item.id === userId);
-    if (!user) return;
+    if (!user || user.is_system) return;
     const adminCount = store.users.filter((item) => item.role === "admin").length;
     if (user.role === "admin" && adminCount <= 1) return;
 
