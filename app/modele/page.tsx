@@ -2,6 +2,7 @@ import { Activity, BrainCircuit, Target, Trophy } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { TeamName } from "@/components/TeamName";
 import { requireUser } from "@/lib/auth";
+import { hasSubmitted } from "@/lib/db";
 import { readModelReport } from "@/lib/model";
 import { teamName } from "@/lib/teams";
 
@@ -15,7 +16,23 @@ function num(value: unknown, digits = 2) {
 
 export default async function ModelePage() {
   const user = await requireUser();
+  const canSeeModel = user.role === "admin" || hasSubmitted(user.id);
   const report = readModelReport();
+
+  if (!canSeeModel) {
+    return (
+      <AppShell user={user}>
+        <section className="panel locked-panel">
+          <p className="eyebrow">Modèle verrouillé</p>
+          <h1>XGBoost</h1>
+          <p className="muted">
+            Le modèle contient trop d’indices avant la fin de tes pronostics. Soumets tous tes matchs et tes paris bonus pour le débloquer.
+          </p>
+          <a className="button" href="/predict">Retour aux pronostics</a>
+        </section>
+      </AppShell>
+    );
+  }
 
   if (!report) {
     return (

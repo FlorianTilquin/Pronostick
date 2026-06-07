@@ -286,6 +286,16 @@ input:disabled {
   color: #f8fafc !important;
 }
 
+.locked-panel {
+  display: grid;
+  gap: 14px;
+  max-width: 680px;
+}
+
+.locked-panel .button {
+  width: fit-content;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
