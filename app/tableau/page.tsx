@@ -26,13 +26,26 @@ export default async function TableauPage() {
               <div className="tableau-list">
                 {rows
                   .filter(({ match }) => match.group_name === group)
-                  .map(({ match, predictions }) => (
+                  .map(({ match, market, predictions }) => (
                     <article className="tableau-match" key={match.id}>
-                      <div className="tableau-fixture">
-                        <span className="match-no">#{match.match_no}</span>
-                        <TeamName team={match.home_team} />
-                        <span className="score real-score">{match.home_score === null ? "à venir" : `${match.home_score}-${match.away_score}`}</span>
-                        <TeamName team={match.away_team} align="right" />
+                      <div className="tableau-main">
+                        <div className="tableau-fixture">
+                          <span className="match-no">#{match.match_no}</span>
+                          <TeamName team={match.home_team} />
+                          <span className="score real-score">{match.home_score === null ? "à venir" : `${match.home_score}-${match.away_score}`}</span>
+                          <TeamName team={match.away_team} align="right" />
+                        </div>
+                        {market ? (
+                          <div className="market-row" aria-label="Probabilités basées sur les pronostics humains">
+                            {market.map((item) => (
+                              <span className="market-pill" key={item.outcome}>
+                                <strong>{item.label}</strong>
+                                <span>{Math.round(item.probability * 100)}%</span>
+                                <small>{item.odds ? `cote ${item.odds.toFixed(1)}` : "cote -"} · {item.count}</small>
+                              </span>
+                            ))}
+                          </div>
+                        ) : null}
                       </div>
                       <div className="tableau-predictions" style={{ ["--player-count" as string]: players.length }}>
                         {predictions.map(({ user: player, prediction, hidden }) => (
