@@ -2,7 +2,7 @@ import { TimelineChart } from "@/components/TimelineChart";
 import { AppShell } from "@/components/AppShell";
 import { requireUser } from "@/lib/auth";
 import { getUsers } from "@/lib/db";
-import { randomBaselineNames, randomBaselineTimeline, readRandomDistribution } from "@/lib/randomBaseline";
+import { randomBaselineBandNames, randomBaselineTimeline, readRandomDistribution } from "@/lib/randomBaseline";
 import { timeline } from "@/lib/scoring";
 
 export default async function GraphiquesPage() {
@@ -14,7 +14,7 @@ export default async function GraphiquesPage() {
   const randomTimeline = randomBaselineTimeline();
   const data = playerTimeline.map((row, index) => ({ ...row, ...(randomTimeline[index] ?? {}) }));
   const randomDistribution = readRandomDistribution();
-  const chartNames = randomTimeline.length ? [...names, ...randomBaselineNames] : names;
+  const chartNames = randomTimeline.length ? [...randomBaselineBandNames, ...names] : names;
 
   return (
     <AppShell user={user}>

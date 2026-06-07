@@ -265,6 +265,18 @@ input:disabled {
   overflow-x: auto;
 }
 
+.chart-frame {
+  width: 100%;
+  height: min(62vh, 620px);
+  min-height: 460px;
+  padding: 8px 2px 0;
+}
+
+.chart-frame .recharts-legend-wrapper {
+  font-weight: 800;
+  font-size: 13px;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;

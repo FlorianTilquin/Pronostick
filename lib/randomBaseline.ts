@@ -19,7 +19,9 @@ type RandomDistribution = {
   scorelines: Array<{ home: number; away: number; count: number }>;
 };
 
-export const randomBaselineNames = ["Hasard bottom 1%", "Hasard bottom 5%", "Hasard top 5%", "Hasard top 1%"];
+export const randomBaselineBandNames = ["Hasard 1%-99%", "Hasard 5%-95%"];
+
+let randomBaselineCache: { key: string; rows: Array<Record<string, number | string | [number, number]>> } | null = null;
 
 function distributionPath() {
   return path.join(process.cwd(), "data", "random_score_distribution.json");
@@ -61,11 +63,14 @@ export function randomBaselineTimeline() {
   if (!distribution) return [];
 
   const matches = getMatches().filter((match) => match.status === "finished");
+  const cacheKey = `${distribution.seed}:${distribution.simulations}:${matches.map((match) => `${match.id}:${match.home_score}-${match.away_score}`).join("|")}`;
+  if (randomBaselineCache?.key === cacheKey) return randomBaselineCache.rows;
+
   const predictions = getPredictions();
   const eligibleOddsUsers = new Set(getUsers().filter((user) => !user.is_system).map((user) => user.id));
   const totals = Array.from({ length: distribution.simulations }, () => 0);
 
-  return matches.map((match) => {
+  const rows = matches.map((match) => {
     for (let simulation = 0; simulation < distribution.simulations; simulation += 1) {
       const score = sampleScore(distribution, simulation, match.id);
       const prediction: Prediction = {
@@ -82,10 +87,11 @@ export function randomBaselineTimeline() {
     const sorted = [...totals].sort((a, b) => a - b);
     return {
       match: `${match.match_no}. ${teamName(match.home_team)}-${teamName(match.away_team)}`,
-      "Hasard bottom 1%": percentile(sorted, 0.01),
-      "Hasard bottom 5%": percentile(sorted, 0.05),
-      "Hasard top 5%": percentile(sorted, 0.95),
-      "Hasard top 1%": percentile(sorted, 0.99)
+      "Hasard 1%-99%": [percentile(sorted, 0.01), percentile(sorted, 0.99)] as [number, number],
+      "Hasard 5%-95%": [percentile(sorted, 0.05), percentile(sorted, 0.95)] as [number, number]
     };
   });
+
+  randomBaselineCache = { key: cacheKey, rows };
+  return rows;
 }
