@@ -90,7 +90,7 @@ export default async function PredictPage() {
         <aside className={`grid prediction-side${!submitted ? " has-sticky-actions" : ""}`}>
           {!submitted ? (
             <div className="sticky-actions">
-              <section className="panel">
+              <section className="panel save-panel">
                 <h2>Sauvegarde</h2>
                 <p className="muted">Garde tes scores et tes paris bonus même si tu quittes la page.</p>
                 <button className="button" type="submit">
@@ -98,7 +98,7 @@ export default async function PredictPage() {
                   Sauvegarder
                 </button>
               </section>
-              <section className="panel">
+              <section className="panel validation-panel">
                 <h2>Validation</h2>
                 <p className="muted">Une fois soumis, tes pronostics sont verrouillés et tu peux voir ceux des autres.</p>
                 <button formAction={submitPredictionsAction} className="button warn" disabled={!canSubmit} type="submit">

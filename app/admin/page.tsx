@@ -1,6 +1,7 @@
 import { KeyRound, Plus, Save, ShieldCheck, Trash2 } from "lucide-react";
 import { changeUserPasswordAction, createUserAction, deleteUserAction, updateResultAction, updateUserDisplayNameAction } from "@/app/actions";
 import { AppShell } from "@/components/AppShell";
+import { PasswordInput } from "@/components/PasswordInput";
 import { TeamName } from "@/components/TeamName";
 import { requireAdmin } from "@/lib/auth";
 import { getMatches, getUsers } from "@/lib/db";
@@ -48,7 +49,7 @@ export default async function AdminPage() {
                   </form>
                   <form action={changeUserPasswordAction} className="inline-admin-form">
                     <input type="hidden" name="userId" value={item.id} />
-                    <input className="compact-input" name="password" type="password" minLength={6} placeholder="nouveau mdp" required />
+                    <PasswordInput name="password" minLength={6} placeholder="nouveau mdp" required />
                     <button className="icon-button neutral" type="submit" title="Changer le mot de passe">
                       <KeyRound size={17} />
                     </button>
@@ -76,7 +77,7 @@ export default async function AdminPage() {
           <form action={createUserAction} className="create-user-form">
             <input className="compact-input" name="username" placeholder="identifiant" required />
             <input className="compact-input" name="displayName" placeholder="nom affiché" required />
-            <input className="compact-input" name="password" type="password" minLength={6} placeholder="mot de passe" required />
+            <PasswordInput name="password" minLength={6} placeholder="mot de passe" required />
             <button className="button" type="submit">
               <Plus size={18} />
               Ajouter

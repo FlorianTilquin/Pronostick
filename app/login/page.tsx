@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { LogIn } from "lucide-react";
 import { loginAction } from "@/app/actions";
+import { PasswordInput } from "@/components/PasswordInput";
 
 const legacyPhotos = [
   {
@@ -51,7 +52,7 @@ export default function LoginPage() {
             <p className="muted">Connecte-toi avec le compte préparé par l’admin.</p>
           </div>
           <input className="compact-input" name="username" placeholder="Utilisateur" autoComplete="username" required />
-          <input className="compact-input" name="password" type="password" placeholder="Mot de passe" autoComplete="current-password" required />
+          <PasswordInput name="password" placeholder="Mot de passe" autoComplete="current-password" required />
           {state?.error ? <p style={{ color: "var(--red)", margin: 0 }}>{state.error}</p> : null}
           <button className="button" disabled={pending} type="submit">
             <LogIn size={18} />
