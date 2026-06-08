@@ -32,25 +32,21 @@ export function scorePrediction(prediction: Prediction, match: Match, allPredict
   let base = 0;
   const parts: string[] = [];
 
-  if (prediction.home_score === match.home_score && prediction.away_score === match.away_score) {
-    base += cfg.exactScore;
-    parts.push("score exact");
-  } else {
-    if (actualOutcome === predictedOutcome) {
-      base += cfg.correctOutcome;
-      parts.push("bon signe");
-    }
-    const actualDiff = match.home_score - match.away_score;
-    const predictedDiff = prediction.home_score - prediction.away_score;
-    if (actualDiff === predictedDiff) {
-      base += cfg.correctGoalDifference;
-      parts.push("bon ecart");
-    }
-    if (prediction.home_score === match.home_score) base += cfg.correctTeamGoals;
-    if (prediction.away_score === match.away_score) base += cfg.correctTeamGoals;
+  if (actualOutcome === predictedOutcome) {
+    base += cfg.correctOutcome;
+    parts.push("bon resultat");
+  }
 
-    const goalDistance = Math.abs(prediction.home_score - match.home_score) + Math.abs(prediction.away_score - match.away_score);
-    base = Math.max(0, base - Math.min(goalDistance, cfg.maxGoalDistancePenalty));
+  const actualDiff = match.home_score - match.away_score;
+  const predictedDiff = prediction.home_score - prediction.away_score;
+  if (actualDiff === predictedDiff) {
+    base += cfg.correctGoalDifference;
+    parts.push("bonne difference");
+  }
+
+  if (prediction.home_score === match.home_score && prediction.away_score === match.away_score) {
+    base += Math.max(0, cfg.exactScore - cfg.correctOutcome - cfg.correctGoalDifference);
+    parts.push("score exact");
   }
 
   let odds = 0;

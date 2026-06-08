@@ -5,6 +5,7 @@ import { readConfig } from "@/lib/config";
 export default async function ReglementPage() {
   const user = await requireUser();
   const scoring = readConfig().scoring;
+  const exactSupplement = Math.max(0, scoring.exactScore - scoring.correctOutcome - scoring.correctGoalDifference);
 
   return (
     <AppShell user={user}>
@@ -26,29 +27,19 @@ export default async function ReglementPage() {
           </thead>
           <tbody>
             <tr>
-              <td>Score exact</td>
-              <td className="score">{scoring.exactScore}</td>
-              <td>Déclenché quand les deux scores sont parfaitement trouvés.</td>
-            </tr>
-            <tr>
-              <td>Bon signe</td>
+              <td>Bon résultat</td>
               <td className="score">{scoring.correctOutcome}</td>
               <td>Victoire domicile, nul ou victoire extérieur correctement anticipé.</td>
             </tr>
             <tr>
-              <td>Bon écart</td>
+              <td>Bonne différence de buts</td>
               <td className="score">{scoring.correctGoalDifference}</td>
-              <td>Différence de buts exacte, même sans score exact.</td>
+              <td>Point supplémentaire quand la différence de buts est exacte.</td>
             </tr>
             <tr>
-              <td>Buts d’une équipe</td>
-              <td className="score">{scoring.correctTeamGoals}</td>
-              <td>Bonus par équipe dont le nombre de buts est correct.</td>
-            </tr>
-            <tr>
-              <td>Pénalité distance</td>
-              <td className="score">-{scoring.maxGoalDistancePenalty} max</td>
-              <td>Réduit le score selon l’écart total aux buts réels.</td>
+              <td>Score exact</td>
+              <td className="score">+{exactSupplement}</td>
+              <td>Point supplémentaire quand les deux scores sont parfaitement trouvés, soit {scoring.exactScore} points de base au total.</td>
             </tr>
             <tr>
               <td>Bonus cote</td>
@@ -72,12 +63,12 @@ export default async function ReglementPage() {
             </tr>
             <tr>
               <td>1e équipe critiquée par Trump</td>
-              <td className="score">{scoring.specials.firstTeamCriticizedByTrump ?? 4}</td>
+              <td className="score">{scoring.specials.firstTeamCriticizedByTrump ?? 5}</td>
               <td>Pari bonus à arbitrer entre vous pendant le tournoi.</td>
             </tr>
             <tr>
               <td>Messi ou CR7 : moins de buts</td>
-              <td className="score">{scoring.specials.messiOrRonaldoFewestGoals ?? 4}</td>
+              <td className="score">{scoring.specials.messiOrRonaldoFewestGoals ?? 5}</td>
               <td>Choisir celui qui termine avec le plus petit total de buts.</td>
             </tr>
           </tbody>

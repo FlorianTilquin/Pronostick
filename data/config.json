@@ -19,11 +19,11 @@
     }
   ],
   "scoring": {
-    "exactScore": 8,
-    "correctOutcome": 3,
-    "correctGoalDifference": 2,
-    "correctTeamGoals": 1,
-    "maxGoalDistancePenalty": 3,
+    "exactScore": 4,
+    "correctOutcome": 2,
+    "correctGoalDifference": 1,
+    "correctTeamGoals": 0,
+    "maxGoalDistancePenalty": 0,
     "oddsBonus": {
       "enabled": true,
       "maxBonus": 4,
@@ -31,11 +31,11 @@
       "basis": "outcome"
     },
     "specials": {
-      "topScorer": 8,
-      "bestDefense": 6,
-      "bestAttack": 6,
-      "firstTeamCriticizedByTrump": 4,
-      "messiOrRonaldoFewestGoals": 4
+      "topScorer": 5,
+      "bestDefense": 5,
+      "bestAttack": 5,
+      "firstTeamCriticizedByTrump": 5,
+      "messiOrRonaldoFewestGoals": 5
     }
   },
   "groups": [
