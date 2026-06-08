@@ -55,7 +55,7 @@ export default async function TableauPage() {
                               <span className="market-pill" key={item.outcome}>
                                 <strong>{item.label}</strong>
                                 <span>{Math.round(item.probability * 100)}%</span>
-                                <small>{item.odds ? `x${item.odds.toFixed(1)}` : "x-"} · {item.count}</small>
+                                <small>{item.odds ? `x${item.odds.toFixed(1)}` : "x-"}</small>
                               </span>
                             ))}
                           </div>
