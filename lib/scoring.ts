@@ -1,4 +1,5 @@
 import { readConfig } from "@/lib/config";
+import { bookmakerOddsByMatchId, type BookmakerMarket } from "@/lib/bookmakerOdds";
 import { getMatches, getPredictions, getSubmittedUserIds, getUsers } from "@/lib/db";
 import { teamName } from "@/lib/teams";
 import type { Match, Prediction, User } from "@/lib/types";
@@ -15,6 +16,28 @@ function outcomeLabel(value: "H" | "D" | "A", match: Match) {
   if (value === "H") return teamName(match.home_team);
   if (value === "A") return teamName(match.away_team);
   return "Nul";
+}
+
+function bookmakerOutcomeMarket(match: Match, market?: BookmakerMarket) {
+  if (!market) return null;
+  return (["H", "D", "A"] as const).map((value) => {
+    const odds = value === "H" ? market.home_odds : value === "D" ? market.draw_odds : market.away_odds;
+    const probability = value === "H" ? market.home_implied_prob : value === "D" ? market.draw_implied_prob : market.away_implied_prob;
+    return {
+      outcome: value,
+      label: outcomeLabel(value, match),
+      probability,
+      odds
+    };
+  });
+}
+
+function bookmakerOutcomeForMatch(match: Match, market?: BookmakerMarket) {
+  if (!market || match.home_score === null || match.away_score === null) return null;
+  const actual = outcome(match.home_score, match.away_score);
+  const odds = actual === "H" ? market.home_odds : actual === "D" ? market.draw_odds : market.away_odds;
+  const probability = actual === "H" ? market.home_implied_prob : actual === "D" ? market.draw_implied_prob : market.away_implied_prob;
+  return { outcome: actual, label: outcomeLabel(actual, match), odds, probability };
 }
 
 function oddsEligibleUserIds() {
@@ -110,6 +133,7 @@ export function predictionsByMatchForUserVisibility(viewer: User) {
   const predictions = getPredictions();
   const submitted = getSubmittedUserIds();
   const viewerCanSeeAll = viewer.role === "admin" || submitted.has(viewer.id);
+  const bookmakerMarkets = bookmakerOddsByMatchId();
 
   return matches.map((match) => {
     const humanPredictions = predictions.filter((item) => item.match_id === match.id && humanUsers.some((user) => user.id === item.user_id));
@@ -133,6 +157,7 @@ export function predictionsByMatchForUserVisibility(viewer: User) {
     return {
       match,
       market,
+      bookmakerMarket: viewerCanSeeAll ? bookmakerOutcomeMarket(match, bookmakerMarkets.get(match.id)) : null,
       predictions: users.map((user) => {
         const prediction = predictions.find((item) => item.user_id === user.id && item.match_id === match.id);
         const visible = viewerCanSeeAll || user.id === viewer.id;
@@ -147,6 +172,7 @@ export function matchImpactStats() {
   const users = getUsers().filter((user) => user.role === "player");
   const predictions = getPredictions();
   const eligibleOddsUsers = oddsEligibleUserIds();
+  const bookmakerMarkets = bookmakerOddsByMatchId();
 
   const rows = matches.map((match) => {
     const scores = users
@@ -163,11 +189,15 @@ export function matchImpactStats() {
     const average = totals.length ? totals.reduce((sum, value) => sum + value, 0) / totals.length : 0;
     const best = scores.filter((item) => item.total === max);
     const exactCount = scores.filter((item) => item.prediction.home_score === match.home_score && item.prediction.away_score === match.away_score).length;
+    const outcomeHits = scores.filter((item) => outcome(item.prediction.home_score, item.prediction.away_score) === outcome(match.home_score ?? 0, match.away_score ?? 0));
+    const bookmakerActual = bookmakerOutcomeForMatch(match, bookmakerMarkets.get(match.id));
 
     return {
       match,
       scores,
       best,
+      outcomeHits,
+      bookmakerActual,
       average,
       spread: max - min,
       exactCount,
@@ -176,10 +206,17 @@ export function matchImpactStats() {
   });
 
   return {
-    swingMatches: [...rows].sort((a, b) => b.spread - a.spread || b.topGap - a.topGap).slice(0, 5),
-    soloShots: [...rows]
-      .filter((row) => row.best.length === 1 && row.best[0]?.total > 0)
-      .sort((a, b) => b.topGap - a.topGap || b.spread - a.spread)
+    collectiveHits: [...rows]
+      .filter((row) => row.scores.length > 1 && row.scores.every((item) => item.total > 0))
+      .sort((a, b) => b.average - a.average || b.exactCount - a.exactCount)
+      .slice(0, 5),
+    collectiveMisses: [...rows]
+      .filter((row) => row.scores.length > 1 && row.scores.every((item) => item.total === 0))
+      .sort((a, b) => a.average - b.average || b.spread - a.spread)
+      .slice(0, 5),
+    bookmakerUpsets: [...rows]
+      .filter((row) => Boolean(row.bookmakerActual) && (row.bookmakerActual?.odds ?? 0) >= 3 && row.outcomeHits.length > 0)
+      .sort((a, b) => (b.bookmakerActual?.odds ?? 0) - (a.bookmakerActual?.odds ?? 0) || b.outcomeHits.length - a.outcomeHits.length)
       .slice(0, 5),
     exactMatches: [...rows].filter((row) => row.exactCount > 0).sort((a, b) => b.exactCount - a.exactCount || b.spread - a.spread).slice(0, 5)
   };

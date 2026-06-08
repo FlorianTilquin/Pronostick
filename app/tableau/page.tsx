@@ -37,7 +37,7 @@ export default async function TableauPage() {
               <div className="tableau-list">
                 {rows
                   .filter(({ match }) => match.group_name === group)
-                  .map(({ match, market, predictions }) => (
+                  .map(({ match, market, bookmakerMarket, predictions }) => (
                     <article className="tableau-match" key={match.id}>
                       <div className="tableau-main">
                         <div className="tableau-meta">
@@ -49,15 +49,30 @@ export default async function TableauPage() {
                           <span className="score real-score">{match.home_score === null ? "à venir" : `${match.home_score}-${match.away_score}`}</span>
                           <TeamName team={match.away_team} align="right" />
                         </div>
-                        {market ? (
-                          <div className="market-row" aria-label="Probabilités basées sur les pronostics humains">
-                            {market.map((item) => (
-                              <span className="market-pill" key={item.outcome}>
-                                <strong>{item.label}</strong>
-                                <span>{Math.round(item.probability * 100)}%</span>
-                                <small>{item.odds ? `x${item.odds.toFixed(1)}` : "x-"}</small>
-                              </span>
-                            ))}
+                        {market || bookmakerMarket ? (
+                          <div className="markets-stack">
+                            {market ? (
+                              <div className="market-row" aria-label="Cotes basées sur les pronostics humains">
+                                <span className="market-label">Amis</span>
+                                {market.map((item) => (
+                                  <span className="market-pill" key={item.outcome}>
+                                    <strong>{item.label}</strong>
+                                    <span>{item.odds ? `x${item.odds.toFixed(1)}` : "x-"}</span>
+                                  </span>
+                                ))}
+                              </div>
+                            ) : null}
+                            {bookmakerMarket ? (
+                              <div className="market-row bookmaker-row" aria-label="Cotes moyennes des bookmakers">
+                                <span className="market-label">Books</span>
+                                {bookmakerMarket.map((item) => (
+                                  <span className="market-pill bookmaker-pill" key={item.outcome}>
+                                    <strong>{item.label}</strong>
+                                    <span>x{item.odds.toFixed(2)}</span>
+                                  </span>
+                                ))}
+                              </div>
+                            ) : null}
                           </div>
                         ) : null}
                       </div>

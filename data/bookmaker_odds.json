@@ -1,0 +1,1590 @@
+{
+  "generated_on": "2026-06-08T16:54:43.534406+02:00",
+  "description": "Average 1N2 odds for World Cup group-stage fixtures, aligned to Pronostick match order.",
+  "matches": [
+    {
+      "match_id": 1,
+      "match_no": 1,
+      "home_team": "Mexico",
+      "away_team": "South Africa",
+      "home_odds": 1.47,
+      "draw_odds": 4.64,
+      "away_odds": 9.45,
+      "home_implied_prob": 0.6791790000975831,
+      "draw_implied_prob": 0.2151709332205705,
+      "away_implied_prob": 0.1056500666818462,
+      "samples": 2,
+      "bookmaker_count_avg": 33.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 2,
+      "match_no": 2,
+      "home_team": "Korea Republic",
+      "away_team": "Czechia",
+      "home_odds": 2.75,
+      "draw_odds": 3.25,
+      "away_odds": 3.0,
+      "home_implied_prob": 0.3619489559164733,
+      "draw_implied_prob": 0.3062645011600928,
+      "away_implied_prob": 0.3317865429234338,
+      "samples": 2,
+      "bookmaker_count_avg": 30.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 3,
+      "match_no": 3,
+      "home_team": "Mexico",
+      "away_team": "Korea Republic",
+      "home_odds": 1.85,
+      "draw_odds": 3.7,
+      "away_odds": 4.96,
+      "home_implied_prob": 0.5339074273412271,
+      "draw_implied_prob": 0.2669537136706135,
+      "away_implied_prob": 0.1991388589881593,
+      "samples": 2,
+      "bookmaker_count_avg": 26.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 4,
+      "match_no": 4,
+      "home_team": "Czechia",
+      "away_team": "South Africa",
+      "home_odds": 2.0,
+      "draw_odds": 3.5,
+      "away_odds": 4.25,
+      "home_implied_prob": 0.4897119341563786,
+      "draw_implied_prob": 0.279835390946502,
+      "away_implied_prob": 0.2304526748971193,
+      "samples": 2,
+      "bookmaker_count_avg": 26.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 5,
+      "match_no": 5,
+      "home_team": "Czechia",
+      "away_team": "Mexico",
+      "home_odds": 4.8,
+      "draw_odds": 3.65,
+      "away_odds": 2.1,
+      "home_implied_prob": 0.2173543173117822,
+      "draw_implied_prob": 0.2858358145470012,
+      "away_implied_prob": 0.4968098681412164,
+      "samples": 2,
+      "bookmaker_count_avg": 25.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 6,
+      "match_no": 6,
+      "home_team": "South Africa",
+      "away_team": "Korea Republic",
+      "home_odds": 4.1,
+      "draw_odds": 3.5,
+      "away_odds": 2.5,
+      "home_implied_prob": 0.2623688155922039,
+      "draw_implied_prob": 0.3073463268365817,
+      "away_implied_prob": 0.4302848575712144,
+      "samples": 2,
+      "bookmaker_count_avg": 25.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 7,
+      "match_no": 7,
+      "home_team": "Canada",
+      "away_team": "Switzerland",
+      "home_odds": 3.8,
+      "draw_odds": 3.6,
+      "away_odds": 2.16,
+      "home_implied_prob": 0.2621359223300971,
+      "draw_implied_prob": 0.2766990291262136,
+      "away_implied_prob": 0.4611650485436893,
+      "samples": 2,
+      "bookmaker_count_avg": 25.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 8,
+      "match_no": 8,
+      "home_team": "Qatar",
+      "away_team": "Bosnia and Herzegovina",
+      "home_odds": 6.59,
+      "draw_odds": 4.23,
+      "away_odds": 1.92,
+      "home_implied_prob": 0.1669390196525803,
+      "draw_implied_prob": 0.2600775743523651,
+      "away_implied_prob": 0.5729834059950545,
+      "samples": 2,
+      "bookmaker_count_avg": 25.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 9,
+      "match_no": 9,
+      "home_team": "Canada",
+      "away_team": "Qatar",
+      "home_odds": 1.34,
+      "draw_odds": 5.37,
+      "away_odds": 12.0,
+      "home_implied_prob": 0.7346452976544705,
+      "draw_implied_prob": 0.1833193107741137,
+      "away_implied_prob": 0.0820353915714158,
+      "samples": 2,
+      "bookmaker_count_avg": 26.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 10,
+      "match_no": 10,
+      "home_team": "Bosnia and Herzegovina",
+      "away_team": "Switzerland",
+      "home_odds": 6.1,
+      "draw_odds": 4.06,
+      "away_odds": 1.66,
+      "home_implied_prob": 0.1618866437994216,
+      "draw_implied_prob": 0.243228701274993,
+      "away_implied_prob": 0.5948846549255854,
+      "samples": 2,
+      "bookmaker_count_avg": 26.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 11,
+      "match_no": 11,
+      "home_team": "Bosnia and Herzegovina",
+      "away_team": "Canada",
+      "home_odds": 4.8,
+      "draw_odds": 3.78,
+      "away_odds": 1.85,
+      "home_implied_prob": 0.2055736837463621,
+      "draw_implied_prob": 0.2610459476144282,
+      "away_implied_prob": 0.5333803686392098,
+      "samples": 2,
+      "bookmaker_count_avg": 30.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 12,
+      "match_no": 12,
+      "home_team": "Switzerland",
+      "away_team": "Qatar",
+      "home_odds": 1.25,
+      "draw_odds": 6.98,
+      "away_odds": 17.0,
+      "home_implied_prob": 0.7983314831634541,
+      "draw_implied_prob": 0.1429676724862919,
+      "away_implied_prob": 0.0587008443502539,
+      "samples": 2,
+      "bookmaker_count_avg": 33.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 13,
+      "match_no": 13,
+      "home_team": "Brazil",
+      "away_team": "Morocco",
+      "home_odds": 1.7,
+      "draw_odds": 3.95,
+      "away_odds": 6.0,
+      "home_implied_prob": 0.5835282531084575,
+      "draw_implied_prob": 0.2511387418441462,
+      "away_implied_prob": 0.1653330050473963,
+      "samples": 2,
+      "bookmaker_count_avg": 33.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 14,
+      "match_no": 14,
+      "home_team": "Haiti",
+      "away_team": "Scotland",
+      "home_odds": 7.0,
+      "draw_odds": 4.75,
+      "away_odds": 1.54,
+      "home_implied_prob": 0.1424676209952283,
+      "draw_implied_prob": 0.2099522835719154,
+      "away_implied_prob": 0.6475800954328562,
+      "samples": 2,
+      "bookmaker_count_avg": 33.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 15,
+      "match_no": 15,
+      "home_team": "Brazil",
+      "away_team": "Haiti",
+      "home_odds": 1.1,
+      "draw_odds": 15.0,
+      "away_odds": 40.0,
+      "home_implied_prob": 0.9084027252081756,
+      "draw_implied_prob": 0.0666161998485995,
+      "away_implied_prob": 0.0249810749432248,
+      "samples": 2,
+      "bookmaker_count_avg": 27.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 16,
+      "match_no": 16,
+      "home_team": "Scotland",
+      "away_team": "Morocco",
+      "home_odds": 4.3,
+      "draw_odds": 3.37,
+      "away_odds": 2.06,
+      "home_implied_prob": 0.2291820726811747,
+      "draw_implied_prob": 0.2924281639552081,
+      "away_implied_prob": 0.4783897633636171,
+      "samples": 2,
+      "bookmaker_count_avg": 26.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 17,
+      "match_no": 17,
+      "home_team": "Scotland",
+      "away_team": "Brazil",
+      "home_odds": 9.5,
+      "draw_odds": 5.0,
+      "away_odds": 1.5,
+      "home_implied_prob": 0.1083032490974729,
+      "draw_implied_prob": 0.2057761732851986,
+      "away_implied_prob": 0.6859205776173285,
+      "samples": 2,
+      "bookmaker_count_avg": 26.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 18,
+      "match_no": 18,
+      "home_team": "Morocco",
+      "away_team": "Haiti",
+      "home_odds": 1.36,
+      "draw_odds": 5.5,
+      "away_odds": 13.0,
+      "home_implied_prob": 0.739706186633561,
+      "draw_implied_prob": 0.1829091661493896,
+      "away_implied_prob": 0.0773846472170494,
+      "samples": 2,
+      "bookmaker_count_avg": 25.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 19,
+      "match_no": 19,
+      "home_team": "United States",
+      "away_team": "Paraguay",
+      "home_odds": 2.05,
+      "draw_odds": 3.5,
+      "away_odds": 4.1,
+      "home_implied_prob": 0.4794520547945206,
+      "draw_implied_prob": 0.2808219178082191,
+      "away_implied_prob": 0.2397260273972603,
+      "samples": 2,
+      "bookmaker_count_avg": 33.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 20,
+      "match_no": 20,
+      "home_team": "Australia",
+      "away_team": "Turkiye",
+      "home_odds": 5.0,
+      "draw_odds": 3.9,
+      "away_odds": 1.8,
+      "home_implied_prob": 0.1976351351351351,
+      "draw_implied_prob": 0.2533783783783784,
+      "away_implied_prob": 0.5489864864864865,
+      "samples": 2,
+      "bookmaker_count_avg": 30.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 21,
+      "match_no": 21,
+      "home_team": "United States",
+      "away_team": "Australia",
+      "home_odds": 1.8,
+      "draw_odds": 3.95,
+      "away_odds": 4.9,
+      "home_implied_prob": 0.5485333711208729,
+      "draw_implied_prob": 0.2499645741816635,
+      "away_implied_prob": 0.2015020546974635,
+      "samples": 2,
+      "bookmaker_count_avg": 26.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 22,
+      "match_no": 22,
+      "home_team": "Turkiye",
+      "away_team": "Paraguay",
+      "home_odds": 2.28,
+      "draw_odds": 3.3,
+      "away_odds": 3.8,
+      "home_implied_prob": 0.4365079365079365,
+      "draw_implied_prob": 0.3015873015873016,
+      "away_implied_prob": 0.2619047619047619,
+      "samples": 2,
+      "bookmaker_count_avg": 26.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 23,
+      "match_no": 23,
+      "home_team": "Turkiye",
+      "away_team": "United States",
+      "home_odds": 2.95,
+      "draw_odds": 3.55,
+      "away_odds": 2.6,
+      "home_implied_prob": 0.337199744268883,
+      "draw_implied_prob": 0.2802082381952689,
+      "away_implied_prob": 0.382592017535848,
+      "samples": 2,
+      "bookmaker_count_avg": 25.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 24,
+      "match_no": 24,
+      "home_team": "Paraguay",
+      "away_team": "Australia",
+      "home_odds": 2.24,
+      "draw_odds": 3.4,
+      "away_odds": 3.75,
+      "home_implied_prob": 0.4432315928526733,
+      "draw_implied_prob": 0.2920114023499965,
+      "away_implied_prob": 0.2647570047973301,
+      "samples": 2,
+      "bookmaker_count_avg": 25.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 25,
+      "match_no": 25,
+      "home_team": "Germany",
+      "away_team": "Curacao",
+      "home_odds": 1.05,
+      "draw_odds": 23.0,
+      "away_odds": 120.0,
+      "home_implied_prob": 0.9484047214061132,
+      "draw_implied_prob": 0.0432967372815834,
+      "away_implied_prob": 0.0082985413123034,
+      "samples": 2,
+      "bookmaker_count_avg": 33.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 26,
+      "match_no": 26,
+      "home_team": "Ivory Coast",
+      "away_team": "Ecuador",
+      "home_odds": 3.75,
+      "draw_odds": 2.99,
+      "away_odds": 2.47,
+      "home_implied_prob": 0.2650832905604031,
+      "draw_implied_prob": 0.3324623209369605,
+      "away_implied_prob": 0.4024543885026364,
+      "samples": 2,
+      "bookmaker_count_avg": 33.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 27,
+      "match_no": 27,
+      "home_team": "Germany",
+      "away_team": "Ivory Coast",
+      "home_odds": 1.58,
+      "draw_odds": 4.48,
+      "away_odds": 6.04,
+      "home_implied_prob": 0.6194758337759382,
+      "draw_implied_prob": 0.218475852090621,
+      "away_implied_prob": 0.1620483141334408,
+      "samples": 2,
+      "bookmaker_count_avg": 26.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 28,
+      "match_no": 28,
+      "home_team": "Ecuador",
+      "away_team": "Curacao",
+      "home_odds": 1.22,
+      "draw_odds": 7.4,
+      "away_odds": 19.0,
+      "home_implied_prob": 0.81361973982686,
+      "draw_implied_prob": 0.1341373084579417,
+      "away_implied_prob": 0.0522429517151983,
+      "samples": 2,
+      "bookmaker_count_avg": 26.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 29,
+      "match_no": 29,
+      "home_team": "Ecuador",
+      "away_team": "Germany",
+      "home_odds": 5.75,
+      "draw_odds": 4.0,
+      "away_odds": 1.75,
+      "home_implied_prob": 0.1747269890795632,
+      "draw_implied_prob": 0.2511700468018721,
+      "away_implied_prob": 0.5741029641185648,
+      "samples": 2,
+      "bookmaker_count_avg": 25.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 30,
+      "match_no": 30,
+      "home_team": "Curacao",
+      "away_team": "Ivory Coast",
+      "home_odds": 18.0,
+      "draw_odds": 6.8,
+      "away_odds": 1.29,
+      "home_implied_prob": 0.0568164153583087,
+      "draw_implied_prob": 0.1503963935955231,
+      "away_implied_prob": 0.7927871910461681,
+      "samples": 2,
+      "bookmaker_count_avg": 25.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 31,
+      "match_no": 31,
+      "home_team": "Netherlands",
+      "away_team": "Japan",
+      "home_odds": 2.05,
+      "draw_odds": 3.8,
+      "away_odds": 3.98,
+      "home_implied_prob": 0.4867248093199885,
+      "draw_implied_prob": 0.2625752260805201,
+      "away_implied_prob": 0.2506999645994915,
+      "samples": 2,
+      "bookmaker_count_avg": 33.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 32,
+      "match_no": 32,
+      "home_team": "Tunisia",
+      "away_team": "Sweden",
+      "home_odds": 4.4,
+      "draw_odds": 3.52,
+      "away_odds": 1.98,
+      "home_implied_prob": 0.2236024844720496,
+      "draw_implied_prob": 0.2795031055900621,
+      "away_implied_prob": 0.4968944099378882,
+      "samples": 2,
+      "bookmaker_count_avg": 30.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 33,
+      "match_no": 33,
+      "home_team": "Netherlands",
+      "away_team": "Tunisia",
+      "home_odds": 1.55,
+      "draw_odds": 4.47,
+      "away_odds": 7.0,
+      "home_implied_prob": 0.6376799779899528,
+      "draw_implied_prob": 0.221119455455129,
+      "away_implied_prob": 0.1412005665549181,
+      "samples": 2,
+      "bookmaker_count_avg": 25.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 34,
+      "match_no": 34,
+      "home_team": "Sweden",
+      "away_team": "Japan",
+      "home_odds": 3.7,
+      "draw_odds": 3.5,
+      "away_odds": 2.35,
+      "home_implied_prob": 0.2753598928690994,
+      "draw_implied_prob": 0.2910947438901908,
+      "away_implied_prob": 0.4335453632407097,
+      "samples": 2,
+      "bookmaker_count_avg": 25.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 35,
+      "match_no": 35,
+      "home_team": "Sweden",
+      "away_team": "Netherlands",
+      "home_odds": 5.5,
+      "draw_odds": 4.2,
+      "away_odds": 1.67,
+      "home_implied_prob": 0.1784778238632026,
+      "draw_implied_prob": 0.2337209598208605,
+      "away_implied_prob": 0.5878012163159367,
+      "samples": 2,
+      "bookmaker_count_avg": 26.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 36,
+      "match_no": 36,
+      "home_team": "Japan",
+      "away_team": "Tunisia",
+      "home_odds": 1.88,
+      "draw_odds": 3.62,
+      "away_odds": 5.2,
+      "home_implied_prob": 0.5316673068667104,
+      "draw_implied_prob": 0.2761145129584021,
+      "away_implied_prob": 0.1922181801748876,
+      "samples": 2,
+      "bookmaker_count_avg": 26.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 37,
+      "match_no": 37,
+      "home_team": "Belgium",
+      "away_team": "Egypt",
+      "home_odds": 1.71,
+      "draw_odds": 4.05,
+      "away_odds": 5.6,
+      "home_implied_prob": 0.5788446077868381,
+      "draw_implied_prob": 0.2444010566211094,
+      "away_implied_prob": 0.1767543355920524,
+      "samples": 2,
+      "bookmaker_count_avg": 33.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 38,
+      "match_no": 38,
+      "home_team": "Iran",
+      "away_team": "New Zealand",
+      "home_odds": 1.95,
+      "draw_odds": 3.5,
+      "away_odds": 4.5,
+      "home_implied_prob": 0.5023923444976077,
+      "draw_implied_prob": 0.2799043062200957,
+      "away_implied_prob": 0.2177033492822966,
+      "samples": 2,
+      "bookmaker_count_avg": 33.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 39,
+      "match_no": 39,
+      "home_team": "Belgium",
+      "away_team": "Iran",
+      "home_odds": 1.45,
+      "draw_odds": 4.9,
+      "away_odds": 8.5,
+      "home_implied_prob": 0.6818925998690242,
+      "draw_implied_prob": 0.201784544859201,
+      "away_implied_prob": 0.1163228552717747,
+      "samples": 2,
+      "bookmaker_count_avg": 26.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 40,
+      "match_no": 40,
+      "home_team": "New Zealand",
+      "away_team": "Egypt",
+      "home_odds": 5.25,
+      "draw_odds": 4.0,
+      "away_odds": 1.78,
+      "home_implied_prob": 0.1900440411050313,
+      "draw_implied_prob": 0.2494328039503536,
+      "away_implied_prob": 0.560523154944615,
+      "samples": 2,
+      "bookmaker_count_avg": 26.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 41,
+      "match_no": 41,
+      "home_team": "New Zealand",
+      "away_team": "Belgium",
+      "home_odds": 11.3,
+      "draw_odds": 6.0,
+      "away_odds": 1.33,
+      "home_implied_prob": 0.087876752304287,
+      "draw_implied_prob": 0.1655012168397405,
+      "away_implied_prob": 0.7466220308559725,
+      "samples": 2,
+      "bookmaker_count_avg": 24.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 42,
+      "match_no": 42,
+      "home_team": "Egypt",
+      "away_team": "Iran",
+      "home_odds": 2.4,
+      "draw_odds": 3.15,
+      "away_odds": 3.7,
+      "home_implied_prob": 0.414842498665243,
+      "draw_implied_prob": 0.3160704751735184,
+      "away_implied_prob": 0.2690870261612386,
+      "samples": 2,
+      "bookmaker_count_avg": 24.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 43,
+      "match_no": 43,
+      "home_team": "Spain",
+      "away_team": "Cape Verde",
+      "home_odds": 1.11,
+      "draw_odds": 12.0,
+      "away_odds": 45.0,
+      "home_implied_prob": 0.8951215873489482,
+      "draw_implied_prob": 0.0827987468297777,
+      "away_implied_prob": 0.022079665821274,
+      "samples": 2,
+      "bookmaker_count_avg": 33.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 44,
+      "match_no": 44,
+      "home_team": "Saudi Arabia",
+      "away_team": "Uruguay",
+      "home_odds": 8.0,
+      "draw_odds": 4.63,
+      "away_odds": 1.5,
+      "home_implied_prob": 0.1240510851120836,
+      "draw_implied_prob": 0.2143431276234705,
+      "away_implied_prob": 0.6616057872644457,
+      "samples": 2,
+      "bookmaker_count_avg": 33.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 45,
+      "match_no": 45,
+      "home_team": "Spain",
+      "away_team": "Saudi Arabia",
+      "home_odds": 1.14,
+      "draw_odds": 10.75,
+      "away_odds": 30.0,
+      "home_implied_prob": 0.8740903362198642,
+      "draw_implied_prob": 0.0926942310037809,
+      "away_implied_prob": 0.0332154327763548,
+      "samples": 2,
+      "bookmaker_count_avg": 26.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 46,
+      "match_no": 46,
+      "home_team": "Uruguay",
+      "away_team": "Cape Verde",
+      "home_odds": 1.48,
+      "draw_odds": 4.72,
+      "away_odds": 7.8,
+      "home_implied_prob": 0.6652019311381573,
+      "draw_implied_prob": 0.2085802665433205,
+      "away_implied_prob": 0.1262178023185221,
+      "samples": 2,
+      "bookmaker_count_avg": 26.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 47,
+      "match_no": 47,
+      "home_team": "Uruguay",
+      "away_team": "Spain",
+      "home_odds": 5.55,
+      "draw_odds": 4.12,
+      "away_odds": 1.67,
+      "home_implied_prob": 0.1763531368784746,
+      "draw_implied_prob": 0.2375630848727024,
+      "away_implied_prob": 0.5860837782488229,
+      "samples": 2,
+      "bookmaker_count_avg": 24.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 48,
+      "match_no": 48,
+      "home_team": "Cape Verde",
+      "away_team": "Saudi Arabia",
+      "home_odds": 2.68,
+      "draw_odds": 3.5,
+      "away_odds": 2.85,
+      "home_implied_prob": 0.3695402511762308,
+      "draw_implied_prob": 0.2829622494720853,
+      "away_implied_prob": 0.3474974993516837,
+      "samples": 2,
+      "bookmaker_count_avg": 24.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 49,
+      "match_no": 49,
+      "home_team": "France",
+      "away_team": "Senegal",
+      "home_odds": 1.5,
+      "draw_odds": 4.69,
+      "away_odds": 7.85,
+      "home_implied_prob": 0.6618518152319488,
+      "draw_implied_prob": 0.2116796850422011,
+      "away_implied_prob": 0.1264684997258501,
+      "samples": 2,
+      "bookmaker_count_avg": 32.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 50,
+      "match_no": 50,
+      "home_team": "Norway",
+      "away_team": "Iraq",
+      "home_odds": 1.23,
+      "draw_odds": 8.0,
+      "away_odds": 16.0,
+      "home_implied_prob": 0.8125952260030472,
+      "draw_implied_prob": 0.1249365159979685,
+      "away_implied_prob": 0.0624682579989842,
+      "samples": 2,
+      "bookmaker_count_avg": 29.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 51,
+      "match_no": 51,
+      "home_team": "France",
+      "away_team": "Norway",
+      "home_odds": 1.85,
+      "draw_odds": 3.85,
+      "away_odds": 5.5,
+      "home_implied_prob": 0.5503931379556826,
+      "draw_implied_prob": 0.2644746247319514,
+      "away_implied_prob": 0.185132237312366,
+      "samples": 2,
+      "bookmaker_count_avg": 25.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 52,
+      "match_no": 52,
+      "home_team": "Iraq",
+      "away_team": "Senegal",
+      "home_odds": 8.1,
+      "draw_odds": 4.64,
+      "away_odds": 1.55,
+      "home_implied_prob": 0.1254469658648898,
+      "draw_implied_prob": 0.2189914705831051,
+      "away_implied_prob": 0.655561563552005,
+      "samples": 2,
+      "bookmaker_count_avg": 25.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 53,
+      "match_no": 53,
+      "home_team": "Iraq",
+      "away_team": "France",
+      "home_odds": 31.0,
+      "draw_odds": 10.0,
+      "away_odds": 1.14,
+      "home_implied_prob": 0.0319560464203621,
+      "draw_implied_prob": 0.0990637439031227,
+      "away_implied_prob": 0.868980209676515,
+      "samples": 2,
+      "bookmaker_count_avg": 26.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 54,
+      "match_no": 54,
+      "home_team": "Senegal",
+      "away_team": "Norway",
+      "home_odds": 3.6,
+      "draw_odds": 3.6,
+      "away_odds": 2.14,
+      "home_implied_prob": 0.2715736040609137,
+      "draw_implied_prob": 0.2715736040609137,
+      "away_implied_prob": 0.4568527918781725,
+      "samples": 2,
+      "bookmaker_count_avg": 26.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 55,
+      "match_no": 55,
+      "home_team": "Argentina",
+      "away_team": "Algeria",
+      "home_odds": 1.43,
+      "draw_odds": 4.75,
+      "away_odds": 9.5,
+      "home_implied_prob": 0.688905003625816,
+      "draw_implied_prob": 0.2073966642494561,
+      "away_implied_prob": 0.103698332124728,
+      "samples": 2,
+      "bookmaker_count_avg": 32.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 56,
+      "match_no": 56,
+      "home_team": "Austria",
+      "away_team": "Jordan",
+      "home_odds": 1.34,
+      "draw_odds": 5.93,
+      "away_odds": 11.0,
+      "home_implied_prob": 0.7419565449826083,
+      "draw_implied_prob": 0.1676596577195102,
+      "away_implied_prob": 0.0903837972978813,
+      "samples": 2,
+      "bookmaker_count_avg": 33.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 57,
+      "match_no": 57,
+      "home_team": "Argentina",
+      "away_team": "Austria",
+      "home_odds": 1.67,
+      "draw_odds": 3.94,
+      "away_odds": 5.8,
+      "home_implied_prob": 0.5841841821370323,
+      "draw_implied_prob": 0.2476110619717877,
+      "away_implied_prob": 0.1682047558911799,
+      "samples": 2,
+      "bookmaker_count_avg": 26.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 58,
+      "match_no": 58,
+      "home_team": "Jordan",
+      "away_team": "Algeria",
+      "home_odds": 6.8,
+      "draw_odds": 4.44,
+      "away_odds": 1.55,
+      "home_implied_prob": 0.1445373209560213,
+      "draw_implied_prob": 0.2213634645272398,
+      "away_implied_prob": 0.6340992145167388,
+      "samples": 2,
+      "bookmaker_count_avg": 26.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 59,
+      "match_no": 59,
+      "home_team": "Jordan",
+      "away_team": "Argentina",
+      "home_odds": 22.5,
+      "draw_odds": 7.75,
+      "away_odds": 1.22,
+      "home_implied_prob": 0.0447510412722453,
+      "draw_implied_prob": 0.1299223778871639,
+      "away_implied_prob": 0.8253265808405907,
+      "samples": 2,
+      "bookmaker_count_avg": 24.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 60,
+      "match_no": 60,
+      "home_team": "Algeria",
+      "away_team": "Austria",
+      "home_odds": 3.5,
+      "draw_odds": 3.4,
+      "away_odds": 2.4,
+      "home_implied_prob": 0.2867182009838369,
+      "draw_implied_prob": 0.2951510892480675,
+      "away_implied_prob": 0.4181307097680956,
+      "samples": 2,
+      "bookmaker_count_avg": 24.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 61,
+      "match_no": 61,
+      "home_team": "Portugal",
+      "away_team": "Uzbekistan",
+      "home_odds": 1.29,
+      "draw_odds": 6.6,
+      "away_odds": 13.7,
+      "home_implied_prob": 0.7754251460032416,
+      "draw_implied_prob": 0.1515603694460881,
+      "away_implied_prob": 0.0730144845506702,
+      "samples": 2,
+      "bookmaker_count_avg": 26.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 62,
+      "match_no": 62,
+      "home_team": "Colombia",
+      "away_team": "DR Congo",
+      "home_odds": 1.5,
+      "draw_odds": 4.42,
+      "away_odds": 8.0,
+      "home_implied_prob": 0.6549360992776441,
+      "draw_implied_prob": 0.2222633821077977,
+      "away_implied_prob": 0.1228005186145582,
+      "samples": 2,
+      "bookmaker_count_avg": 26.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 63,
+      "match_no": 63,
+      "home_team": "Portugal",
+      "away_team": "Colombia",
+      "home_odds": 2.19,
+      "draw_odds": 3.75,
+      "away_odds": 3.6,
+      "home_implied_prob": 0.4561350159647255,
+      "draw_implied_prob": 0.2663828493233997,
+      "away_implied_prob": 0.2774821347118747,
+      "samples": 2,
+      "bookmaker_count_avg": 25.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 64,
+      "match_no": 64,
+      "home_team": "DR Congo",
+      "away_team": "Uzbekistan",
+      "home_odds": 2.4,
+      "draw_odds": 3.5,
+      "away_odds": 3.75,
+      "home_implied_prob": 0.42997542997543,
+      "draw_implied_prob": 0.2948402948402948,
+      "away_implied_prob": 0.2751842751842752,
+      "samples": 2,
+      "bookmaker_count_avg": 25.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 65,
+      "match_no": 65,
+      "home_team": "DR Congo",
+      "away_team": "Portugal",
+      "home_odds": 13.0,
+      "draw_odds": 6.41,
+      "away_odds": 1.31,
+      "home_implied_prob": 0.077209671828322,
+      "draw_implied_prob": 0.1565874779669557,
+      "away_implied_prob": 0.7662028502047222,
+      "samples": 2,
+      "bookmaker_count_avg": 29.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 66,
+      "match_no": 66,
+      "home_team": "Uzbekistan",
+      "away_team": "Colombia",
+      "home_odds": 9.5,
+      "draw_odds": 4.85,
+      "away_odds": 1.45,
+      "home_implied_prob": 0.1051470863080775,
+      "draw_implied_prob": 0.2059582102941726,
+      "away_implied_prob": 0.6888947033977497,
+      "samples": 2,
+      "bookmaker_count_avg": 33.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 67,
+      "match_no": 67,
+      "home_team": "England",
+      "away_team": "Croatia",
+      "home_odds": 1.78,
+      "draw_odds": 3.9,
+      "away_odds": 5.0,
+      "home_implied_prob": 0.5517514571897459,
+      "draw_implied_prob": 0.2518250240507045,
+      "away_implied_prob": 0.1964235187595495,
+      "samples": 2,
+      "bookmaker_count_avg": 32.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 68,
+      "match_no": 68,
+      "home_team": "Ghana",
+      "away_team": "Panama",
+      "home_odds": 2.11,
+      "draw_odds": 3.8,
+      "away_odds": 3.85,
+      "home_implied_prob": 0.4754399363046975,
+      "draw_implied_prob": 0.2639942804218189,
+      "away_implied_prob": 0.2605657832734835,
+      "samples": 2,
+      "bookmaker_count_avg": 32.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 69,
+      "match_no": 69,
+      "home_team": "England",
+      "away_team": "Ghana",
+      "home_odds": 1.35,
+      "draw_odds": 5.86,
+      "away_odds": 12.0,
+      "home_implied_prob": 0.7446707119484067,
+      "draw_implied_prob": 0.1715538329573974,
+      "away_implied_prob": 0.0837754550941957,
+      "samples": 2,
+      "bookmaker_count_avg": 26.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 70,
+      "match_no": 70,
+      "home_team": "Panama",
+      "away_team": "Croatia",
+      "home_odds": 8.0,
+      "draw_odds": 4.44,
+      "away_odds": 1.52,
+      "home_implied_prob": 0.1239931800811335,
+      "draw_implied_prob": 0.2234111352813216,
+      "away_implied_prob": 0.6525956846375449,
+      "samples": 2,
+      "bookmaker_count_avg": 26.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 71,
+      "match_no": 71,
+      "home_team": "Panama",
+      "away_team": "England",
+      "home_odds": 22.5,
+      "draw_odds": 7.75,
+      "away_odds": 1.32,
+      "home_implied_prob": 0.0477357037866592,
+      "draw_implied_prob": 0.1385875271225589,
+      "away_implied_prob": 0.8136767690907819,
+      "samples": 2,
+      "bookmaker_count_avg": 25.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    },
+    {
+      "match_id": 72,
+      "match_no": 72,
+      "home_team": "Croatia",
+      "away_team": "Ghana",
+      "home_odds": 1.93,
+      "draw_odds": 3.9,
+      "away_odds": 5.7,
+      "home_implied_prob": 0.5454143971735611,
+      "draw_implied_prob": 0.2699102016781982,
+      "away_implied_prob": 0.1846754011482408,
+      "samples": 2,
+      "bookmaker_count_avg": 25.0,
+      "sources": [
+        "bmbets"
+      ],
+      "source_files": [
+        "world_cup_odds.csv",
+        "world_cup_odds_bmbets.csv"
+      ],
+      "fetched_at": "2026-06-08T16:54:43.534406+02:00"
+    }
+  ]
+}

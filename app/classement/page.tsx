@@ -66,45 +66,45 @@ export default async function ClassementPage() {
       {finished ? (
         <section className="score-insights">
           <div className="panel">
-            <h2>Matchs qui ont fait l’écart</h2>
+            <h2>Tout le monde l’a vu</h2>
             <div className="insight-list">
-              {impact.swingMatches.map((row) => (
+              {impact.collectiveHits.length ? impact.collectiveHits.map((row) => (
                 <article className="insight-item" key={row.match.id}>
                   <MatchLabel match={row.match} />
-                  <strong>Écart {row.spread} pts</strong>
+                  <strong>{row.scores.length}/{row.scores.length} avec des points</strong>
                   <p className="muted">
-                    Meilleur score : {row.best.map((item) => item.user.display_name).join(", ")} avec {row.best[0]?.total ?? 0} pts, moyenne {row.average.toFixed(1)}.
+                    Résultat {row.match.home_score}-{row.match.away_score}, moyenne {row.average.toFixed(1)} pts, {row.exactCount} score(s) exact(s).
                   </p>
                 </article>
-              ))}
+              )) : <p className="muted">Aucun sans-faute collectif pour l’instant.</p>}
             </div>
           </div>
           <div className="panel">
-            <h2>Coups solo</h2>
+            <h2>Naufrages collectifs</h2>
             <div className="insight-list">
-              {impact.soloShots.map((row) => (
+              {impact.collectiveMisses.length ? impact.collectiveMisses.map((row) => (
                 <article className="insight-item" key={row.match.id}>
                   <MatchLabel match={row.match} />
-                  <strong>{row.best[0]?.user.display_name} +{row.topGap.toFixed(1)} vs moyenne</strong>
+                  <strong>0 point pour tout le monde</strong>
                   <p className="muted">
-                    Prono {row.best[0]?.prediction.home_score}-{row.best[0]?.prediction.away_score}, {row.best[0]?.total ?? 0} pts.
+                    Résultat {row.match.home_score}-{row.match.away_score}. Personne n’a trouvé le bon sens du match.
                   </p>
                 </article>
-              ))}
+              )) : <p className="muted">Aucun raté général pour l’instant.</p>}
             </div>
           </div>
           <div className="panel">
-            <h2>Scores exacts flairés</h2>
+            <h2>Contre les books</h2>
             <div className="insight-list">
-              {impact.exactMatches.length ? impact.exactMatches.map((row) => (
+              {impact.bookmakerUpsets.length ? impact.bookmakerUpsets.map((row) => (
                 <article className="insight-item" key={row.match.id}>
                   <MatchLabel match={row.match} />
-                  <strong>{row.exactCount} score(s) exact(s)</strong>
+                  <strong>{row.bookmakerActual?.label} coté x{row.bookmakerActual?.odds.toFixed(2)}</strong>
                   <p className="muted">
-                    Résultat {row.match.home_score}-{row.match.away_score}.
+                    Trouvé par {row.outcomeHits.map((item) => item.user.display_name).join(", ")} malgré une proba books de {Math.round((row.bookmakerActual?.probability ?? 0) * 100)}%.
                   </p>
                 </article>
-              )) : <p className="muted">Aucun score exact pour l’instant.</p>}
+              )) : <p className="muted">Aucun gros contrepied coté pour l’instant.</p>}
             </div>
           </div>
         </section>
