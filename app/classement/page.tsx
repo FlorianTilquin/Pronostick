@@ -107,6 +107,20 @@ export default async function ClassementPage() {
               )) : <p className="muted">Aucun gros contrepied coté pour l’instant.</p>}
             </div>
           </div>
+          <div className="panel">
+            <h2>Coups solo</h2>
+            <div className="insight-list">
+              {impact.soloShots.length ? impact.soloShots.map((row) => (
+                <article className="insight-item" key={row.match.id}>
+                  <MatchLabel match={row.match} />
+                  <strong>{row.best[0]?.user.display_name} +{row.topGap.toFixed(1)} vs moyenne</strong>
+                  <p className="muted">
+                    Prono {row.best[0]?.prediction.home_score}-{row.best[0]?.prediction.away_score}, {row.best[0]?.total ?? 0} pts sur ce match.
+                  </p>
+                </article>
+              )) : <p className="muted">Aucun coup solo pour l’instant.</p>}
+            </div>
+          </div>
         </section>
       ) : null}
     </AppShell>

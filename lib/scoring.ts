@@ -218,6 +218,10 @@ export function matchImpactStats() {
       .filter((row) => Boolean(row.bookmakerActual) && (row.bookmakerActual?.odds ?? 0) >= 3 && row.outcomeHits.length > 0)
       .sort((a, b) => (b.bookmakerActual?.odds ?? 0) - (a.bookmakerActual?.odds ?? 0) || b.outcomeHits.length - a.outcomeHits.length)
       .slice(0, 5),
+    soloShots: [...rows]
+      .filter((row) => row.best.length === 1 && row.best[0]?.total > 0)
+      .sort((a, b) => b.topGap - a.topGap || b.spread - a.spread)
+      .slice(0, 5),
     exactMatches: [...rows].filter((row) => row.exactCount > 0).sort((a, b) => b.exactCount - a.exactCount || b.spread - a.spread).slice(0, 5)
   };
 }
