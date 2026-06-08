@@ -42,11 +42,6 @@ export default async function ReglementPage() {
               <td>Point supplémentaire quand les deux scores sont parfaitement trouvés, soit {scoring.exactScore} points de base au total.</td>
             </tr>
             <tr>
-              <td>Bonus cote</td>
-              <td className="score">0 à {scoring.oddsBonus.maxBonus}</td>
-              <td>Plus le bon signe était rare parmi les joueurs, plus il rapporte.</td>
-            </tr>
-            <tr>
               <td>Meilleur buteur</td>
               <td className="score">{scoring.specials.topScorer}</td>
               <td>Résultat spécial saisi en fin de tournoi.</td>

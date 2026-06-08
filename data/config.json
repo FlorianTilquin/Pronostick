@@ -25,8 +25,8 @@
     "correctTeamGoals": 0,
     "maxGoalDistancePenalty": 0,
     "oddsBonus": {
-      "enabled": true,
-      "maxBonus": 4,
+      "enabled": false,
+      "maxBonus": 0,
       "minBonus": 0,
       "basis": "outcome"
     },
