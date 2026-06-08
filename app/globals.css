@@ -697,12 +697,29 @@ th {
 
 .tableau-main {
   display: grid;
-  gap: 10px;
+  gap: 8px;
+}
+
+.tableau-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: capitalize;
+}
+
+.tableau-meta time {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .tableau-fixture {
   display: grid;
-  grid-template-columns: 42px minmax(120px, 1fr) 70px minmax(120px, 1fr);
+  grid-template-columns: minmax(120px, 1fr) 70px minmax(120px, 1fr);
   align-items: center;
   gap: 10px;
 }

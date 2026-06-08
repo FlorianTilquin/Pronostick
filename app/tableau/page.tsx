@@ -3,6 +3,17 @@ import { TeamName } from "@/components/TeamName";
 import { requireUser } from "@/lib/auth";
 import { predictionsByMatchForUserVisibility } from "@/lib/scoring";
 
+function formatKickoff(value: string) {
+  return new Intl.DateTimeFormat("fr-FR", {
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    month: "short",
+    timeZone: "Europe/Paris",
+    weekday: "short"
+  }).format(new Date(value));
+}
+
 export default async function TableauPage() {
   const user = await requireUser();
   const rows = predictionsByMatchForUserVisibility(user);
@@ -29,8 +40,11 @@ export default async function TableauPage() {
                   .map(({ match, market, predictions }) => (
                     <article className="tableau-match" key={match.id}>
                       <div className="tableau-main">
-                        <div className="tableau-fixture">
+                        <div className="tableau-meta">
                           <span className="match-no">#{match.match_no}</span>
+                          <time dateTime={match.kickoff_at}>{formatKickoff(match.kickoff_at)}</time>
+                        </div>
+                        <div className="tableau-fixture">
                           <TeamName team={match.home_team} />
                           <span className="score real-score">{match.home_score === null ? "à venir" : `${match.home_score}-${match.away_score}`}</span>
                           <TeamName team={match.away_team} align="right" />
