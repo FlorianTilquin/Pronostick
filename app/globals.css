@@ -229,6 +229,36 @@ input:disabled {
   cursor: not-allowed;
 }
 
+.view-switch {
+  display: inline-grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #e8eee6;
+  flex: 0 0 auto;
+}
+
+.view-switch-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 7px 11px;
+  border-radius: 6px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.view-switch-item.active {
+  background: white;
+  color: var(--ink);
+  box-shadow: 0 1px 4px rgb(24 33 27 / 12%);
+}
+
 .password-field {
   position: relative;
   min-width: 0;
@@ -758,6 +788,23 @@ th {
   gap: 8px;
 }
 
+.tableau-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.tableau-toolbar > span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
 .tableau-groups {
   display: grid;
   gap: 18px;
@@ -775,6 +822,10 @@ th {
 .tableau-list {
   display: grid;
   gap: 10px;
+}
+
+.tableau-list-chrono {
+  gap: 8px;
 }
 
 .tableau-match {
@@ -1068,6 +1119,24 @@ th {
   .topline {
     align-items: stretch;
     flex-direction: column;
+  }
+
+  .view-switch {
+    width: 100%;
+  }
+
+  .tableau-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin: -14px -14px 14px;
+    padding: 12px 14px;
+    background: rgb(255 255 255 / 96%);
+    border-bottom: 1px solid var(--line);
+    backdrop-filter: blur(8px);
   }
 
   .sidebar {
