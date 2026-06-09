@@ -1,7 +1,10 @@
 import { TimelineChart } from "@/components/TimelineChart";
 import { AppShell } from "@/components/AppShell";
+import { MdsProjectionChart } from "@/components/MdsProjectionChart";
+import { RidgeOddsChart } from "@/components/RidgeOddsChart";
 import { requireUser } from "@/lib/auth";
 import { getUsers } from "@/lib/db";
+import { predictionMdsProjection, predictionOddsDistribution } from "@/lib/graphStats";
 import { randomBaselineBandNames, randomBaselineTimeline, readRandomDistribution } from "@/lib/randomBaseline";
 import { timeline } from "@/lib/scoring";
 
@@ -15,6 +18,8 @@ export default async function GraphiquesPage() {
   const data = playerTimeline.map((row, index) => ({ ...row, ...(randomTimeline[index] ?? {}) }));
   const randomDistribution = readRandomDistribution();
   const chartNames = randomTimeline.length ? [...randomBaselineBandNames, ...names] : names;
+  const oddsDistribution = predictionOddsDistribution();
+  const mdsProjection = predictionMdsProjection();
 
   return (
     <AppShell user={user}>
@@ -27,6 +32,28 @@ export default async function GraphiquesPage() {
           </p>
         </div>
       </div>
+      <section className="graph-grid">
+        <article className="panel graph-panel">
+          <div className="section-title">
+            <div>
+              <h2>Audace des pronos</h2>
+              <p className="muted">Distribution des cotes bookmakers choisies par chaque joueur. XGBoost est inclus comme concurrent.</p>
+            </div>
+          </div>
+          <RidgeOddsChart rows={oddsDistribution} />
+          <p className="muted">Lecture : plus la bosse part à droite, plus le joueur choisit souvent des issues peu probables chez les books.</p>
+        </article>
+        <article className="panel graph-panel">
+          <div className="section-title">
+            <div>
+              <h2>Proximité des grilles</h2>
+              <p className="muted">Projection MDS des distances entre pronostics. La distance combine le résultat 1/N/2 et l’écart de score.</p>
+            </div>
+          </div>
+          <MdsProjectionChart points={mdsProjection} />
+          <p className="muted">Lecture : deux points proches ont des grilles similaires. Un gros point est un profil plus isolé du groupe.</p>
+        </article>
+      </section>
       <section className="panel">
         {data.length ? <TimelineChart data={data} names={chartNames} /> : <p className="muted">Aucun résultat saisi pour le moment.</p>}
         {randomDistribution ? (
