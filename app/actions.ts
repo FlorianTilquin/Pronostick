@@ -24,6 +24,27 @@ import { specialBets } from "@/lib/specials";
 
 const score = z.coerce.number().int().min(0).max(30);
 
+function persistPredictionForm(userId: number, formData: FormData) {
+  const matches = getMatches();
+  for (const match of matches) {
+    const homeRaw = formData.get(`home_${match.id}`);
+    const awayRaw = formData.get(`away_${match.id}`);
+    if (homeRaw === null || awayRaw === null || homeRaw === "" || awayRaw === "") continue;
+    const parsedHome = score.safeParse(homeRaw);
+    const parsedAway = score.safeParse(awayRaw);
+    if (parsedHome.success && parsedAway.success) {
+      upsertPrediction(userId, match.id, parsedHome.data, parsedAway.data);
+    }
+  }
+
+  for (const { category } of specialBets) {
+    const value = String(formData.get(category) ?? "").trim();
+    if (value) {
+      upsertSpecialPrediction(userId, category, value);
+    }
+  }
+}
+
 export async function loginAction(_: unknown, formData: FormData) {
   const username = String(formData.get("username") ?? "").trim();
   const password = String(formData.get("password") ?? "");
@@ -43,30 +64,14 @@ export async function logoutAction() {
 export async function savePredictionsAction(formData: FormData) {
   const user = await requireUser();
   if (hasSubmitted(user.id)) return;
-
-  const matches = getMatches();
-  for (const match of matches) {
-    const homeRaw = formData.get(`home_${match.id}`);
-    const awayRaw = formData.get(`away_${match.id}`);
-    if (homeRaw === null || awayRaw === null || homeRaw === "" || awayRaw === "") continue;
-    const parsedHome = score.safeParse(homeRaw);
-    const parsedAway = score.safeParse(awayRaw);
-    if (parsedHome.success && parsedAway.success) {
-      upsertPrediction(user.id, match.id, parsedHome.data, parsedAway.data);
-    }
-  }
-
-  for (const { category } of specialBets) {
-    const value = String(formData.get(category) ?? "").trim();
-    if (value) {
-      upsertSpecialPrediction(user.id, category, value);
-    }
-  }
+  persistPredictionForm(user.id, formData);
   revalidatePath("/predict");
 }
 
-export async function submitPredictionsAction() {
+export async function submitPredictionsAction(formData: FormData) {
   const user = await requireUser();
+  if (hasSubmitted(user.id)) return;
+  persistPredictionForm(user.id, formData);
   const totalMatches = getMatches().length;
   const count = getPredictions(user.id).length;
   const specials = getSpecialPredictions(user.id).length;

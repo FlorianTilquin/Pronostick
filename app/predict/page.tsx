@@ -14,7 +14,9 @@ export default async function PredictPage() {
   const specials = getSpecialPredictions(user.id);
   const specialMap = new Map(specials.map((item) => [item.category, item.value]));
   const completed = predictions.size;
-  const canSubmit = completed === matches.length && specials.length === specialBets.length && !submitted;
+  const missingMatches = Math.max(0, matches.length - completed);
+  const missingSpecials = Math.max(0, specialBets.length - specials.length);
+  const canSubmit = missingMatches === 0 && missingSpecials === 0 && !submitted;
   const groups = Array.from(new Set(matches.map((match) => match.group_name)));
 
   return (
@@ -100,8 +102,12 @@ export default async function PredictPage() {
               </section>
               <section className="panel validation-panel">
                 <h2>Validation</h2>
-                <p className="muted">Une fois soumis, tes pronostics sont verrouillés et tu peux voir ceux des autres.</p>
-                <button formAction={submitPredictionsAction} className="button warn" disabled={!canSubmit} type="submit">
+                <p className="muted">
+                  {canSubmit
+                    ? "Une fois soumis, tes pronostics sont verrouillés et tu peux voir ceux des autres."
+                    : `Il manque ${missingMatches} match(s) et ${missingSpecials} pari(s) bonus. Le bouton sauvegarde aussi avant de vérifier.`}
+                </p>
+                <button formAction={submitPredictionsAction} className="button warn" type="submit">
                   <CheckCircle2 size={18} />
                   Soumettre tous mes pronos
                 </button>

@@ -964,7 +964,7 @@ th {
 
   .content {
     padding: 16px;
-    padding-bottom: 96px;
+    padding-bottom: 132px;
     overflow-x: hidden;
   }
 
@@ -1097,33 +1097,37 @@ th {
     left: 12px;
     z-index: 20;
     width: auto;
-    gap: 0;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 8px;
   }
 
-  .sticky-actions .save-panel {
+  .sticky-actions .save-panel,
+  .sticky-actions .validation-panel {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: 1fr;
     align-items: center;
-    gap: 12px;
-    padding: 12px;
+    gap: 8px;
+    min-width: 0;
+    padding: 10px;
     box-shadow: 0 18px 60px rgb(16 37 27 / 22%);
   }
 
-  .sticky-actions .save-panel h2 {
+  .sticky-actions .save-panel h2,
+  .sticky-actions .validation-panel h2 {
     font-size: 16px;
   }
 
-  .sticky-actions .save-panel p {
+  .sticky-actions .save-panel p,
+  .sticky-actions .validation-panel p {
     display: none;
   }
 
-  .sticky-actions .save-panel .button {
+  .sticky-actions .save-panel .button,
+  .sticky-actions .validation-panel .button {
+    width: 100%;
     min-height: 42px;
-    white-space: nowrap;
-  }
-
-  .sticky-actions .validation-panel {
-    display: none;
+    padding: 9px 10px;
+    white-space: normal;
   }
 
   .prediction-side.has-sticky-actions {
