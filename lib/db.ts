@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import bcrypt from "bcryptjs";
 import { readConfig } from "@/lib/config";
+import { readMatchSchedule } from "@/lib/matchSchedule";
 import { readModelReport } from "@/lib/model";
 import type { Match, Prediction, Role, SpecialCategory, User } from "@/lib/types";
 
@@ -97,6 +98,29 @@ function syncSystemModel(store: Store) {
   return changed;
 }
 
+function syncMatchSchedule(store: Store) {
+  const schedule = readMatchSchedule();
+  if (!schedule) return false;
+
+  let changed = false;
+  for (const item of schedule.matches) {
+    const match = store.matches.find((candidate) => candidate.id === item.match_id);
+    if (!match) continue;
+    const sameFixture = match.home_team === item.home_team && match.away_team === item.away_team;
+    if (!sameFixture) continue;
+    if (match.kickoff_at !== item.kickoff_at) {
+      match.kickoff_at = item.kickoff_at;
+      changed = true;
+    }
+    if (match.venue !== item.venue) {
+      match.venue = item.venue;
+      changed = true;
+    }
+  }
+
+  return changed;
+}
+
 function initialStore(): Store {
   const cfg = readConfig();
   const users: DbUser[] = cfg.initialUsers.map((user, index) => ({
@@ -159,12 +183,16 @@ export function readStore(): Store {
   fs.mkdirSync(path.dirname(file), { recursive: true });
   if (!fs.existsSync(file)) {
     const created = initialStore();
+    syncMatchSchedule(created);
     syncSystemModel(created);
     writeStore(created);
     return created;
   }
   const store = JSON.parse(fs.readFileSync(file, "utf8")) as Store;
-  if (syncSystemModel(store)) {
+  const scheduleChanged = syncMatchSchedule(store);
+  const modelChanged = syncSystemModel(store);
+  const changed = scheduleChanged || modelChanged;
+  if (changed) {
     writeStore(store);
   }
   return store;

@@ -44,6 +44,12 @@ function oddsEligibleUserIds() {
   return new Set(getUsers().filter((user) => !user.is_system).map((user) => user.id));
 }
 
+function finishedMatchesChronological() {
+  return getMatches()
+    .filter((match) => match.status === "finished")
+    .sort((a, b) => Date.parse(a.kickoff_at) - Date.parse(b.kickoff_at) || a.match_no - b.match_no);
+}
+
 export function scorePrediction(prediction: Prediction, match: Match, allPredictions: Prediction[], eligibleOddsUsers = oddsEligibleUserIds()) {
   if (match.home_score === null || match.away_score === null || match.status !== "finished") {
     return { base: 0, odds: 0, total: 0, details: "En attente" };
@@ -108,7 +114,7 @@ export function leaderboard() {
 
 export function timeline() {
   const users = getUsers().filter((user) => user.role === "player");
-  const matches = getMatches().filter((match) => match.status === "finished");
+  const matches = finishedMatchesChronological();
   const predictions = getPredictions();
   const eligibleOddsUsers = oddsEligibleUserIds();
   const cumul = new Map<number, number>(users.map((user) => [user.id, 0]));
@@ -121,6 +127,37 @@ export function timeline() {
         cumul.set(user.id, (cumul.get(user.id) ?? 0) + scorePrediction(prediction, match, predictions, eligibleOddsUsers).total);
       }
       row[user.display_name] = cumul.get(user.id) ?? 0;
+    }
+    return row;
+  });
+}
+
+export function scoringBreakdownTimeline() {
+  const users = getUsers().filter((user) => user.role === "player");
+  const matches = finishedMatchesChronological();
+  const predictions = getPredictions();
+  const cumul = new Map(users.map((user) => [user.id, { outcome: 0, difference: 0, exact: 0 }]));
+
+  return matches.map((match) => {
+    const row: Record<string, number | string> = { match: `${match.match_no}. ${teamName(match.home_team)}-${teamName(match.away_team)}` };
+    for (const user of users) {
+      const prediction = predictions.find((item) => item.user_id === user.id && item.match_id === match.id);
+      const counts = cumul.get(user.id) ?? { outcome: 0, difference: 0, exact: 0 };
+      if (prediction && match.home_score !== null && match.away_score !== null) {
+        if (outcome(prediction.home_score, prediction.away_score) === outcome(match.home_score, match.away_score)) {
+          counts.outcome += 1;
+        }
+        if (prediction.home_score - prediction.away_score === match.home_score - match.away_score) {
+          counts.difference += 1;
+        }
+        if (prediction.home_score === match.home_score && prediction.away_score === match.away_score) {
+          counts.exact += 1;
+        }
+      }
+      cumul.set(user.id, counts);
+      row[`${user.display_name}__outcome`] = counts.outcome;
+      row[`${user.display_name}__difference`] = counts.difference;
+      row[`${user.display_name}__exact`] = counts.exact;
     }
     return row;
   });

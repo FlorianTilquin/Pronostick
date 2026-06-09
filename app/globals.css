@@ -315,6 +315,32 @@ input:disabled {
   min-width: 640px;
 }
 
+.breakdown-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.breakdown-card {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  padding: 12px;
+  border-radius: 8px;
+  background: #050807;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 8%);
+}
+
+.breakdown-card h3 {
+  color: #f8fafc;
+  font-size: 15px;
+}
+
+.breakdown-chart {
+  width: 100%;
+  height: 280px;
+}
+
 .chart-axis line,
 .mds-grid line,
 .mds-grid rect {
@@ -1243,6 +1269,10 @@ th {
 
   .analysis-chart-frame svg {
     min-width: 560px;
+  }
+
+  .breakdown-grid {
+    grid-template-columns: 1fr;
   }
 
   .model-fixture {

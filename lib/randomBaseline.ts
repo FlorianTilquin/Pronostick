@@ -62,7 +62,9 @@ export function randomBaselineTimeline() {
   const distribution = readRandomDistribution();
   if (!distribution) return [];
 
-  const matches = getMatches().filter((match) => match.status === "finished");
+  const matches = getMatches()
+    .filter((match) => match.status === "finished")
+    .sort((a, b) => Date.parse(a.kickoff_at) - Date.parse(b.kickoff_at) || a.match_no - b.match_no);
   const cacheKey = `${distribution.seed}:${distribution.simulations}:${matches.map((match) => `${match.id}:${match.home_score}-${match.away_score}`).join("|")}`;
   if (randomBaselineCache?.key === cacheKey) return randomBaselineCache.rows;
 

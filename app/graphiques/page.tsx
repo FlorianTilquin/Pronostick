@@ -2,11 +2,12 @@ import { TimelineChart } from "@/components/TimelineChart";
 import { AppShell } from "@/components/AppShell";
 import { MdsProjectionChart } from "@/components/MdsProjectionChart";
 import { RidgeOddsChart } from "@/components/RidgeOddsChart";
+import { ScoringBreakdownChart } from "@/components/ScoringBreakdownChart";
 import { requireUser } from "@/lib/auth";
 import { getUsers } from "@/lib/db";
 import { predictionMdsProjection, predictionOddsDistribution } from "@/lib/graphStats";
 import { randomBaselineBandNames, randomBaselineTimeline, readRandomDistribution } from "@/lib/randomBaseline";
-import { timeline } from "@/lib/scoring";
+import { scoringBreakdownTimeline, timeline } from "@/lib/scoring";
 
 export default async function GraphiquesPage() {
   const user = await requireUser();
@@ -20,6 +21,7 @@ export default async function GraphiquesPage() {
   const chartNames = randomTimeline.length ? [...randomBaselineBandNames, ...names] : names;
   const oddsDistribution = predictionOddsDistribution();
   const mdsProjection = predictionMdsProjection();
+  const breakdownTimeline = scoringBreakdownTimeline();
 
   return (
     <AppShell user={user}>
@@ -32,6 +34,30 @@ export default async function GraphiquesPage() {
           </p>
         </div>
       </div>
+      <section className="panel graph-panel">
+        <div className="section-title">
+          <div>
+            <h2>Course aux points</h2>
+            <p className="muted">Score cumulé après chaque résultat saisi, en ordre chronologique réel des matchs.</p>
+          </div>
+        </div>
+        {data.length ? <TimelineChart data={data} names={chartNames} /> : <p className="muted">Aucun résultat saisi pour le moment.</p>}
+        {randomDistribution ? (
+          <p className="muted">
+            Hasard : {randomDistribution.simulations.toLocaleString("fr-FR")} grilles tirées depuis {randomDistribution.source.matches.toLocaleString("fr-FR")} matchs de coupes internationales
+            ({randomDistribution.source.start} - {randomDistribution.source.end}), hors amicaux et qualifications. Ces grilles ne comptent pas comme joueurs.
+          </p>
+        ) : null}
+      </section>
+      <section className="panel graph-panel">
+        <div className="section-title">
+          <div>
+            <h2>D’où viennent les points</h2>
+            <p className="muted">Compteurs cumulés de bons résultats, bonnes différences de buts et scores exacts.</p>
+          </div>
+        </div>
+        {breakdownTimeline.length ? <ScoringBreakdownChart data={breakdownTimeline} names={names} /> : <p className="muted">Aucun résultat saisi pour le moment.</p>}
+      </section>
       <section className="graph-grid">
         <article className="panel graph-panel">
           <div className="section-title">
@@ -53,15 +79,6 @@ export default async function GraphiquesPage() {
           <MdsProjectionChart points={mdsProjection} />
           <p className="muted">Lecture : deux points proches ont des grilles similaires. Un gros point est un profil plus isolé du groupe.</p>
         </article>
-      </section>
-      <section className="panel">
-        {data.length ? <TimelineChart data={data} names={chartNames} /> : <p className="muted">Aucun résultat saisi pour le moment.</p>}
-        {randomDistribution ? (
-          <p className="muted">
-            Hasard : {randomDistribution.simulations.toLocaleString("fr-FR")} grilles tirées depuis {randomDistribution.source.matches.toLocaleString("fr-FR")} matchs de coupes internationales
-            ({randomDistribution.source.start} - {randomDistribution.source.end}), hors amicaux et qualifications. Ces grilles ne comptent pas comme joueurs.
-          </p>
-        ) : null}
       </section>
     </AppShell>
   );

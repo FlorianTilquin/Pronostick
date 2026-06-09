@@ -254,7 +254,52 @@ def generate_bookmaker_odds():
     (ROOT / "data" / "bookmaker_odds.json").write_text(json.dumps(output, ensure_ascii=False, indent=2) + "\n")
 
 
+def generate_match_schedule():
+    by_pair, _by_group_pair = load_matches_by_pair()
+    df = pd.read_csv(ODDS_CSVS[0])
+    df = df.dropna(subset=["home_team", "away_team", "commence_time"])
+    schedule = []
+    unmatched = []
+    seen = set()
+
+    for item in df.to_dict("records"):
+        home = normalize_team(str(item["home_team"]))
+        away = normalize_team(str(item["away_team"]))
+        match = by_pair.get((home, away))
+        if not match:
+            match = next((candidate for pair, candidate in by_pair.items() if frozenset(pair) == frozenset((home, away))), None)
+        if not match:
+            unmatched.append({"home_team": item["home_team"], "away_team": item["away_team"]})
+            continue
+        if match["id"] in seen:
+            continue
+        seen.add(match["id"])
+        schedule.append({
+            "match_id": match["id"],
+            "match_no": match["match_no"],
+            "group": match["group_name"],
+            "home_team": match["home_team"],
+            "away_team": match["away_team"],
+            "kickoff_at": item["commence_time"],
+            "venue": f"Groupe {match['group_name']} - horaire officiel",
+        })
+
+    if unmatched:
+        raise RuntimeError(f"Unmatched schedule fixtures: {unmatched}")
+    if len(schedule) != len(by_pair):
+        missing = sorted(set(match["id"] for match in by_pair.values()) - seen)
+        raise RuntimeError(f"Schedule covers {len(schedule)} fixtures, expected {len(by_pair)}. Missing ids: {missing}")
+
+    output = {
+        "source_file": str(ODDS_CSVS[0]),
+        "generated_on": df["fetched_at"].dropna().max() if "fetched_at" in df else None,
+        "matches": sorted(schedule, key=lambda item: item["match_no"]),
+    }
+    (ROOT / "data" / "match_schedule.json").write_text(json.dumps(output, ensure_ascii=False, indent=2) + "\n")
+
+
 if __name__ == "__main__":
     generate_model_asset()
     generate_random_distribution()
     generate_bookmaker_odds()
+    generate_match_schedule()
