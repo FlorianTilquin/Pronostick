@@ -63,7 +63,7 @@ export default async function GraphiquesPage() {
           <div className="section-title">
             <div>
               <h2>Audace des pronos</h2>
-              <p className="muted">Distribution des cotes bookmakers choisies par chaque joueur. XGBoost est inclus comme concurrent.</p>
+              <p className="muted">Distribution des cotes bookmakers choisies par chaque joueur, XGBoost et les books inclus comme concurrents.</p>
             </div>
           </div>
           <RidgeOddsChart rows={oddsDistribution} />

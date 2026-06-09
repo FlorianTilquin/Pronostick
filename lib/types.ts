@@ -6,7 +6,7 @@ export type User = {
   display_name: string;
   role: Role;
   is_system?: boolean;
-  system_type?: "model";
+  system_type?: "model" | "bookmaker";
 };
 
 export type Match = {

@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import bcrypt from "bcryptjs";
+import { bookmakerPickForMarket, readBookmakerOdds } from "@/lib/bookmakerOdds";
 import { readConfig } from "@/lib/config";
 import { readMatchSchedule } from "@/lib/matchSchedule";
 import { readModelReport } from "@/lib/model";
@@ -98,6 +99,81 @@ function syncSystemModel(store: Store) {
   return changed;
 }
 
+function syncSystemBookmaker(store: Store) {
+  const report = readBookmakerOdds();
+  if (!report) return false;
+
+  let changed = false;
+  let user = store.users.find((item) => item.username === "bookmakers");
+  if (!user) {
+    store.counters.users += 1;
+    user = {
+      id: store.counters.users,
+      username: "bookmakers",
+      display_name: "Bookmakers",
+      role: "player",
+      is_system: true,
+      system_type: "bookmaker",
+      password_hash: bcrypt.hashSync(`disabled-bookmakers-${report.generated_on}`, 10),
+      created_at: report.generated_on
+    };
+    store.users.push(user);
+    changed = true;
+  } else {
+    if (user.display_name !== "Bookmakers") {
+      user.display_name = "Bookmakers";
+      changed = true;
+    }
+    if (user.role !== "player") {
+      user.role = "player";
+      changed = true;
+    }
+    if (!user.is_system || user.system_type !== "bookmaker") {
+      user.is_system = true;
+      user.system_type = "bookmaker";
+      changed = true;
+    }
+  }
+
+  const coveredMatchIds = new Set(report.matches.map((market) => market.match_id));
+  const stalePredictionCount = store.predictions.length;
+  store.predictions = store.predictions.filter((prediction) => prediction.user_id !== user.id || coveredMatchIds.has(prediction.match_id));
+  if (store.predictions.length !== stalePredictionCount) {
+    changed = true;
+  }
+
+  for (const market of report.matches) {
+    const pick = bookmakerPickForMarket(market);
+    const existing = store.predictions.find((prediction) => prediction.user_id === user.id && prediction.match_id === market.match_id);
+    if (existing) {
+      if (existing.home_score !== pick.home_score || existing.away_score !== pick.away_score) {
+        existing.home_score = pick.home_score;
+        existing.away_score = pick.away_score;
+        existing.updated_at = report.generated_on;
+        changed = true;
+      }
+    } else {
+      store.counters.predictions += 1;
+      store.predictions.push({
+        id: store.counters.predictions,
+        user_id: user.id,
+        match_id: market.match_id,
+        home_score: pick.home_score,
+        away_score: pick.away_score,
+        updated_at: report.generated_on
+      });
+      changed = true;
+    }
+  }
+
+  if (!store.submissions.some((item) => item.user_id === user.id)) {
+    store.submissions.push({ user_id: user.id, submitted_at: report.generated_on });
+    changed = true;
+  }
+
+  return changed;
+}
+
 function syncMatchSchedule(store: Store) {
   const schedule = readMatchSchedule();
   if (!schedule) return false;
@@ -185,13 +261,15 @@ export function readStore(): Store {
     const created = initialStore();
     syncMatchSchedule(created);
     syncSystemModel(created);
+    syncSystemBookmaker(created);
     writeStore(created);
     return created;
   }
   const store = JSON.parse(fs.readFileSync(file, "utf8")) as Store;
   const scheduleChanged = syncMatchSchedule(store);
   const modelChanged = syncSystemModel(store);
-  const changed = scheduleChanged || modelChanged;
+  const bookmakerChanged = syncSystemBookmaker(store);
+  const changed = scheduleChanged || modelChanged || bookmakerChanged;
   if (changed) {
     writeStore(store);
   }

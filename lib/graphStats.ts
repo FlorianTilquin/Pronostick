@@ -30,10 +30,24 @@ function oddsForPrediction(prediction: Prediction, market: ReturnType<typeof boo
   return market.draw_odds;
 }
 
+function signedRoot(value: number) {
+  return Math.sign(value) * Math.sqrt(Math.abs(value));
+}
+
 function perMatchDistance(a: Prediction, b: Prediction) {
-  const outcomePenalty = predictionOutcome(a) === predictionOutcome(b) ? 0 : 1;
-  const scoreDistance = Math.min(6, Math.abs(a.home_score - b.home_score) + Math.abs(a.away_score - b.away_score)) / 6;
-  return 0.68 * outcomePenalty + 0.32 * scoreDistance;
+  const alpha = 1;
+  const beta = 0.5;
+  const gamma = 1;
+  const marginA = a.home_score - a.away_score;
+  const marginB = b.home_score - b.away_score;
+  const totalA = a.home_score + a.away_score;
+  const totalB = b.home_score + b.away_score;
+  const marginGap = signedRoot(marginA) - signedRoot(marginB);
+  const totalGap = Math.sqrt(totalA) - Math.sqrt(totalB);
+  const continuous = Math.sqrt(alpha * marginGap ** 2 + beta * totalGap ** 2);
+  const outcomeJump = predictionOutcome(a) === predictionOutcome(b) ? 0 : gamma;
+
+  return continuous + outcomeJump;
 }
 
 function pairDistance(a: Prediction[], b: Prediction[]) {
