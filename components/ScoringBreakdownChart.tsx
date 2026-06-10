@@ -29,7 +29,7 @@ export function ScoringBreakdownChart({ data, names }: { data: BreakdownRow[]; n
                   formatter={(value, name) => [`${value}`, String(name).replace(`__${metric.key}`, "")]}
                   labelFormatter={(label) => String(label)}
                 />
-                <Legend align="left" iconType="circle" verticalAlign="top" wrapperStyle={{ color: "#f8fafc", fontSize: 12, fontWeight: 800, paddingBottom: 8 }} />
+                <Legend align="center" iconType="circle" verticalAlign="top" wrapperStyle={{ color: "#f8fafc", fontSize: 12, fontWeight: 800, paddingBottom: 8 }} />
                 {names.map((name, index) => (
                   <Line
                     dataKey={`${name}__${metric.key}`}

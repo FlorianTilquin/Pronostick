@@ -5,29 +5,38 @@ import { LogIn } from "lucide-react";
 import { loginAction } from "@/app/actions";
 import { PasswordInput } from "@/components/PasswordInput";
 
+// Images servies en local (public/legacy) : pas de dependance a des hotes externes.
 const legacyPhotos = [
   {
     year: "2010",
     title: "Le bus de Knysna",
-    src: "https://www.sportbuzzbusiness.fr/wp-content/uploads/2014/05/adidas-d%C3%A9truit-bus-coupe-du-monde-2010-afrique-du-sud.jpg",
+    src: "/legacy/knysna-2010.jpg",
+    width: 874,
+    height: 420,
     credit: "SportBuzzBusiness / adidas"
   },
   {
     year: "1998",
     title: "Le soir ou tout commence",
-    src: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Tribune_pr%C3%A9sidentielle_finale_France_Br%C3%A9sil_football_12_juillet_1998.jpg?width=900",
+    src: "/legacy/finale-1998.jpg",
+    width: 960,
+    height: 648,
     credit: "Archives nationales / Wikimedia Commons"
   },
   {
     year: "2006",
     title: "Zidane et Thuram, Berlin",
-    src: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Italy_vs_France_-_FIFA_World_Cup_2006_final_-_Lilian_Thuram_and_Zinedine_Zidane.jpg?width=900",
+    src: "/legacy/berlin-2006.jpg",
+    width: 960,
+    height: 893,
     credit: "David Ruddell / CC BY 2.0"
   },
   {
     year: "2018",
     title: "La deuxieme etoile",
-    src: "https://commons.wikimedia.org/wiki/Special:Redirect/file/France_champion_of_the_Football_World_Cup_Russia_2018.jpg?width=900",
+    src: "/legacy/moscou-2018.jpg",
+    width: 960,
+    height: 592,
     credit: "Kremlin.ru / CC BY 4.0"
   }
 ];
@@ -63,7 +72,7 @@ export default function LoginPage() {
         <div className="legacy-strip">
           {legacyPhotos.map((photo) => (
             <figure className="legacy-photo" key={photo.year}>
-              <img src={photo.src} alt={photo.title} />
+              <img src={photo.src} alt={photo.title} width={photo.width} height={photo.height} loading="lazy" />
               <figcaption>
                 <strong>{photo.year}</strong>
                 <span>{photo.title}</span>

@@ -32,146 +32,120 @@ function now() {
   return new Date().toISOString();
 }
 
-function syncSystemModel(store: Store) {
-  const model = readModelReport();
-  if (!model) return false;
+type SystemSync = {
+  username: string;
+  display_name: string;
+  system_type: NonNullable<User["system_type"]>;
+  generated_on: string;
+  predictions: Array<{ match_id: number; home_score: number; away_score: number }>;
+  // Supprime les pronostics du compte systeme qui ne sont plus couverts par la source.
+  removeStale?: boolean;
+};
 
+function syncSystemUser(store: Store, sync: SystemSync) {
   let changed = false;
-  let user = store.users.find((item) => item.username === model.username);
+  let user = store.users.find((item) => item.username === sync.username);
   if (!user) {
     store.counters.users += 1;
     user = {
       id: store.counters.users,
-      username: model.username,
-      display_name: model.display_name,
+      username: sync.username,
+      display_name: sync.display_name,
       role: "player",
       is_system: true,
-      system_type: "model",
-      password_hash: bcrypt.hashSync(`disabled-${model.username}-${model.metadata.generated_on}`, 10),
-      created_at: model.metadata.generated_on
+      system_type: sync.system_type,
+      password_hash: bcrypt.hashSync(`disabled-${sync.username}-${sync.generated_on}`, 10),
+      created_at: sync.generated_on
     };
     store.users.push(user);
     changed = true;
   } else {
-    if (user.display_name !== model.display_name) {
-      user.display_name = model.display_name;
+    if (user.display_name !== sync.display_name) {
+      user.display_name = sync.display_name;
       changed = true;
     }
     if (user.role !== "player") {
       user.role = "player";
       changed = true;
     }
-    if (!user.is_system || user.system_type !== "model") {
+    if (!user.is_system || user.system_type !== sync.system_type) {
       user.is_system = true;
-      user.system_type = "model";
+      user.system_type = sync.system_type;
+      changed = true;
+    }
+  }
+  const userId = user.id;
+
+  if (sync.removeStale) {
+    const coveredMatchIds = new Set(sync.predictions.map((item) => item.match_id));
+    const stalePredictionCount = store.predictions.length;
+    store.predictions = store.predictions.filter((prediction) => prediction.user_id !== userId || coveredMatchIds.has(prediction.match_id));
+    if (store.predictions.length !== stalePredictionCount) {
       changed = true;
     }
   }
 
-  for (const item of model.matches) {
-    const existing = store.predictions.find((prediction) => prediction.user_id === user.id && prediction.match_id === item.match_id);
+  for (const item of sync.predictions) {
+    const existing = store.predictions.find((prediction) => prediction.user_id === userId && prediction.match_id === item.match_id);
     if (existing) {
-      if (existing.home_score !== item.prediction_home_score || existing.away_score !== item.prediction_away_score) {
-        existing.home_score = item.prediction_home_score;
-        existing.away_score = item.prediction_away_score;
-        existing.updated_at = model.metadata.generated_on;
+      if (existing.home_score !== item.home_score || existing.away_score !== item.away_score) {
+        existing.home_score = item.home_score;
+        existing.away_score = item.away_score;
+        existing.updated_at = sync.generated_on;
         changed = true;
       }
     } else {
       store.counters.predictions += 1;
       store.predictions.push({
         id: store.counters.predictions,
-        user_id: user.id,
+        user_id: userId,
         match_id: item.match_id,
-        home_score: item.prediction_home_score,
-        away_score: item.prediction_away_score,
-        updated_at: model.metadata.generated_on
+        home_score: item.home_score,
+        away_score: item.away_score,
+        updated_at: sync.generated_on
       });
       changed = true;
     }
   }
 
-  if (!store.submissions.some((item) => item.user_id === user.id)) {
-    store.submissions.push({ user_id: user.id, submitted_at: model.metadata.generated_on });
+  if (!store.submissions.some((item) => item.user_id === userId)) {
+    store.submissions.push({ user_id: userId, submitted_at: sync.generated_on });
     changed = true;
   }
 
   return changed;
 }
 
+function syncSystemModel(store: Store) {
+  const model = readModelReport();
+  if (!model) return false;
+  return syncSystemUser(store, {
+    username: model.username,
+    display_name: model.display_name,
+    system_type: "model",
+    generated_on: model.metadata.generated_on,
+    predictions: model.matches.map((item) => ({
+      match_id: item.match_id,
+      home_score: item.prediction_home_score,
+      away_score: item.prediction_away_score
+    }))
+  });
+}
+
 function syncSystemBookmaker(store: Store) {
   const report = readBookmakerOdds();
   if (!report) return false;
-
-  let changed = false;
-  let user = store.users.find((item) => item.username === "bookmakers");
-  if (!user) {
-    store.counters.users += 1;
-    user = {
-      id: store.counters.users,
-      username: "bookmakers",
-      display_name: "Bookmakers",
-      role: "player",
-      is_system: true,
-      system_type: "bookmaker",
-      password_hash: bcrypt.hashSync(`disabled-bookmakers-${report.generated_on}`, 10),
-      created_at: report.generated_on
-    };
-    store.users.push(user);
-    changed = true;
-  } else {
-    if (user.display_name !== "Bookmakers") {
-      user.display_name = "Bookmakers";
-      changed = true;
-    }
-    if (user.role !== "player") {
-      user.role = "player";
-      changed = true;
-    }
-    if (!user.is_system || user.system_type !== "bookmaker") {
-      user.is_system = true;
-      user.system_type = "bookmaker";
-      changed = true;
-    }
-  }
-
-  const coveredMatchIds = new Set(report.matches.map((market) => market.match_id));
-  const stalePredictionCount = store.predictions.length;
-  store.predictions = store.predictions.filter((prediction) => prediction.user_id !== user.id || coveredMatchIds.has(prediction.match_id));
-  if (store.predictions.length !== stalePredictionCount) {
-    changed = true;
-  }
-
-  for (const market of report.matches) {
-    const pick = bookmakerPickForMarket(market);
-    const existing = store.predictions.find((prediction) => prediction.user_id === user.id && prediction.match_id === market.match_id);
-    if (existing) {
-      if (existing.home_score !== pick.home_score || existing.away_score !== pick.away_score) {
-        existing.home_score = pick.home_score;
-        existing.away_score = pick.away_score;
-        existing.updated_at = report.generated_on;
-        changed = true;
-      }
-    } else {
-      store.counters.predictions += 1;
-      store.predictions.push({
-        id: store.counters.predictions,
-        user_id: user.id,
-        match_id: market.match_id,
-        home_score: pick.home_score,
-        away_score: pick.away_score,
-        updated_at: report.generated_on
-      });
-      changed = true;
-    }
-  }
-
-  if (!store.submissions.some((item) => item.user_id === user.id)) {
-    store.submissions.push({ user_id: user.id, submitted_at: report.generated_on });
-    changed = true;
-  }
-
-  return changed;
+  return syncSystemUser(store, {
+    username: "bookmakers",
+    display_name: "Bookmakers",
+    system_type: "bookmaker",
+    generated_on: report.generated_on,
+    removeStale: true,
+    predictions: report.matches.map((market) => {
+      const pick = bookmakerPickForMarket(market);
+      return { match_id: market.match_id, home_score: pick.home_score, away_score: pick.away_score };
+    })
+  });
 }
 
 function syncMatchSchedule(store: Store) {

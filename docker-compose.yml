@@ -4,10 +4,13 @@ services:
     container_name: pronostick
     restart: unless-stopped
     ports:
-      - "3000:3000"
+      # Loopback uniquement : seul le reverse proxy / tunnel Cloudflare expose l'app.
+      # Si le proxy tourne dans un autre conteneur, mets les deux sur un meme
+      # reseau docker et supprime ce mapping de ports.
+      - "127.0.0.1:3000:3000"
+    # APP_URL, AUTH_SECRET et COOKIE_SECURE viennent de .env (non versionne).
+    env_file: .env
     environment:
-      APP_URL: "https://pronostick.example.com"
-      AUTH_SECRET: "change-me-before-deploying"
       STORE_PATH: "/app/data/pronostick.json"
     volumes:
       - ./data:/app/data

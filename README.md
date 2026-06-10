@@ -53,7 +53,11 @@ docker run -d \
   pronostick
 ```
 
-Quand l’app passe derrière Cloudflare en HTTPS, utilise `APP_URL=https://pronostick.tondomaine.com` et `COOKIE_SECURE=true`.
+Quand l’app passe derrière Cloudflare en HTTPS, utilise `APP_URL=https://pronostick.tondomaine.com` et `COOKIE_SECURE=true`, et ne publie plus le port sur le LAN : remplace `-p 3000:3000` par `-p 127.0.0.1:3000:3000` (ou mets l’app et le proxy sur un même réseau docker sans publier de port), sinon l’app reste joignable en HTTP direct via l’IP du NAS.
+
+Avec `docker compose`, copie d’abord `.env.example` en `.env` et renseigne `AUTH_SECRET` : le compose lit les secrets depuis `.env` (non versionné) et publie le port sur loopback uniquement.
+
+En production (`NODE_ENV=production`), l’app refuse de signer une session si `AUTH_SECRET` n’est pas défini — pas de secret par défaut silencieux. Les connexions sont limitées à 5 échecs par compte par tranche de 10 minutes.
 
 Le volume `/mnt/user/appdata/pronostick/data:/app/data` conserve les données et la config.
 

@@ -6,8 +6,14 @@ import { requireUser } from "@/lib/auth";
 import { getMatches, getPredictions, getSpecialPredictions, hasSubmitted } from "@/lib/db";
 import { specialBets } from "@/lib/specials";
 
-export default async function PredictPage() {
+type PredictPageProps = {
+  searchParams?: Promise<{ sauvegarde?: string }>;
+};
+
+export default async function PredictPage({ searchParams }: PredictPageProps) {
   const user = await requireUser();
+  const params = await searchParams;
+  const justSaved = params?.sauvegarde === "1";
   const matches = getMatches();
   const predictions = new Map(getPredictions(user.id).map((prediction) => [prediction.match_id, prediction]));
   const submitted = hasSubmitted(user.id);
@@ -99,6 +105,7 @@ export default async function PredictPage() {
                   <Save size={18} />
                   Sauvegarder
                 </button>
+                {justSaved ? <span className="save-confirm">Sauvegardé ✓</span> : null}
               </section>
               <section className="panel validation-panel">
                 <h2>Validation</h2>
@@ -107,7 +114,7 @@ export default async function PredictPage() {
                     ? "Une fois soumis, tes pronostics sont verrouillés et tu peux voir ceux des autres."
                     : `Il manque ${missingMatches} match(s) et ${missingSpecials} pari(s) bonus. Le bouton sauvegarde aussi avant de vérifier.`}
                 </p>
-                <button formAction={submitPredictionsAction} className="button warn" type="submit">
+                <button formAction={submitPredictionsAction} className="button warn" type="submit" disabled={!canSubmit}>
                   <CheckCircle2 size={18} />
                   Soumettre tous mes pronos
                 </button>

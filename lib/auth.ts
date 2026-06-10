@@ -7,7 +7,14 @@ import { getUserById } from "@/lib/db";
 const cookieName = "pronostick_session";
 
 function secret() {
-  return new TextEncoder().encode(process.env.AUTH_SECRET ?? "dev-secret-change-me");
+  const value = process.env.AUTH_SECRET;
+  if (!value) {
+    if (process.env.NODE_ENV === "production") {
+      throw new Error("AUTH_SECRET doit etre defini en production (variable d'environnement manquante).");
+    }
+    return new TextEncoder().encode("dev-secret-change-me");
+  }
+  return new TextEncoder().encode(value);
 }
 
 function secureCookie() {

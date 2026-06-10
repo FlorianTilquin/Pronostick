@@ -90,6 +90,11 @@ select {
   background: rgb(255 255 255 / 10%);
 }
 
+.nav a.active {
+  background: rgb(255 255 255 / 16%);
+  font-weight: 700;
+}
+
 .content {
   padding: 30px;
   overflow-x: auto;
@@ -227,6 +232,14 @@ h2 {
 input:disabled {
   opacity: 0.55;
   cursor: not-allowed;
+}
+
+.save-confirm {
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--green);
+  font-size: 13px;
+  font-weight: 800;
 }
 
 .view-switch {
@@ -1227,8 +1240,48 @@ th {
     backdrop-filter: blur(8px);
   }
 
+  /* Sidebar repliee en barre compacte : marque + nav horizontale scrollable. */
   .sidebar {
     position: static;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+  }
+
+  .brand strong {
+    font-size: 17px;
+  }
+
+  .brand span,
+  .userbox {
+    display: none;
+  }
+
+  .nav {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav form {
+    display: contents;
+  }
+
+  .nav a,
+  .nav button {
+    flex-shrink: 0;
+    padding: 8px 10px;
+    font-size: 13px;
+    white-space: nowrap;
   }
 
   .two,

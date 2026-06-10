@@ -20,6 +20,7 @@ import {
   upsertPrediction,
   upsertSpecialPrediction
 } from "@/lib/db";
+import { clearLoginFailures, loginBlockedMinutes, recordLoginFailure } from "@/lib/loginRateLimit";
 import { specialBets } from "@/lib/specials";
 
 const score = z.coerce.number().int().min(0).max(30);
@@ -48,10 +49,16 @@ function persistPredictionForm(userId: number, formData: FormData) {
 export async function loginAction(_: unknown, formData: FormData) {
   const username = String(formData.get("username") ?? "").trim();
   const password = String(formData.get("password") ?? "");
+  const blockedMinutes = loginBlockedMinutes(username);
+  if (blockedMinutes > 0) {
+    return { error: `Trop de tentatives. Réessaie dans ${blockedMinutes} min.` };
+  }
   const user = getUserByUsername(username);
   if (!user || user.is_system || !bcrypt.compareSync(password, user.password_hash)) {
+    recordLoginFailure(username);
     return { error: "Identifiants incorrects." };
   }
+  clearLoginFailures(username);
   await createSession(user);
   redirect("/predict");
 }
@@ -66,6 +73,7 @@ export async function savePredictionsAction(formData: FormData) {
   if (hasSubmitted(user.id)) return;
   persistPredictionForm(user.id, formData);
   revalidatePath("/predict");
+  redirect("/predict?sauvegarde=1");
 }
 
 export async function submitPredictionsAction(formData: FormData) {

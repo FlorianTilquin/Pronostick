@@ -17,8 +17,13 @@ export function MdsProjectionChart({ points }: { points: MdsPoint[] }) {
   const maxY = Math.max(...ys, 0.1);
   const xSpan = Math.max(0.001, maxX - minX);
   const ySpan = Math.max(0.001, maxY - minY);
-  const xFor = (x: number) => padding + ((x - minX) / xSpan) * (width - padding * 2);
-  const yFor = (y: number) => height - padding - ((y - minY) / ySpan) * (height - padding * 2);
+  // Meme echelle sur les deux axes : les distances MDS ne sont lisibles
+  // qu'a rapport d'aspect 1, sinon le second axe est artificiellement etire.
+  const scale = Math.min((width - padding * 2) / xSpan, (height - padding * 2) / ySpan);
+  const centerX = (minX + maxX) / 2;
+  const centerY = (minY + maxY) / 2;
+  const xFor = (x: number) => width / 2 + (x - centerX) * scale;
+  const yFor = (y: number) => height / 2 - (y - centerY) * scale;
   const maxDistance = Math.max(0.001, ...activePoints.map((point) => point.averageDistance));
 
   return (
@@ -34,15 +39,18 @@ export function MdsProjectionChart({ points }: { points: MdsPoint[] }) {
           const color = palette[index % palette.length];
           const x = xFor(point.x);
           const y = yFor(point.y);
+          const labelOnLeft = x > width - 150;
+          const labelX = labelOnLeft ? x - radius - 8 : x + radius + 8;
+          const labelAnchor = labelOnLeft ? "end" : "start";
 
           return (
             <g className="mds-point" key={point.name}>
               <circle cx={x} cy={y} fill={color} fillOpacity={0.2} r={radius + 8} />
               <circle cx={x} cy={y} fill={color} r={radius} />
-              <text x={x + radius + 8} y={y - 3}>
+              <text textAnchor={labelAnchor} x={labelX} y={y - 3}>
                 {point.name}
               </text>
-              <text className="mds-meta" x={x + radius + 8} y={y + 13}>
+              <text className="mds-meta" textAnchor={labelAnchor} x={labelX} y={y + 13}>
                 dist. moy. {point.averageDistance.toFixed(2)}
               </text>
             </g>

@@ -2,7 +2,7 @@
 
 import { Area, CartesianGrid, ComposedChart, Legend, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
-const colors = ["#34d399", "#60a5fa", "#fb7185", "#a78bfa", "#facc15", "#2dd4bf"];
+const colors = ["#34d399", "#60a5fa", "#fb7185", "#a78bfa", "#facc15", "#2dd4bf", "#f97316", "#c084fc"];
 const bandLabels = new Set(["Hasard 1%-99%", "Hasard 5%-95%"]);
 
 type TimelineRow = Record<string, number | string | [number, number]>;
