@@ -2,7 +2,9 @@ import Link from "next/link";
 import { AppShell } from "@/components/AppShell";
 import { TeamName } from "@/components/TeamName";
 import { requireUser } from "@/lib/auth";
+import { getSpecialPredictions, getSubmittedUserIds, getUsers } from "@/lib/db";
 import { predictionsByMatchForUserVisibility } from "@/lib/scoring";
+import { specialBets } from "@/lib/specials";
 
 function formatKickoff(value: string) {
   return new Intl.DateTimeFormat("fr-FR", {
@@ -27,6 +29,13 @@ export default async function TableauPage({ searchParams }: TableauPageProps) {
   const groups = Array.from(new Set(rows.map((row) => row.match.group_name)));
   const players = rows[0]?.predictions.map(({ user: player }) => player) ?? [];
   const chronologicalRows = [...rows].sort((a, b) => Date.parse(a.match.kickoff_at) - Date.parse(b.match.kickoff_at) || a.match.match_no - b.match.match_no);
+  const submitted = getSubmittedUserIds();
+  const canSeeSpecials = user.role === "admin" || submitted.has(user.id);
+  const specialPlayers = getUsers().filter((player) => player.role === "player" && !player.is_system);
+  const specialRows = specialPlayers.map((player) => {
+    const predictions = new Map(getSpecialPredictions(player.id).map((prediction) => [prediction.category, prediction.value]));
+    return { player, predictions, submitted: submitted.has(player.id) };
+  });
 
   const renderMatch = ({ match, market, bookmakerMarket, predictions }: (typeof rows)[number]) => (
     <article className="tableau-match" key={match.id}>
@@ -110,6 +119,40 @@ export default async function TableauPage({ searchParams }: TableauPageProps) {
                 <div className="tableau-list">{rows.filter(({ match }) => match.group_name === group).map(renderMatch)}</div>
               </section>
             ))}
+          </div>
+        )}
+      </section>
+      <section className="panel bonus-board">
+        <div className="section-title">
+          <div>
+            <h2>Paris bonus</h2>
+            <p className="muted">Les bonus se dévoilent avec les grilles validées.</p>
+          </div>
+        </div>
+        {canSeeSpecials ? (
+          <div className="bonus-grid">
+            {specialRows.map(({ player, predictions, submitted: playerSubmitted }) => (
+              <article className={playerSubmitted ? "bonus-card" : "bonus-card muted-card"} key={player.id}>
+                <div className="bonus-card-head">
+                  <strong>{player.display_name}</strong>
+                  <span>{playerSubmitted ? "Validé" : "En attente"}</span>
+                </div>
+                <dl className="bonus-list">
+                  {specialBets.map((bet) => (
+                    <div className="bonus-item" key={bet.category}>
+                      <dt>{bet.label}</dt>
+                      <dd>{playerSubmitted ? predictions.get(bet.category) || "Non rempli" : "Masqué"}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className="locked-panel compact-locked">
+            <h3>Encore caché</h3>
+            <p className="muted">Soumets tous tes pronostics et tes paris bonus pour voir ceux des autres.</p>
+            <Link className="button secondary" href="/predict">Retour aux pronostics</Link>
           </div>
         )}
       </section>

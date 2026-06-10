@@ -965,6 +965,94 @@ th {
   font-size: 15px;
 }
 
+.bonus-board {
+  margin-top: 18px;
+}
+
+.bonus-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.bonus-card {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfdfb;
+}
+
+.bonus-card.muted-card {
+  background: #f4f7f5;
+}
+
+.bonus-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.bonus-card-head strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bonus-card-head span {
+  flex: 0 0 auto;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #eaf4ec;
+  color: #0e6245;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.muted-card .bonus-card-head span {
+  background: #e8eee6;
+  color: var(--muted);
+}
+
+.bonus-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.bonus-item {
+  display: grid;
+  gap: 3px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+.bonus-item dt {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.bonus-item dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.compact-locked {
+  max-width: none;
+  padding: 14px;
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  background: #fbfdfb;
+}
+
 .score-insights {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
