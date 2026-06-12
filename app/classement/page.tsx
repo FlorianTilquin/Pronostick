@@ -23,6 +23,17 @@ export default async function ClassementPage() {
   const finished = getMatches().filter((match) => match.status === "finished").length;
   const impact = matchImpactStats();
   const streaks = outcomeStreaks();
+  const topStreak = (key: "best" | "current") => {
+    const max = Math.max(...streaks.map((row) => row[key]), 0);
+    if (max < 2) return null;
+    const names = streaks
+      .filter((row) => row[key] === max)
+      .map((row) => row.user.display_name)
+      .join(", ");
+    return { names, length: max };
+  };
+  const bestStreak = topStreak("best");
+  const currentStreak = topStreak("current");
 
   return (
     <AppShell user={user}>
@@ -70,20 +81,23 @@ export default async function ClassementPage() {
         <section className="score-insights">
           <div className="panel">
             <h2>Séries de bons pronos</h2>
-            <p className="muted">Bon prono = bon résultat (1/N/2), matchs consécutifs.</p>
-            <div className="streak-list">
-              <div className="streak-row streak-head" aria-hidden="true">
-                <span>Joueur</span>
-                <span>Record</span>
-                <span>En cours</span>
-              </div>
-              {streaks.map(({ user: player, best, current }) => (
-                <div className="streak-row" key={player.id}>
-                  <strong>{player.display_name}</strong>
-                  <span className={`streak-value ${best > 0 ? "" : "zero"}`}>{best}</span>
-                  <span className={`streak-value ${current > 0 ? "active" : "zero"}`}>{current}</span>
-                </div>
-              ))}
+            <div className="insight-list">
+              <article className="insight-item">
+                <span className="muted">Record historique</span>
+                {bestStreak ? (
+                  <strong>{bestStreak.names} avec une série de {bestStreak.length} bons pronos</strong>
+                ) : (
+                  <p className="muted">Aucune série d’au moins 2 bons pronos pour l’instant.</p>
+                )}
+              </article>
+              <article className="insight-item">
+                <span className="muted">Record actuel</span>
+                {currentStreak ? (
+                  <strong>{currentStreak.names} avec {currentStreak.length} bons pronos</strong>
+                ) : (
+                  <p className="muted">Aucune série en cours.</p>
+                )}
+              </article>
             </div>
           </div>
           <div className="panel">
