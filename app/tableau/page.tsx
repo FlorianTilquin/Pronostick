@@ -27,7 +27,6 @@ export default async function TableauPage({ searchParams }: TableauPageProps) {
   const isChronological = params?.ordre === "chrono";
   const rows = predictionsByMatchForUserVisibility(user);
   const groups = Array.from(new Set(rows.map((row) => row.match.group_name)));
-  const players = rows[0]?.predictions.map(({ user: player }) => player) ?? [];
   const chronologicalRows = [...rows].sort((a, b) => Date.parse(a.match.kickoff_at) - Date.parse(b.match.kickoff_at) || a.match.match_no - b.match.match_no);
   const submitted = getSubmittedUserIds();
   const canSeeSpecials = user.role === "admin" || submitted.has(user.id);
@@ -77,7 +76,7 @@ export default async function TableauPage({ searchParams }: TableauPageProps) {
           </div>
         ) : null}
       </div>
-      <div className="tableau-predictions" style={{ ["--player-count" as string]: players.length }}>
+      <div className="tableau-predictions">
         {predictions.map(({ user: player, prediction, hidden }) => (
           <div className="prediction-cell" key={player.id}>
             <span>{player.display_name}</span>

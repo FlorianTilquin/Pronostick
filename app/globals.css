@@ -943,7 +943,9 @@ th {
   font-size: 10px;
 }
 
+/* La cote ne doit jamais etre tronquee : c'est le label qui cede la place. */
 .market-pill span {
+  flex: 0 0 auto;
   color: var(--green);
   font-size: 12px;
   font-weight: 900;
@@ -951,7 +953,7 @@ th {
 
 .tableau-predictions {
   display: grid;
-  grid-template-columns: repeat(var(--player-count), minmax(76px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(86px, 1fr));
   gap: 6px;
 }
 
@@ -1204,22 +1206,51 @@ th {
 
 @media (max-width: 900px) {
   .shell {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Sans min-width:0, la nav horizontale etire toute la page au-dela de l'ecran. */
+  .sidebar,
+  .content {
+    min-width: 0;
   }
 
   .content {
-    padding: 16px;
-    padding-bottom: 132px;
+    padding: 14px;
     overflow-x: hidden;
+  }
+
+  /* Reserve l'espace des actions flottantes uniquement sur la page pronostics. */
+  .content:has(.sticky-actions) {
+    padding-bottom: 132px;
   }
 
   .panel {
     padding: 14px;
   }
 
+  .card {
+    padding: 12px;
+  }
+
   .topline {
     align-items: stretch;
     flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-size: 27px;
+  }
+
+  h2 {
+    font-size: 19px;
+  }
+
+  .topline .muted,
+  .section-title .muted {
+    font-size: 13px;
   }
 
   .view-switch {
@@ -1230,14 +1261,15 @@ th {
     position: sticky;
     top: 0;
     z-index: 3;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 8px;
-    margin: -14px -14px 14px;
-    padding: 12px 14px;
+    margin: -14px -14px 12px;
+    padding: 8px 14px;
     background: rgb(255 255 255 / 96%);
     border-bottom: 1px solid var(--line);
     backdrop-filter: blur(8px);
+  }
+
+  .tableau-toolbar > span {
+    display: none;
   }
 
   /* Sidebar repliee en barre compacte : marque + nav horizontale scrollable. */
@@ -1285,9 +1317,18 @@ th {
   }
 
   .two,
-  .prediction-layout,
-  .stat-grid {
+  .prediction-layout {
     grid-template-columns: 1fr;
+  }
+
+  /* Podium en deux colonnes plutot qu'en pile. */
+  .stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .stat strong {
+    font-size: 24px;
   }
 
   .match-row {
@@ -1316,11 +1357,28 @@ th {
     padding: 12px 0;
   }
 
+  /* Saisie compacte : chaque equipe avec son champ de score sur la meme ligne. */
   .prediction-row {
+    grid-template-columns: minmax(0, 1fr) 52px;
     grid-template-areas:
-      "number number number number number"
-      "home home home away away"
-      ". homeScore separator awayScore .";
+      "number number"
+      "home homeScore"
+      "away awayScore";
+    row-gap: 6px;
+    padding: 10px 0;
+  }
+
+  .prediction-row .muted {
+    display: none;
+  }
+
+  .prediction-row input {
+    justify-self: end;
+  }
+
+  /* match-no est le premier span : first-of-type ne cible pas l'equipe a domicile. */
+  .prediction-row .result-team:not(.away) {
+    grid-area: home;
   }
 
   .result-row .match-no {
@@ -1437,15 +1495,54 @@ th {
     padding-top: 0;
   }
 
-  .tableau-match,
-  .tableau-fixture {
+  .tableau-groups {
+    gap: 14px;
+  }
+
+  .tableau-list,
+  .tableau-list-chrono {
+    gap: 8px;
+  }
+
+  .tableau-match {
     grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .tableau-main {
+    gap: 6px;
+  }
+
+  .tableau-meta {
+    font-size: 11px;
+  }
+
+  /* Match sur une seule ligne : domicile / score / exterieur. */
+  .tableau-fixture {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: 8px;
+    font-size: 14px;
+  }
+
+  .tableau-fixture .team-name.right {
+    justify-content: flex-end;
+  }
+
+  .real-score {
+    min-height: 28px;
+    padding: 2px 10px;
+    font-size: 13px;
+  }
+
+  .markets-stack {
+    gap: 4px;
   }
 
   .market-row {
     display: grid;
-    grid-template-columns: 42px repeat(3, minmax(0, 1fr));
-    gap: 5px;
+    grid-template-columns: 38px repeat(3, minmax(0, 1fr));
+    gap: 4px;
   }
 
   .market-label {
@@ -1455,18 +1552,33 @@ th {
 
   .market-pill {
     justify-content: center;
+    padding: 3px 5px;
   }
 
   .market-pill strong {
-    max-width: 54px;
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: none;
   }
 
-  .tableau-fixture .match-no {
-    order: -1;
-  }
-
+  /* Cellules pronos horizontales : nom a gauche, score a droite. */
   .tableau-predictions {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 5px;
+  }
+
+  .prediction-cell {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    min-height: 0;
+    padding: 5px 8px;
+  }
+
+  .prediction-cell strong {
+    flex: 0 0 auto;
+    font-size: 13px;
   }
 
   .score-insights {
@@ -1492,6 +1604,37 @@ th {
   .model-fixture .team-name.right {
     justify-content: flex-start;
   }
+
+  .bonus-card {
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .bonus-list {
+    gap: 6px;
+  }
+
+  .bonus-item {
+    padding-top: 6px;
+  }
+
+  .bonus-item dd {
+    font-size: 14px;
+  }
+
+  table {
+    min-width: 520px;
+  }
+
+  th,
+  td {
+    padding: 9px 8px;
+    font-size: 14px;
+  }
+
+  .insight-item {
+    padding: 10px;
+  }
 }
 
 @media (max-width: 520px) {
@@ -1508,18 +1651,14 @@ th {
   }
 
   .prediction-row {
+    grid-template-columns: minmax(0, 1fr) 52px;
     grid-template-areas:
-      "number number number number number"
-      "home home home home home"
-      ". homeScore separator awayScore ."
-      "away away away away away";
+      "number number"
+      "home homeScore"
+      "away awayScore";
   }
 
   .result-team.away {
     text-align: left;
-  }
-
-  .tableau-predictions {
-    grid-template-columns: 1fr;
   }
 }
