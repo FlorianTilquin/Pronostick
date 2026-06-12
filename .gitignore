@@ -5,3 +5,4 @@ data/*.sqlite-*
 .env
 npm-debug.log*
 *.tsbuildinfo
+data/top_scorers.json

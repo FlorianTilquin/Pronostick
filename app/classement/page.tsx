@@ -3,7 +3,13 @@ import { TeamName } from "@/components/TeamName";
 import { requireUser } from "@/lib/auth";
 import { getMatches } from "@/lib/db";
 import { maybeSyncResults } from "@/lib/resultsSync";
-import { leaderboard, matchImpactStats, outcomeStreaks } from "@/lib/scoring";
+import { leaderboard, matchImpactStats, outcomeStreaks, teamGoalStats } from "@/lib/scoring";
+import { teamName } from "@/lib/teams";
+import { maybeSyncTopScorers, readTopScorers } from "@/lib/tournamentStats";
+
+function perMatch(value: number) {
+  return value.toLocaleString("fr-FR", { maximumFractionDigits: 2 });
+}
 
 function MatchLabel({ match }: { match: { home_team: string; away_team: string; match_no: number } }) {
   return (
@@ -19,6 +25,7 @@ function MatchLabel({ match }: { match: { home_team: string; away_team: string; 
 export default async function ClassementPage() {
   const user = await requireUser();
   await maybeSyncResults();
+  await maybeSyncTopScorers();
   const rows = leaderboard();
   const finished = getMatches().filter((match) => match.status === "finished").length;
   const impact = matchImpactStats();
@@ -34,6 +41,10 @@ export default async function ClassementPage() {
   };
   const bestStreak = topStreak("best");
   const currentStreak = topStreak("current");
+  const goalStats = teamGoalStats();
+  const scorers = readTopScorers()?.scorers ?? [];
+  const topGoals = scorers[0]?.goals ?? 0;
+  const topScorers = topGoals > 0 ? scorers.filter((scorer) => scorer.goals === topGoals) : [];
 
   return (
     <AppShell user={user}>
@@ -96,6 +107,48 @@ export default async function ClassementPage() {
                   <strong>{currentStreak.names} avec {currentStreak.length} bons pronos</strong>
                 ) : (
                   <p className="muted">Aucune série en cours.</p>
+                )}
+              </article>
+            </div>
+          </div>
+          <div className="panel">
+            <h2>Stats du tournoi</h2>
+            <div className="insight-list">
+              <article className="insight-item">
+                <span className="muted">Meilleur buteur</span>
+                {topScorers.length ? (
+                  <strong>
+                    {topScorers.slice(0, 3).map((scorer) => `${scorer.name} (${teamName(scorer.team)})`).join(", ")}
+                    {topScorers.length > 3 ? ` et ${topScorers.length - 3} autres` : ""} — {topGoals} but{topGoals > 1 ? "s" : ""}
+                  </strong>
+                ) : (
+                  <p className="muted">Aucun but pour l’instant.</p>
+                )}
+              </article>
+              <article className="insight-item">
+                <span className="muted">Meilleure attaque</span>
+                {goalStats.attack.length ? (
+                  <span className="score-match-label">
+                    {goalStats.attack.map((row) => (
+                      <TeamName key={row.team} team={row.team} />
+                    ))}
+                    <strong>{perMatch(goalStats.attack[0].scoredPerMatch)} but(s)/match</strong>
+                  </span>
+                ) : (
+                  <p className="muted">Aucun match terminé.</p>
+                )}
+              </article>
+              <article className="insight-item">
+                <span className="muted">Meilleure défense</span>
+                {goalStats.defense.length ? (
+                  <span className="score-match-label">
+                    {goalStats.defense.map((row) => (
+                      <TeamName key={row.team} team={row.team} />
+                    ))}
+                    <strong>{perMatch(goalStats.defense[0].concededPerMatch)} encaissé(s)/match</strong>
+                  </span>
+                ) : (
+                  <p className="muted">Aucun match terminé.</p>
                 )}
               </article>
             </div>

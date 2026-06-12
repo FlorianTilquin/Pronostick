@@ -134,6 +134,34 @@ export function outcomeStreaks() {
     .sort((a, b) => b.best - a.best || b.current - a.current || a.user.display_name.localeCompare(b.user.display_name));
 }
 
+export function teamGoalStats() {
+  const stats = new Map<string, { team: string; played: number; scored: number; conceded: number }>();
+  const record = (team: string, scored: number, conceded: number) => {
+    const entry = stats.get(team) ?? { team, played: 0, scored: 0, conceded: 0 };
+    entry.played += 1;
+    entry.scored += scored;
+    entry.conceded += conceded;
+    stats.set(team, entry);
+  };
+  for (const match of finishedMatchesChronological()) {
+    if (match.home_score === null || match.away_score === null) continue;
+    record(match.home_team, match.home_score, match.away_score);
+    record(match.away_team, match.away_score, match.home_score);
+  }
+  const rows = [...stats.values()].map((entry) => ({
+    ...entry,
+    scoredPerMatch: entry.scored / entry.played,
+    concededPerMatch: entry.conceded / entry.played
+  }));
+  if (!rows.length) return { attack: [], defense: [] };
+  const bestAttack = Math.max(...rows.map((row) => row.scoredPerMatch));
+  const bestDefense = Math.min(...rows.map((row) => row.concededPerMatch));
+  return {
+    attack: rows.filter((row) => row.scoredPerMatch === bestAttack),
+    defense: rows.filter((row) => row.concededPerMatch === bestDefense)
+  };
+}
+
 export function timeline() {
   const users = getUsers().filter((user) => user.role === "player");
   const matches = finishedMatchesChronological();

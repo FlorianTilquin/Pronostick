@@ -21,7 +21,7 @@ const espnAliases: Record<string, string> = {
   usa: "united states",
 };
 
-function normalizeTeam(name: string) {
+export function normalizeTeam(name: string) {
   const flat = name
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
