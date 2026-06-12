@@ -9,7 +9,7 @@
       "home_team": "Mexico",
       "away_team": "South Africa",
       "kickoff_at": "2026-06-11T19:00:00Z",
-      "venue": "Groupe A - horaire officiel"
+      "venue": "Estadio Banorte, Mexico City (Mexique)"
     },
     {
       "match_id": 2,
@@ -18,7 +18,7 @@
       "home_team": "Korea Republic",
       "away_team": "Czechia",
       "kickoff_at": "2026-06-12T02:00:00Z",
-      "venue": "Groupe A - horaire officiel"
+      "venue": "Estadio Akron, Guadalajara (Mexique)"
     },
     {
       "match_id": 3,
@@ -27,7 +27,7 @@
       "home_team": "Mexico",
       "away_team": "Korea Republic",
       "kickoff_at": "2026-06-19T01:00:00Z",
-      "venue": "Groupe A - horaire officiel"
+      "venue": "Estadio Akron, Guadalajara (Mexique)"
     },
     {
       "match_id": 4,
@@ -36,7 +36,7 @@
       "home_team": "Czechia",
       "away_team": "South Africa",
       "kickoff_at": "2026-06-18T16:00:00Z",
-      "venue": "Groupe A - horaire officiel"
+      "venue": "Mercedes-Benz Stadium, Atlanta, Georgia (États-Unis)"
     },
     {
       "match_id": 5,
@@ -45,7 +45,7 @@
       "home_team": "Czechia",
       "away_team": "Mexico",
       "kickoff_at": "2026-06-25T01:00:00Z",
-      "venue": "Groupe A - horaire officiel"
+      "venue": "Estadio Banorte, Mexico City (Mexique)"
     },
     {
       "match_id": 6,
@@ -54,7 +54,7 @@
       "home_team": "South Africa",
       "away_team": "Korea Republic",
       "kickoff_at": "2026-06-25T01:00:00Z",
-      "venue": "Groupe A - horaire officiel"
+      "venue": "Estadio BBVA, Guadalupe (Mexique)"
     },
     {
       "match_id": 7,
@@ -63,7 +63,7 @@
       "home_team": "Canada",
       "away_team": "Switzerland",
       "kickoff_at": "2026-06-24T19:00:00Z",
-      "venue": "Groupe B - horaire officiel"
+      "venue": "BC Place, Vancouver (Canada)"
     },
     {
       "match_id": 8,
@@ -72,7 +72,7 @@
       "home_team": "Qatar",
       "away_team": "Bosnia and Herzegovina",
       "kickoff_at": "2026-06-24T19:00:00Z",
-      "venue": "Groupe B - horaire officiel"
+      "venue": "Lumen Field, Seattle, Washington (États-Unis)"
     },
     {
       "match_id": 9,
@@ -81,7 +81,7 @@
       "home_team": "Canada",
       "away_team": "Qatar",
       "kickoff_at": "2026-06-18T22:00:00Z",
-      "venue": "Groupe B - horaire officiel"
+      "venue": "BC Place, Vancouver (Canada)"
     },
     {
       "match_id": 10,
@@ -90,7 +90,7 @@
       "home_team": "Bosnia and Herzegovina",
       "away_team": "Switzerland",
       "kickoff_at": "2026-06-18T19:00:00Z",
-      "venue": "Groupe B - horaire officiel"
+      "venue": "SoFi Stadium, Inglewood, California (États-Unis)"
     },
     {
       "match_id": 11,
@@ -99,7 +99,7 @@
       "home_team": "Bosnia and Herzegovina",
       "away_team": "Canada",
       "kickoff_at": "2026-06-12T19:00:00Z",
-      "venue": "Groupe B - horaire officiel"
+      "venue": "BMO Field, Toronto (Canada)"
     },
     {
       "match_id": 12,
@@ -108,7 +108,7 @@
       "home_team": "Switzerland",
       "away_team": "Qatar",
       "kickoff_at": "2026-06-13T19:00:00Z",
-      "venue": "Groupe B - horaire officiel"
+      "venue": "Levi's Stadium, Santa Clara, California (États-Unis)"
     },
     {
       "match_id": 13,
@@ -117,7 +117,7 @@
       "home_team": "Brazil",
       "away_team": "Morocco",
       "kickoff_at": "2026-06-13T22:00:00Z",
-      "venue": "Groupe C - horaire officiel"
+      "venue": "MetLife Stadium, East Rutherford, New Jersey (États-Unis)"
     },
     {
       "match_id": 14,
@@ -126,7 +126,7 @@
       "home_team": "Haiti",
       "away_team": "Scotland",
       "kickoff_at": "2026-06-14T01:00:00Z",
-      "venue": "Groupe C - horaire officiel"
+      "venue": "Gillette Stadium, Foxborough, Massachusetts (États-Unis)"
     },
     {
       "match_id": 15,
@@ -135,7 +135,7 @@
       "home_team": "Brazil",
       "away_team": "Haiti",
       "kickoff_at": "2026-06-20T00:30:00Z",
-      "venue": "Groupe C - horaire officiel"
+      "venue": "Lincoln Financial Field, Philadelphia, Pennsylvania (États-Unis)"
     },
     {
       "match_id": 16,
@@ -144,7 +144,7 @@
       "home_team": "Scotland",
       "away_team": "Morocco",
       "kickoff_at": "2026-06-19T22:00:00Z",
-      "venue": "Groupe C - horaire officiel"
+      "venue": "Gillette Stadium, Foxborough, Massachusetts (États-Unis)"
     },
     {
       "match_id": 17,
@@ -153,7 +153,7 @@
       "home_team": "Scotland",
       "away_team": "Brazil",
       "kickoff_at": "2026-06-24T22:00:00Z",
-      "venue": "Groupe C - horaire officiel"
+      "venue": "Hard Rock Stadium, Miami Gardens, Florida (États-Unis)"
     },
     {
       "match_id": 18,
@@ -162,7 +162,7 @@
       "home_team": "Morocco",
       "away_team": "Haiti",
       "kickoff_at": "2026-06-24T22:00:00Z",
-      "venue": "Groupe C - horaire officiel"
+      "venue": "Mercedes-Benz Stadium, Atlanta, Georgia (États-Unis)"
     },
     {
       "match_id": 19,
@@ -171,7 +171,7 @@
       "home_team": "United States",
       "away_team": "Paraguay",
       "kickoff_at": "2026-06-13T01:00:00Z",
-      "venue": "Groupe D - horaire officiel"
+      "venue": "SoFi Stadium, Inglewood, California (États-Unis)"
     },
     {
       "match_id": 20,
@@ -180,7 +180,7 @@
       "home_team": "Australia",
       "away_team": "Turkiye",
       "kickoff_at": "2026-06-14T04:00:00Z",
-      "venue": "Groupe D - horaire officiel"
+      "venue": "BC Place, Vancouver (Canada)"
     },
     {
       "match_id": 21,
@@ -189,7 +189,7 @@
       "home_team": "United States",
       "away_team": "Australia",
       "kickoff_at": "2026-06-19T19:00:00Z",
-      "venue": "Groupe D - horaire officiel"
+      "venue": "Lumen Field, Seattle, Washington (États-Unis)"
     },
     {
       "match_id": 22,
@@ -198,7 +198,7 @@
       "home_team": "Turkiye",
       "away_team": "Paraguay",
       "kickoff_at": "2026-06-20T03:00:00Z",
-      "venue": "Groupe D - horaire officiel"
+      "venue": "Levi's Stadium, Santa Clara, California (États-Unis)"
     },
     {
       "match_id": 23,
@@ -207,7 +207,7 @@
       "home_team": "Turkiye",
       "away_team": "United States",
       "kickoff_at": "2026-06-26T02:00:00Z",
-      "venue": "Groupe D - horaire officiel"
+      "venue": "SoFi Stadium, Inglewood, California (États-Unis)"
     },
     {
       "match_id": 24,
@@ -216,7 +216,7 @@
       "home_team": "Paraguay",
       "away_team": "Australia",
       "kickoff_at": "2026-06-26T02:00:00Z",
-      "venue": "Groupe D - horaire officiel"
+      "venue": "Levi's Stadium, Santa Clara, California (États-Unis)"
     },
     {
       "match_id": 25,
@@ -225,7 +225,7 @@
       "home_team": "Germany",
       "away_team": "Curacao",
       "kickoff_at": "2026-06-14T17:00:00Z",
-      "venue": "Groupe E - horaire officiel"
+      "venue": "NRG Stadium, Houston, Texas (États-Unis)"
     },
     {
       "match_id": 26,
@@ -234,7 +234,7 @@
       "home_team": "Ivory Coast",
       "away_team": "Ecuador",
       "kickoff_at": "2026-06-14T23:00:00Z",
-      "venue": "Groupe E - horaire officiel"
+      "venue": "Lincoln Financial Field, Philadelphia, Pennsylvania (États-Unis)"
     },
     {
       "match_id": 27,
@@ -243,7 +243,7 @@
       "home_team": "Germany",
       "away_team": "Ivory Coast",
       "kickoff_at": "2026-06-20T20:00:00Z",
-      "venue": "Groupe E - horaire officiel"
+      "venue": "BMO Field, Toronto (Canada)"
     },
     {
       "match_id": 28,
@@ -252,7 +252,7 @@
       "home_team": "Ecuador",
       "away_team": "Curacao",
       "kickoff_at": "2026-06-21T00:00:00Z",
-      "venue": "Groupe E - horaire officiel"
+      "venue": "GEHA Field at Arrowhead Stadium, Kansas City, Missouri (États-Unis)"
     },
     {
       "match_id": 29,
@@ -261,7 +261,7 @@
       "home_team": "Ecuador",
       "away_team": "Germany",
       "kickoff_at": "2026-06-25T20:00:00Z",
-      "venue": "Groupe E - horaire officiel"
+      "venue": "MetLife Stadium, East Rutherford, New Jersey (États-Unis)"
     },
     {
       "match_id": 30,
@@ -270,7 +270,7 @@
       "home_team": "Curacao",
       "away_team": "Ivory Coast",
       "kickoff_at": "2026-06-25T20:00:00Z",
-      "venue": "Groupe E - horaire officiel"
+      "venue": "Lincoln Financial Field, Philadelphia, Pennsylvania (États-Unis)"
     },
     {
       "match_id": 31,
@@ -279,7 +279,7 @@
       "home_team": "Netherlands",
       "away_team": "Japan",
       "kickoff_at": "2026-06-14T20:00:00Z",
-      "venue": "Groupe F - horaire officiel"
+      "venue": "AT&T Stadium, Arlington, Texas (États-Unis)"
     },
     {
       "match_id": 32,
@@ -288,7 +288,7 @@
       "home_team": "Tunisia",
       "away_team": "Sweden",
       "kickoff_at": "2026-06-15T02:00:00Z",
-      "venue": "Groupe F - horaire officiel"
+      "venue": "Estadio BBVA, Guadalupe (Mexique)"
     },
     {
       "match_id": 33,
@@ -297,7 +297,7 @@
       "home_team": "Netherlands",
       "away_team": "Tunisia",
       "kickoff_at": "2026-06-25T23:00:00Z",
-      "venue": "Groupe F - horaire officiel"
+      "venue": "GEHA Field at Arrowhead Stadium, Kansas City, Missouri (États-Unis)"
     },
     {
       "match_id": 34,
@@ -306,7 +306,7 @@
       "home_team": "Sweden",
       "away_team": "Japan",
       "kickoff_at": "2026-06-25T23:00:00Z",
-      "venue": "Groupe F - horaire officiel"
+      "venue": "AT&T Stadium, Arlington, Texas (États-Unis)"
     },
     {
       "match_id": 35,
@@ -315,7 +315,7 @@
       "home_team": "Sweden",
       "away_team": "Netherlands",
       "kickoff_at": "2026-06-20T17:00:00Z",
-      "venue": "Groupe F - horaire officiel"
+      "venue": "NRG Stadium, Houston, Texas (États-Unis)"
     },
     {
       "match_id": 36,
@@ -324,7 +324,7 @@
       "home_team": "Japan",
       "away_team": "Tunisia",
       "kickoff_at": "2026-06-21T04:00:00Z",
-      "venue": "Groupe F - horaire officiel"
+      "venue": "Estadio BBVA, Guadalupe (Mexique)"
     },
     {
       "match_id": 37,
@@ -333,7 +333,7 @@
       "home_team": "Belgium",
       "away_team": "Egypt",
       "kickoff_at": "2026-06-15T19:00:00Z",
-      "venue": "Groupe G - horaire officiel"
+      "venue": "Lumen Field, Seattle, Washington (États-Unis)"
     },
     {
       "match_id": 38,
@@ -342,7 +342,7 @@
       "home_team": "Iran",
       "away_team": "New Zealand",
       "kickoff_at": "2026-06-16T01:00:00Z",
-      "venue": "Groupe G - horaire officiel"
+      "venue": "SoFi Stadium, Inglewood, California (États-Unis)"
     },
     {
       "match_id": 39,
@@ -351,7 +351,7 @@
       "home_team": "Belgium",
       "away_team": "Iran",
       "kickoff_at": "2026-06-21T19:00:00Z",
-      "venue": "Groupe G - horaire officiel"
+      "venue": "SoFi Stadium, Inglewood, California (États-Unis)"
     },
     {
       "match_id": 40,
@@ -360,7 +360,7 @@
       "home_team": "New Zealand",
       "away_team": "Egypt",
       "kickoff_at": "2026-06-22T01:00:00Z",
-      "venue": "Groupe G - horaire officiel"
+      "venue": "BC Place, Vancouver (Canada)"
     },
     {
       "match_id": 41,
@@ -369,7 +369,7 @@
       "home_team": "New Zealand",
       "away_team": "Belgium",
       "kickoff_at": "2026-06-27T03:00:00Z",
-      "venue": "Groupe G - horaire officiel"
+      "venue": "BC Place, Vancouver (Canada)"
     },
     {
       "match_id": 42,
@@ -378,7 +378,7 @@
       "home_team": "Egypt",
       "away_team": "Iran",
       "kickoff_at": "2026-06-27T03:00:00Z",
-      "venue": "Groupe G - horaire officiel"
+      "venue": "Lumen Field, Seattle, Washington (États-Unis)"
     },
     {
       "match_id": 43,
@@ -387,7 +387,7 @@
       "home_team": "Spain",
       "away_team": "Cape Verde",
       "kickoff_at": "2026-06-15T16:00:00Z",
-      "venue": "Groupe H - horaire officiel"
+      "venue": "Mercedes-Benz Stadium, Atlanta, Georgia (États-Unis)"
     },
     {
       "match_id": 44,
@@ -396,7 +396,7 @@
       "home_team": "Saudi Arabia",
       "away_team": "Uruguay",
       "kickoff_at": "2026-06-15T22:00:00Z",
-      "venue": "Groupe H - horaire officiel"
+      "venue": "Hard Rock Stadium, Miami Gardens, Florida (États-Unis)"
     },
     {
       "match_id": 45,
@@ -405,7 +405,7 @@
       "home_team": "Spain",
       "away_team": "Saudi Arabia",
       "kickoff_at": "2026-06-21T16:00:00Z",
-      "venue": "Groupe H - horaire officiel"
+      "venue": "Mercedes-Benz Stadium, Atlanta, Georgia (États-Unis)"
     },
     {
       "match_id": 46,
@@ -414,7 +414,7 @@
       "home_team": "Uruguay",
       "away_team": "Cape Verde",
       "kickoff_at": "2026-06-21T22:00:00Z",
-      "venue": "Groupe H - horaire officiel"
+      "venue": "Hard Rock Stadium, Miami Gardens, Florida (États-Unis)"
     },
     {
       "match_id": 47,
@@ -423,7 +423,7 @@
       "home_team": "Uruguay",
       "away_team": "Spain",
       "kickoff_at": "2026-06-27T00:00:00Z",
-      "venue": "Groupe H - horaire officiel"
+      "venue": "Estadio Akron, Guadalajara (Mexique)"
     },
     {
       "match_id": 48,
@@ -432,7 +432,7 @@
       "home_team": "Cape Verde",
       "away_team": "Saudi Arabia",
       "kickoff_at": "2026-06-27T00:00:00Z",
-      "venue": "Groupe H - horaire officiel"
+      "venue": "NRG Stadium, Houston, Texas (États-Unis)"
     },
     {
       "match_id": 49,
@@ -441,7 +441,7 @@
       "home_team": "France",
       "away_team": "Senegal",
       "kickoff_at": "2026-06-16T19:00:00Z",
-      "venue": "Groupe I - horaire officiel"
+      "venue": "MetLife Stadium, East Rutherford, New Jersey (États-Unis)"
     },
     {
       "match_id": 50,
@@ -450,7 +450,7 @@
       "home_team": "Norway",
       "away_team": "Iraq",
       "kickoff_at": "2026-06-16T22:00:00Z",
-      "venue": "Groupe I - horaire officiel"
+      "venue": "Gillette Stadium, Foxborough, Massachusetts (États-Unis)"
     },
     {
       "match_id": 51,
@@ -459,7 +459,7 @@
       "home_team": "France",
       "away_team": "Norway",
       "kickoff_at": "2026-06-26T19:00:00Z",
-      "venue": "Groupe I - horaire officiel"
+      "venue": "Gillette Stadium, Foxborough, Massachusetts (États-Unis)"
     },
     {
       "match_id": 52,
@@ -468,7 +468,7 @@
       "home_team": "Iraq",
       "away_team": "Senegal",
       "kickoff_at": "2026-06-26T19:00:00Z",
-      "venue": "Groupe I - horaire officiel"
+      "venue": "BMO Field, Toronto (Canada)"
     },
     {
       "match_id": 53,
@@ -477,7 +477,7 @@
       "home_team": "Iraq",
       "away_team": "France",
       "kickoff_at": "2026-06-22T21:00:00Z",
-      "venue": "Groupe I - horaire officiel"
+      "venue": "Lincoln Financial Field, Philadelphia, Pennsylvania (États-Unis)"
     },
     {
       "match_id": 54,
@@ -486,7 +486,7 @@
       "home_team": "Senegal",
       "away_team": "Norway",
       "kickoff_at": "2026-06-23T00:00:00Z",
-      "venue": "Groupe I - horaire officiel"
+      "venue": "MetLife Stadium, East Rutherford, New Jersey (États-Unis)"
     },
     {
       "match_id": 55,
@@ -495,7 +495,7 @@
       "home_team": "Argentina",
       "away_team": "Algeria",
       "kickoff_at": "2026-06-17T01:00:00Z",
-      "venue": "Groupe J - horaire officiel"
+      "venue": "GEHA Field at Arrowhead Stadium, Kansas City, Missouri (États-Unis)"
     },
     {
       "match_id": 56,
@@ -504,7 +504,7 @@
       "home_team": "Austria",
       "away_team": "Jordan",
       "kickoff_at": "2026-06-17T04:00:00Z",
-      "venue": "Groupe J - horaire officiel"
+      "venue": "Levi's Stadium, Santa Clara, California (États-Unis)"
     },
     {
       "match_id": 57,
@@ -513,7 +513,7 @@
       "home_team": "Argentina",
       "away_team": "Austria",
       "kickoff_at": "2026-06-22T17:00:00Z",
-      "venue": "Groupe J - horaire officiel"
+      "venue": "AT&T Stadium, Arlington, Texas (États-Unis)"
     },
     {
       "match_id": 58,
@@ -522,7 +522,7 @@
       "home_team": "Jordan",
       "away_team": "Algeria",
       "kickoff_at": "2026-06-23T03:00:00Z",
-      "venue": "Groupe J - horaire officiel"
+      "venue": "Levi's Stadium, Santa Clara, California (États-Unis)"
     },
     {
       "match_id": 59,
@@ -531,7 +531,7 @@
       "home_team": "Jordan",
       "away_team": "Argentina",
       "kickoff_at": "2026-06-28T02:00:00Z",
-      "venue": "Groupe J - horaire officiel"
+      "venue": "AT&T Stadium, Arlington, Texas (États-Unis)"
     },
     {
       "match_id": 60,
@@ -540,7 +540,7 @@
       "home_team": "Algeria",
       "away_team": "Austria",
       "kickoff_at": "2026-06-28T02:00:00Z",
-      "venue": "Groupe J - horaire officiel"
+      "venue": "GEHA Field at Arrowhead Stadium, Kansas City, Missouri (États-Unis)"
     },
     {
       "match_id": 61,
@@ -549,7 +549,7 @@
       "home_team": "Portugal",
       "away_team": "Uzbekistan",
       "kickoff_at": "2026-06-23T17:00:00Z",
-      "venue": "Groupe K - horaire officiel"
+      "venue": "NRG Stadium, Houston, Texas (États-Unis)"
     },
     {
       "match_id": 62,
@@ -558,7 +558,7 @@
       "home_team": "Colombia",
       "away_team": "DR Congo",
       "kickoff_at": "2026-06-24T02:00:00Z",
-      "venue": "Groupe K - horaire officiel"
+      "venue": "Estadio Akron, Guadalajara (Mexique)"
     },
     {
       "match_id": 63,
@@ -567,7 +567,7 @@
       "home_team": "Portugal",
       "away_team": "Colombia",
       "kickoff_at": "2026-06-27T23:30:00Z",
-      "venue": "Groupe K - horaire officiel"
+      "venue": "Hard Rock Stadium, Miami Gardens, Florida (États-Unis)"
     },
     {
       "match_id": 64,
@@ -576,7 +576,7 @@
       "home_team": "DR Congo",
       "away_team": "Uzbekistan",
       "kickoff_at": "2026-06-27T23:30:00Z",
-      "venue": "Groupe K - horaire officiel"
+      "venue": "Mercedes-Benz Stadium, Atlanta, Georgia (États-Unis)"
     },
     {
       "match_id": 65,
@@ -585,7 +585,7 @@
       "home_team": "DR Congo",
       "away_team": "Portugal",
       "kickoff_at": "2026-06-17T17:00:00Z",
-      "venue": "Groupe K - horaire officiel"
+      "venue": "NRG Stadium, Houston, Texas (États-Unis)"
     },
     {
       "match_id": 66,
@@ -594,7 +594,7 @@
       "home_team": "Uzbekistan",
       "away_team": "Colombia",
       "kickoff_at": "2026-06-18T02:00:00Z",
-      "venue": "Groupe K - horaire officiel"
+      "venue": "Estadio Banorte, Mexico City (Mexique)"
     },
     {
       "match_id": 67,
@@ -603,7 +603,7 @@
       "home_team": "England",
       "away_team": "Croatia",
       "kickoff_at": "2026-06-17T20:00:00Z",
-      "venue": "Groupe L - horaire officiel"
+      "venue": "AT&T Stadium, Arlington, Texas (États-Unis)"
     },
     {
       "match_id": 68,
@@ -612,7 +612,7 @@
       "home_team": "Ghana",
       "away_team": "Panama",
       "kickoff_at": "2026-06-17T23:00:00Z",
-      "venue": "Groupe L - horaire officiel"
+      "venue": "BMO Field, Toronto (Canada)"
     },
     {
       "match_id": 69,
@@ -621,7 +621,7 @@
       "home_team": "England",
       "away_team": "Ghana",
       "kickoff_at": "2026-06-23T20:00:00Z",
-      "venue": "Groupe L - horaire officiel"
+      "venue": "Gillette Stadium, Foxborough, Massachusetts (États-Unis)"
     },
     {
       "match_id": 70,
@@ -630,7 +630,7 @@
       "home_team": "Panama",
       "away_team": "Croatia",
       "kickoff_at": "2026-06-23T23:00:00Z",
-      "venue": "Groupe L - horaire officiel"
+      "venue": "BMO Field, Toronto (Canada)"
     },
     {
       "match_id": 71,
@@ -639,7 +639,7 @@
       "home_team": "Panama",
       "away_team": "England",
       "kickoff_at": "2026-06-27T21:00:00Z",
-      "venue": "Groupe L - horaire officiel"
+      "venue": "MetLife Stadium, East Rutherford, New Jersey (États-Unis)"
     },
     {
       "match_id": 72,
@@ -648,7 +648,7 @@
       "home_team": "Croatia",
       "away_team": "Ghana",
       "kickoff_at": "2026-06-27T21:00:00Z",
-      "venue": "Groupe L - horaire officiel"
+      "venue": "Lincoln Financial Field, Philadelphia, Pennsylvania (États-Unis)"
     }
   ]
 }

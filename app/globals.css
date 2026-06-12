@@ -874,6 +874,15 @@ th {
   white-space: nowrap;
 }
 
+.tableau-venue {
+  margin: -5px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .tableau-fixture {
   display: grid;
   grid-template-columns: minmax(120px, 1fr) 70px minmax(120px, 1fr);

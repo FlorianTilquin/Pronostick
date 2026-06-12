@@ -46,6 +46,7 @@ export default async function TableauPage({ searchParams }: TableauPageProps) {
           <span>Groupe {match.group_name}</span>
           <time dateTime={match.kickoff_at}>{formatKickoff(match.kickoff_at)}</time>
         </div>
+        <p className="tableau-venue">{match.venue}</p>
         <div className="tableau-fixture">
           <TeamName team={match.home_team} />
           <span className="score real-score">{match.home_score === null ? "à venir" : `${match.home_score}-${match.away_score}`}</span>
