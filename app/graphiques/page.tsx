@@ -4,6 +4,7 @@ import { MdsProjectionChart } from "@/components/MdsProjectionChart";
 import { RidgeOddsChart } from "@/components/RidgeOddsChart";
 import { ScoringBreakdownChart } from "@/components/ScoringBreakdownChart";
 import { requireUser } from "@/lib/auth";
+import { maybeSyncResults } from "@/lib/resultsSync";
 import { getUsers } from "@/lib/db";
 import { predictionMdsProjection, predictionOddsDistribution } from "@/lib/graphStats";
 import { randomBaselineBandNames, randomBaselineTimeline, readRandomDistribution } from "@/lib/randomBaseline";
@@ -11,6 +12,7 @@ import { scoringBreakdownTimeline, timeline } from "@/lib/scoring";
 
 export default async function GraphiquesPage() {
   const user = await requireUser();
+  await maybeSyncResults();
   const names = getUsers()
     .filter((item) => item.role === "player")
     .map((item) => item.display_name);

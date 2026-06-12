@@ -2,6 +2,7 @@ import { AppShell } from "@/components/AppShell";
 import { TeamName } from "@/components/TeamName";
 import { requireUser } from "@/lib/auth";
 import { getMatches } from "@/lib/db";
+import { maybeSyncResults } from "@/lib/resultsSync";
 import { leaderboard, matchImpactStats } from "@/lib/scoring";
 
 function MatchLabel({ match }: { match: { home_team: string; away_team: string; match_no: number } }) {
@@ -17,6 +18,7 @@ function MatchLabel({ match }: { match: { home_team: string; away_team: string; 
 
 export default async function ClassementPage() {
   const user = await requireUser();
+  await maybeSyncResults();
   const rows = leaderboard();
   const finished = getMatches().filter((match) => match.status === "finished").length;
   const impact = matchImpactStats();

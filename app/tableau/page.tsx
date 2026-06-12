@@ -3,6 +3,7 @@ import { AppShell } from "@/components/AppShell";
 import { TeamName } from "@/components/TeamName";
 import { requireUser } from "@/lib/auth";
 import { getSpecialPredictions, getSubmittedUserIds, getUsers } from "@/lib/db";
+import { maybeSyncResults } from "@/lib/resultsSync";
 import { predictionsByMatchForUserVisibility } from "@/lib/scoring";
 import { specialBets } from "@/lib/specials";
 
@@ -23,6 +24,7 @@ type TableauPageProps = {
 
 export default async function TableauPage({ searchParams }: TableauPageProps) {
   const user = await requireUser();
+  await maybeSyncResults();
   const params = await searchParams;
   const isChronological = params?.ordre === "chrono";
   const rows = predictionsByMatchForUserVisibility(user);
