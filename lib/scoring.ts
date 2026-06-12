@@ -112,6 +112,28 @@ export function leaderboard() {
   return rows;
 }
 
+export function outcomeStreaks() {
+  const users = getUsers();
+  const submitted = getSubmittedUserIds();
+  const matches = finishedMatchesChronological();
+  const predictions = getPredictions();
+  return users
+    .filter((user) => user.role === "player" || submitted.has(user.id))
+    .map((user) => {
+      let best = 0;
+      let current = 0;
+      for (const match of matches) {
+        if (match.home_score === null || match.away_score === null) continue;
+        const prediction = predictions.find((item) => item.user_id === user.id && item.match_id === match.id);
+        const hit = prediction && outcome(prediction.home_score, prediction.away_score) === outcome(match.home_score, match.away_score);
+        current = hit ? current + 1 : 0;
+        best = Math.max(best, current);
+      }
+      return { user, best, current };
+    })
+    .sort((a, b) => b.best - a.best || b.current - a.current || a.user.display_name.localeCompare(b.user.display_name));
+}
+
 export function timeline() {
   const users = getUsers().filter((user) => user.role === "player");
   const matches = finishedMatchesChronological();

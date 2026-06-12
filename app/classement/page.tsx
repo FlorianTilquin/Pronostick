@@ -3,7 +3,7 @@ import { TeamName } from "@/components/TeamName";
 import { requireUser } from "@/lib/auth";
 import { getMatches } from "@/lib/db";
 import { maybeSyncResults } from "@/lib/resultsSync";
-import { leaderboard, matchImpactStats } from "@/lib/scoring";
+import { leaderboard, matchImpactStats, outcomeStreaks } from "@/lib/scoring";
 
 function MatchLabel({ match }: { match: { home_team: string; away_team: string; match_no: number } }) {
   return (
@@ -22,6 +22,7 @@ export default async function ClassementPage() {
   const rows = leaderboard();
   const finished = getMatches().filter((match) => match.status === "finished").length;
   const impact = matchImpactStats();
+  const streaks = outcomeStreaks();
 
   return (
     <AppShell user={user}>
@@ -67,6 +68,24 @@ export default async function ClassementPage() {
       </section>
       {finished ? (
         <section className="score-insights">
+          <div className="panel">
+            <h2>Séries de bons pronos</h2>
+            <p className="muted">Bon prono = bon résultat (1/N/2), matchs consécutifs.</p>
+            <div className="streak-list">
+              <div className="streak-row streak-head" aria-hidden="true">
+                <span>Joueur</span>
+                <span>Record</span>
+                <span>En cours</span>
+              </div>
+              {streaks.map(({ user: player, best, current }) => (
+                <div className="streak-row" key={player.id}>
+                  <strong>{player.display_name}</strong>
+                  <span className={`streak-value ${best > 0 ? "" : "zero"}`}>{best}</span>
+                  <span className={`streak-value ${current > 0 ? "active" : "zero"}`}>{current}</span>
+                </div>
+              ))}
+            </div>
+          </div>
           <div className="panel">
             <h2>Tout le monde l’a vu</h2>
             <div className="insight-list">
