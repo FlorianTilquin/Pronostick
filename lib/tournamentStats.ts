@@ -8,9 +8,15 @@ import type { Match, User } from "@/lib/types";
 // Donnees agregees depuis le scoreboard public ESPN (sans cle) : meilleurs
 // buteurs et chronologie des buts de chaque match.
 const ESPN_SCOREBOARD = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard";
-const SYNC_COOLDOWN_MS = 30 * 60 * 1000;
 const FETCH_TIMEOUT_MS = 8000;
 const LATE_WINDOW_MINUTES = 10;
+// Garde-fou anti-rafale entre deux visites rapprochees.
+const SYNC_COOLDOWN_MS = 5 * 60 * 1000;
+// Delai apres le coup d'envoi a partir duquel un match est suppose termine
+// (90' + mi-temps + temps additionnel, large pour couvrir les prolongations).
+const MATCH_LIKELY_OVER_MS = 2 * 60 * 60 * 1000;
+// Au-dela, on cesse d'essayer de rattraper un match jamais capture.
+const CATCHUP_WINDOW_MS = 12 * 60 * 60 * 1000;
 
 let lastAttemptAt = 0;
 
@@ -209,17 +215,31 @@ function extractMatchEvents(events: EspnEvent[]): Record<string, MatchEventRecor
   return records;
 }
 
-// Rafraichit data/top_scorers.json et data/match_events.json depuis ESPN, au
-// plus toutes les 30 minutes et seulement une fois le tournoi commence.
-// N'echoue jamais (les erreurs reseau sont avalees).
+// Vrai s'il existe un match vraisemblablement termine mais pas encore capture
+// dans le feed, dans sa fenetre de rattrapage. En dehors de toute fenetre de
+// match (jours sans foot, apres le tournoi), renvoie false : aucune requete.
+function needsFeedSync(now: number) {
+  const captured = new Set(Object.keys(readMatchEvents()?.matches ?? {}));
+  return getMatches().some((match) => {
+    const kickoff = Date.parse(match.kickoff_at);
+    if (!Number.isFinite(kickoff)) return false;
+    const sinceKickoff = now - kickoff;
+    return sinceKickoff >= MATCH_LIKELY_OVER_MS && sinceKickoff <= CATCHUP_WINDOW_MS && !captured.has(String(match.id));
+  });
+}
+
+// Rafraichit data/top_scorers.json et data/match_events.json depuis ESPN.
+// Ne se declenche que pour rattraper un match recemment termine et pas encore
+// capture (typiquement une requete par match, ~2h apres son coup d'envoi),
+// throttle a 5 min entre deux essais. N'echoue jamais.
 export async function maybeSyncTournamentFeed() {
   try {
     const now = Date.now();
     if (now - lastAttemptAt < SYNC_COOLDOWN_MS) return;
-    const kickoffs = getMatches().map((match) => Date.parse(match.kickoff_at));
-    const firstKickoff = Math.min(...kickoffs);
-    if (!Number.isFinite(firstKickoff) || firstKickoff > now) return;
+    if (!needsFeedSync(now)) return;
     lastAttemptAt = now;
+
+    const firstKickoff = Math.min(...getMatches().map((match) => Date.parse(match.kickoff_at)));
 
     const range = `${utcDay(firstKickoff)}-${utcDay(now + 24 * 60 * 60 * 1000)}`;
     const response = await fetch(`${ESPN_SCOREBOARD}?dates=${range}`, {
