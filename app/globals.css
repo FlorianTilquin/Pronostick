@@ -325,6 +325,52 @@ input:disabled {
   font-size: 13px;
 }
 
+.chart-tip {
+  max-width: 240px;
+  padding: 7px 9px;
+  border-radius: 8px;
+  background: rgb(11 17 16 / 94%);
+  border: 1px solid rgb(255 255 255 / 18%);
+  box-shadow: 0 18px 50px rgb(0 0 0 / 30%);
+  color: #f8fafc;
+  font-size: 12px;
+}
+
+.chart-tip-label {
+  margin-bottom: 5px;
+  color: #9ca3af;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.chart-tip-grid {
+  display: grid;
+  gap: 2px 12px;
+}
+
+.chart-tip-item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 6px;
+}
+
+.chart-tip-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+}
+
+.chart-tip-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chart-tip-item strong {
+  font-variant-numeric: tabular-nums;
+}
+
 .chart-frame .recharts-legend-item-text {
   color: #f8fafc !important;
 }
@@ -820,33 +866,33 @@ th {
 
 .tableau-groups {
   display: grid;
-  gap: 18px;
+  gap: 14px;
 }
 
 .tableau-group {
   display: grid;
-  gap: 10px;
+  gap: 8px;
 }
 
 .tableau-group h2 {
-  font-size: 18px;
+  font-size: 17px;
 }
 
 .tableau-list {
   display: grid;
-  gap: 10px;
+  gap: 8px;
 }
 
 .tableau-list-chrono {
-  gap: 8px;
+  gap: 6px;
 }
 
 .tableau-match {
   display: grid;
-  grid-template-columns: minmax(320px, 0.9fr) minmax(460px, 1.35fr);
+  grid-template-columns: minmax(300px, 0.85fr) minmax(440px, 1.4fr);
   gap: 12px;
   align-items: center;
-  padding: 12px;
+  padding: 9px 12px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: #fbfdfb;
@@ -854,7 +900,7 @@ th {
 
 .tableau-main {
   display: grid;
-  gap: 8px;
+  gap: 6px;
 }
 
 .tableau-meta {
@@ -894,7 +940,7 @@ th {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 36px;
+  min-height: 30px;
   border-radius: 8px;
   background: #10251b;
   color: white;
@@ -968,9 +1014,9 @@ th {
 
 .prediction-cell {
   display: grid;
-  gap: 4px;
-  min-height: 50px;
-  padding: 7px;
+  gap: 2px;
+  min-height: 42px;
+  padding: 5px 8px;
   border-radius: 8px;
   background: white;
   border: 1px solid var(--line);
@@ -1639,6 +1685,18 @@ th {
 
   .graph-grid {
     grid-template-columns: 1fr;
+  }
+
+  /* Tooltip resserre sur deux colonnes pour ne plus masquer les courbes. */
+  .chart-tip {
+    max-width: 230px;
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+
+  .chart-tip-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2px 10px;
   }
 
   .analysis-chart-frame svg {

@@ -1,16 +1,14 @@
 "use client";
 
 import { Area, CartesianGrid, ComposedChart, Legend, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { CompactTooltip } from "@/components/ChartTooltip";
 
 const colors = ["#34d399", "#60a5fa", "#fb7185", "#a78bfa", "#facc15", "#2dd4bf", "#f97316", "#c084fc"];
 const bandLabels = new Set(["Hasard 1%-99%", "Hasard 5%-95%"]);
 
 type TimelineRow = Record<string, number | string | [number, number]>;
 
-function formatTooltipValue(value: unknown, name: string) {
-  if (Array.isArray(value)) {
-    return [`${value[0]} - ${value[1]} pts`, name];
-  }
+function formatTooltipValue(value: unknown, name: string): [string, string] {
   return [`${value} pts`, name];
 }
 
@@ -46,11 +44,7 @@ export function TimelineChart({ data, names }: { data: TimelineRow[]; names: str
           <XAxis dataKey="match" hide />
           <YAxis allowDecimals={false} axisLine={false} domain={[0, yMax]} tick={{ fill: "#d1d5db", fontWeight: 800 }} ticks={yTicks} tickLine={false} width={46} />
           <CartesianGrid stroke="#ffffff" strokeDasharray="4 8" strokeOpacity={0.32} vertical={false} />
-          <Tooltip
-            contentStyle={{ background: "#0b1110", border: "1px solid rgb(255 255 255 / 18%)", borderRadius: 8, boxShadow: "0 18px 50px rgb(0 0 0 / 30%)", color: "#f8fafc" }}
-            formatter={formatTooltipValue}
-            labelFormatter={(label) => String(label)}
-          />
+          <Tooltip content={<CompactTooltip format={formatTooltipValue} skip={(name) => name.startsWith("Zone hasard")} />} />
           <Legend align="left" iconType="circle" verticalAlign="top" wrapperStyle={{ color: "#f8fafc", paddingBottom: 12 }} />
           {bandNames.includes("Hasard 1%-99%") ? (
             <Area

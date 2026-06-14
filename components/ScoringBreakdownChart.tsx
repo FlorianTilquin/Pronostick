@@ -1,6 +1,7 @@
 "use client";
 
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { CompactTooltip } from "@/components/ChartTooltip";
 
 const colors = ["#34d399", "#60a5fa", "#fb7185", "#a78bfa", "#facc15", "#2dd4bf", "#f97316", "#c084fc"];
 
@@ -24,11 +25,7 @@ export function ScoringBreakdownChart({ data, names }: { data: BreakdownRow[]; n
                 <XAxis dataKey="match" hide />
                 <YAxis allowDecimals={false} axisLine={false} tick={{ fill: "#d1d5db", fontWeight: 800 }} tickLine={false} width={38} />
                 <CartesianGrid stroke="#ffffff" strokeDasharray="4 8" strokeOpacity={0.24} vertical={false} />
-                <Tooltip
-                  contentStyle={{ background: "#0b1110", border: "1px solid rgb(255 255 255 / 18%)", borderRadius: 8, color: "#f8fafc" }}
-                  formatter={(value, name) => [`${value}`, String(name).replace(`__${metric.key}`, "")]}
-                  labelFormatter={(label) => String(label)}
-                />
+                <Tooltip content={<CompactTooltip format={(value, name) => [`${value}`, name]} />} />
                 <Legend align="center" iconType="circle" verticalAlign="top" wrapperStyle={{ color: "#f8fafc", fontSize: 12, fontWeight: 800, paddingBottom: 8 }} />
                 {names.map((name, index) => (
                   <Line

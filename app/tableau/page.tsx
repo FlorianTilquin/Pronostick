@@ -26,7 +26,7 @@ export default async function TableauPage({ searchParams }: TableauPageProps) {
   const user = await requireUser();
   await maybeSyncResults();
   const params = await searchParams;
-  const isChronological = params?.ordre === "chrono";
+  const isChronological = params?.ordre !== "groupes";
   const rows = predictionsByMatchForUserVisibility(user);
   const groups = Array.from(new Set(rows.map((row) => row.match.group_name)));
   const chronologicalRows = [...rows].sort((a, b) => Date.parse(a.match.kickoff_at) - Date.parse(b.match.kickoff_at) || a.match.match_no - b.match.match_no);
@@ -103,11 +103,11 @@ export default async function TableauPage({ searchParams }: TableauPageProps) {
         <div className="tableau-toolbar">
           <span>Affichage</span>
           <nav className="view-switch" aria-label="Ordre d'affichage du tableau">
-            <Link className={`view-switch-item ${!isChronological ? "active" : ""}`} href="/tableau" aria-current={!isChronological ? "page" : undefined}>
-              Groupes
-            </Link>
-            <Link className={`view-switch-item ${isChronological ? "active" : ""}`} href="/tableau?ordre=chrono" aria-current={isChronological ? "page" : undefined}>
+            <Link className={`view-switch-item ${isChronological ? "active" : ""}`} href="/tableau" aria-current={isChronological ? "page" : undefined}>
               Chronologique
+            </Link>
+            <Link className={`view-switch-item ${!isChronological ? "active" : ""}`} href="/tableau?ordre=groupes" aria-current={!isChronological ? "page" : undefined}>
+              Groupes
             </Link>
           </nav>
         </div>
