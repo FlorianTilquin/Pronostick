@@ -5,7 +5,7 @@ import { getMatches } from "@/lib/db";
 import { maybeSyncResults } from "@/lib/resultsSync";
 import { leaderboard, matchImpactStats, outcomeStreaks, teamGoalStats } from "@/lib/scoring";
 import { teamName } from "@/lib/teams";
-import { maybeSyncTopScorers, readTopScorers } from "@/lib/tournamentStats";
+import { lateGoalLosses, maybeSyncTournamentFeed, readTopScorers } from "@/lib/tournamentStats";
 
 function perMatch(value: number) {
   return value.toLocaleString("fr-FR", { maximumFractionDigits: 2 });
@@ -25,7 +25,7 @@ function MatchLabel({ match }: { match: { home_team: string; away_team: string; 
 export default async function ClassementPage() {
   const user = await requireUser();
   await maybeSyncResults();
-  await maybeSyncTopScorers();
+  await maybeSyncTournamentFeed();
   const rows = leaderboard();
   const finished = getMatches().filter((match) => match.status === "finished").length;
   const impact = matchImpactStats();
@@ -45,6 +45,7 @@ export default async function ClassementPage() {
   const scorers = readTopScorers()?.scorers ?? [];
   const topGoals = scorers[0]?.goals ?? 0;
   const topScorers = topGoals > 0 ? scorers.filter((scorer) => scorer.goals === topGoals) : [];
+  const lateLosses = lateGoalLosses();
 
   return (
     <AppShell user={user}>
@@ -152,6 +153,22 @@ export default async function ClassementPage() {
                 )}
               </article>
             </div>
+          </div>
+          <div className="panel">
+            <h2>Money time fatal</h2>
+            <p className="muted">Points perdus à cause de buts dans les 10 dernières minutes (temps additionnel inclus).</p>
+            {lateLosses.length ? (
+              <div className="loss-list">
+                {lateLosses.map((row) => (
+                  <div className="loss-row" key={row.user.id}>
+                    <strong>{row.user.display_name}</strong>
+                    <span className="loss-pill">−{row.lost} pts</span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="muted">Personne n’a (encore) été puni dans le money time.</p>
+            )}
           </div>
           <div className="panel">
             <h2>Tout le monde l’a vu</h2>

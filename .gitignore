@@ -6,3 +6,4 @@ data/*.sqlite-*
 npm-debug.log*
 *.tsbuildinfo
 data/top_scorers.json
+data/match_events.json
