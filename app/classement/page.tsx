@@ -5,7 +5,7 @@ import { getMatches } from "@/lib/db";
 import { maybeSyncResults } from "@/lib/resultsSync";
 import { leaderboard, matchImpactStats, outcomeStreaks, teamGoalStats } from "@/lib/scoring";
 import { teamName } from "@/lib/teams";
-import { lateGoalLosses, maybeSyncTournamentFeed, readTopScorers } from "@/lib/tournamentStats";
+import { lateGoalSwings, maybeSyncTournamentFeed, readTopScorers } from "@/lib/tournamentStats";
 
 function perMatch(value: number) {
   return value.toLocaleString("fr-FR", { maximumFractionDigits: 2 });
@@ -45,7 +45,7 @@ export default async function ClassementPage() {
   const scorers = readTopScorers()?.scorers ?? [];
   const topGoals = scorers[0]?.goals ?? 0;
   const topScorers = topGoals > 0 ? scorers.filter((scorer) => scorer.goals === topGoals) : [];
-  const lateLosses = lateGoalLosses();
+  const { losses: lateLosses, gains: lateGains } = lateGoalSwings();
 
   return (
     <AppShell user={user}>
@@ -162,12 +162,28 @@ export default async function ClassementPage() {
                 {lateLosses.map((row) => (
                   <div className="loss-row" key={row.user.id}>
                     <strong>{row.user.display_name}</strong>
-                    <span className="loss-pill">−{row.lost} pts</span>
+                    <span className="loss-pill">−{row.points} pts</span>
                   </div>
                 ))}
               </div>
             ) : (
               <p className="muted">Personne n’a (encore) été puni dans le money time.</p>
+            )}
+          </div>
+          <div className="panel">
+            <h2>Money time béni</h2>
+            <p className="muted">Points gagnés grâce à des buts dans les 10 dernières minutes (temps additionnel inclus).</p>
+            {lateGains.length ? (
+              <div className="loss-list">
+                {lateGains.map((row) => (
+                  <div className="loss-row" key={row.user.id}>
+                    <strong>{row.user.display_name}</strong>
+                    <span className="gain-pill">+{row.points} pts</span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="muted">Personne n’a (encore) été sauvé dans le money time.</p>
             )}
           </div>
           <div className="panel">

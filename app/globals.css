@@ -1135,14 +1135,23 @@ th {
   white-space: nowrap;
 }
 
-.loss-pill {
+.loss-pill,
+.gain-pill {
   flex: 0 0 auto;
   padding: 3px 10px;
   border-radius: 999px;
-  background: #f8e7e7;
-  color: var(--red);
   font-size: 13px;
   font-weight: 900;
+}
+
+.loss-pill {
+  background: #f8e7e7;
+  color: var(--red);
+}
+
+.gain-pill {
+  background: #eaf4ec;
+  color: #0e6245;
 }
 
 .model-stats {

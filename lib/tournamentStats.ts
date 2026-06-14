@@ -243,22 +243,24 @@ export async function maybeSyncTournamentFeed() {
   }
 }
 
-export type LateGoalLoss = {
+export type LateGoalSwing = {
   user: User;
-  lost: number;
+  points: number;
 };
 
-// Points perdus par joueur a cause de buts inscrits dans les 10 dernieres
-// minutes (temps additionnel inclus). Pour chaque match, on compare les points
-// du joueur avec le score au debut de la fenetre et avec le score final ; seules
-// les pertes nettes sont comptees. Inclut XGBoost, exclut les bookmakers.
-export function lateGoalLosses(): LateGoalLoss[] {
+// Points perdus et gagnes par joueur a cause de buts inscrits dans les 10
+// dernieres minutes (temps additionnel inclus). Pour chaque match, on compare
+// les points du joueur avec le score au debut de la fenetre et avec le score
+// final : un ecart negatif est une perte, positif un gain. Inclut XGBoost,
+// exclut les bookmakers.
+export function lateGoalSwings(): { losses: LateGoalSwing[]; gains: LateGoalSwing[] } {
   const feed = readMatchEvents();
-  if (!feed) return [];
+  if (!feed) return { losses: [], gains: [] };
   const matches = getMatches();
   const predictions = getPredictions();
   const players = getUsers().filter((user) => user.role === "player" && user.system_type !== "bookmaker");
-  const totals = new Map<number, number>(players.map((player) => [player.id, 0]));
+  const lost = new Map<number, number>(players.map((player) => [player.id, 0]));
+  const gained = new Map<number, number>(players.map((player) => [player.id, 0]));
 
   for (const [matchId, record] of Object.entries(feed.matches)) {
     const match = matches.find((item) => item.id === Number(matchId));
@@ -290,13 +292,17 @@ export function lateGoalLosses(): LateGoalLoss[] {
       if (!prediction) continue;
       const before = scorePrediction(prediction, beforeWindow, predictions).total;
       const final = scorePrediction(prediction, match, predictions).total;
-      const lost = before - final;
-      if (lost > 0) totals.set(player.id, (totals.get(player.id) ?? 0) + lost);
+      const swing = final - before;
+      if (swing < 0) lost.set(player.id, (lost.get(player.id) ?? 0) - swing);
+      else if (swing > 0) gained.set(player.id, (gained.get(player.id) ?? 0) + swing);
     }
   }
 
-  return players
-    .map((player) => ({ user: player, lost: totals.get(player.id) ?? 0 }))
-    .filter((row) => row.lost > 0)
-    .sort((a, b) => b.lost - a.lost || a.user.display_name.localeCompare(b.user.display_name));
+  const rank = (totals: Map<number, number>) =>
+    players
+      .map((player) => ({ user: player, points: totals.get(player.id) ?? 0 }))
+      .filter((row) => row.points > 0)
+      .sort((a, b) => b.points - a.points || a.user.display_name.localeCompare(b.user.display_name));
+
+  return { losses: rank(lost), gains: rank(gained) };
 }
