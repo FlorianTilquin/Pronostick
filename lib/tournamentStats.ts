@@ -215,12 +215,22 @@ function extractMatchEvents(events: EspnEvent[]): Record<string, MatchEventRecor
   return records;
 }
 
-// Vrai s'il existe un match vraisemblablement termine mais pas encore capture
-// dans le feed, dans sa fenetre de rattrapage. En dehors de toute fenetre de
-// match (jours sans foot, apres le tournoi), renvoie false : aucune requete.
+// Vrai s'il faut interroger ESPN. Deux cas :
+//  - backfill initial : aucune chronologie capturee alors que des matchs sont
+//    deja joues (deploiement sur une instance qui a deja des resultats mais pas
+//    encore de feed) -> un fetch complet recupere tout l'historique d'un coup ;
+//  - rattrapage normal : un match vraisemblablement termine (kickoff +2h) mais
+//    pas encore capture, dans sa fenetre de 12h.
+// En dehors de ces cas (jours sans foot, tout est capture), renvoie false.
 function needsFeedSync(now: number) {
   const captured = new Set(Object.keys(readMatchEvents()?.matches ?? {}));
-  return getMatches().some((match) => {
+  const matches = getMatches();
+  const isLikelyOver = (match: Match) => now - Date.parse(match.kickoff_at) >= MATCH_LIKELY_OVER_MS;
+
+  if (captured.size === 0) {
+    return matches.some(isLikelyOver);
+  }
+  return matches.some((match) => {
     const kickoff = Date.parse(match.kickoff_at);
     if (!Number.isFinite(kickoff)) return false;
     const sinceKickoff = now - kickoff;
