@@ -156,7 +156,7 @@ export default async function ClassementPage() {
           </div>
           <div className="panel">
             <h2>Money time fatal</h2>
-            <p className="muted">Points perdus à cause de buts dans les 10 dernières minutes (temps additionnel inclus).</p>
+            <p className="muted">Points perdus à cause de buts inscrits dans les 10 dernières minutes, temps additionnel inclus.</p>
             {lateLosses.length ? (
               <div className="loss-list">
                 {lateLosses.map((row) => (
@@ -172,7 +172,7 @@ export default async function ClassementPage() {
           </div>
           <div className="panel">
             <h2>Money time béni</h2>
-            <p className="muted">Points gagnés grâce à des buts dans les 10 dernières minutes (temps additionnel inclus).</p>
+            <p className="muted">Points gagnés grâce à des buts inscrits dans les 10 dernières minutes, temps additionnel inclus.</p>
             {lateGains.length ? (
               <div className="loss-list">
                 {lateGains.map((row) => (

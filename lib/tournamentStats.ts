@@ -15,8 +15,6 @@ const SYNC_COOLDOWN_MS = 5 * 60 * 1000;
 // Delai apres le coup d'envoi a partir duquel un match est suppose termine
 // (90' + mi-temps + temps additionnel, large pour couvrir les prolongations).
 const MATCH_LIKELY_OVER_MS = 2 * 60 * 60 * 1000;
-// Au-dela, on cesse d'essayer de rattraper un match jamais capture.
-const CATCHUP_WINDOW_MS = 12 * 60 * 60 * 1000;
 
 let lastAttemptAt = 0;
 
@@ -215,27 +213,16 @@ function extractMatchEvents(events: EspnEvent[]): Record<string, MatchEventRecor
   return records;
 }
 
-// Vrai s'il faut interroger ESPN. Deux cas :
-//  - backfill initial : aucune chronologie capturee alors que des matchs sont
-//    deja joues (deploiement sur une instance qui a deja des resultats mais pas
-//    encore de feed) -> un fetch complet recupere tout l'historique d'un coup ;
-//  - rattrapage normal : un match vraisemblablement termine (kickoff +2h) mais
-//    pas encore capture, dans sa fenetre de 12h.
-// En dehors de ces cas (jours sans foot, tout est capture), renvoie false.
+// Vrai s'il faut interroger ESPN. On backfill tout match termine ou
+// vraisemblablement termine dont la chronologie n'a pas encore ete capturee.
+// C'est volontairement durable : si l'app n'a pas ete visitee dans les heures
+// suivant un match, les stats money time doivent quand meme se reconstruire.
 function needsFeedSync(now: number) {
   const captured = new Set(Object.keys(readMatchEvents()?.matches ?? {}));
   const matches = getMatches();
   const isLikelyOver = (match: Match) => now - Date.parse(match.kickoff_at) >= MATCH_LIKELY_OVER_MS;
 
-  if (captured.size === 0) {
-    return matches.some(isLikelyOver);
-  }
-  return matches.some((match) => {
-    const kickoff = Date.parse(match.kickoff_at);
-    if (!Number.isFinite(kickoff)) return false;
-    const sinceKickoff = now - kickoff;
-    return sinceKickoff >= MATCH_LIKELY_OVER_MS && sinceKickoff <= CATCHUP_WINDOW_MS && !captured.has(String(match.id));
-  });
+  return matches.some((match) => (match.status === "finished" || isLikelyOver(match)) && !captured.has(String(match.id)));
 }
 
 // Rafraichit data/top_scorers.json et data/match_events.json depuis ESPN.
@@ -279,8 +266,8 @@ export type LateGoalSwing = {
 };
 
 // Points perdus et gagnes par joueur a cause de buts inscrits dans les 10
-// dernieres minutes (temps additionnel inclus). Pour chaque match, on compare
-// les points du joueur avec le score au debut de la fenetre et avec le score
+// dernieres minutes reelles du match, temps additionnel inclus. Pour chaque
+// match, on compare les points du joueur avant cette fenetre et avec le score
 // final : un ecart negatif est une perte, positif un gain. Inclut XGBoost,
 // exclut les bookmakers.
 export function lateGoalSwings(): { losses: LateGoalSwing[]; gains: LateGoalSwing[] } {
@@ -295,8 +282,8 @@ export function lateGoalSwings(): { losses: LateGoalSwing[]; gains: LateGoalSwin
   for (const [matchId, record] of Object.entries(feed.matches)) {
     const match = matches.find((item) => item.id === Number(matchId));
     if (!match || match.home_score === null || match.away_score === null) continue;
+    const windowStart = Math.max(0, record.endMinute - LATE_WINDOW_MINUTES);
 
-    const windowStart = record.endMinute - LATE_WINDOW_MINUTES;
     let homeBefore = 0;
     let awayBefore = 0;
     let homeFinal = 0;
