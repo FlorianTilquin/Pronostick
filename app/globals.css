@@ -1013,8 +1013,8 @@ th {
 
 .team-flag-img {
   flex: 0 0 auto;
-  width: 20px;
-  height: 14px;
+  width: 18px;
+  height: 12px;
   object-fit: cover;
   border-radius: 2px;
   box-shadow: 0 0 0 1px rgb(0 0 0 / 12%);
