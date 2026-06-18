@@ -896,6 +896,7 @@ th {
   border: 1px solid var(--line);
   border-radius: 8px;
   background: #fbfdfb;
+  scroll-margin-top: 20px;
 }
 
 .tableau-main {
@@ -1606,6 +1607,7 @@ th {
     grid-template-columns: 1fr;
     gap: 8px;
     padding: 10px;
+    scroll-margin-top: 88px;
   }
 
   .tableau-main {

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { AppShell } from "@/components/AppShell";
+import { ScrollToMatch } from "@/components/ScrollToMatch";
 import { TeamName } from "@/components/TeamName";
 import { requireUser } from "@/lib/auth";
 import { getSpecialPredictions, getSubmittedUserIds, getUsers } from "@/lib/db";
@@ -30,6 +31,7 @@ export default async function TableauPage({ searchParams }: TableauPageProps) {
   const rows = predictionsByMatchForUserVisibility(user);
   const groups = Array.from(new Set(rows.map((row) => row.match.group_name)));
   const chronologicalRows = [...rows].sort((a, b) => Date.parse(a.match.kickoff_at) - Date.parse(b.match.kickoff_at) || a.match.match_no - b.match.match_no);
+  const lastPlayedMatch = [...chronologicalRows].reverse().find(({ match }) => match.home_score !== null && match.away_score !== null)?.match ?? null;
   const submitted = getSubmittedUserIds();
   const canSeeSpecials = user.role === "admin" || submitted.has(user.id);
   const specialPlayers = getUsers().filter((player) => player.role === "player" && !player.is_system);
@@ -39,7 +41,7 @@ export default async function TableauPage({ searchParams }: TableauPageProps) {
   });
 
   const renderMatch = ({ match, market, bookmakerMarket, predictions }: (typeof rows)[number]) => (
-    <article className="tableau-match" key={match.id}>
+    <article className="tableau-match" id={`match-${match.id}`} key={match.id}>
       <div className="tableau-main">
         <div className="tableau-meta">
           <span className="match-no">#{match.match_no}</span>
@@ -92,6 +94,7 @@ export default async function TableauPage({ searchParams }: TableauPageProps) {
 
   return (
     <AppShell user={user}>
+      <ScrollToMatch matchId={lastPlayedMatch?.id ?? null} />
       <div className="topline">
         <div>
           <p className="eyebrow">Comparaison</p>
