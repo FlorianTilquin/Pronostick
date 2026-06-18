@@ -633,6 +633,186 @@ th {
   font-size: 30px;
 }
 
+.leaderboard-panel {
+  overflow: hidden;
+  border: 1px solid #173c2b;
+  border-radius: 8px;
+  background: #10251b;
+  box-shadow: 0 24px 60px rgb(16 37 27 / 18%);
+  color: #f7fff8;
+}
+
+.leaderboard-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 24px 18px;
+  border-bottom: 1px solid rgb(255 255 255 / 12%);
+}
+
+.leaderboard-heading h2 {
+  margin-top: 5px;
+  font-size: 28px;
+}
+
+.leaderboard-kicker,
+.leaderboard-match-count {
+  color: rgb(247 255 248 / 68%);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.leaderboard-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.leaderboard-match-count {
+  white-space: nowrap;
+}
+
+.leaderboard-list {
+  display: grid;
+}
+
+.leaderboard-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+  min-height: 96px;
+  padding: 16px 24px;
+  border-bottom: 1px solid rgb(255 255 255 / 10%);
+}
+
+.leaderboard-row:last-child {
+  border-bottom: 0;
+}
+
+.leaderboard-row.rank-1 {
+  background: linear-gradient(90deg, rgb(240 180 41 / 18%), transparent 58%);
+}
+
+.leaderboard-rank {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 50%;
+  color: rgb(247 255 248 / 78%);
+  font-size: 15px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+
+.rank-1 .leaderboard-rank {
+  border-color: rgb(240 180 41 / 55%);
+  background: #f0b429;
+  color: #2e2405;
+  box-shadow: 0 8px 24px rgb(240 180 41 / 22%);
+}
+
+.rank-2 .leaderboard-rank {
+  background: #dce2df;
+  color: #26332c;
+}
+
+.rank-3 .leaderboard-rank {
+  background: #bd815c;
+  color: #fff8f1;
+}
+
+.leaderboard-player {
+  display: grid;
+  min-width: 0;
+  gap: 9px;
+}
+
+.leaderboard-player-line,
+.leaderboard-meta {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.leaderboard-player-line strong {
+  overflow: hidden;
+  font-size: 17px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.leaderboard-tag {
+  flex: 0 0 auto;
+  padding: 3px 7px;
+  border: 1px solid rgb(155 228 195 / 28%);
+  border-radius: 999px;
+  color: #9be4c3;
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.leaderboard-progress {
+  width: 100%;
+  height: 5px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 10%);
+}
+
+.leaderboard-progress span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: #53c995;
+}
+
+.rank-1 .leaderboard-progress span {
+  background: #f0b429;
+}
+
+.leaderboard-meta {
+  color: rgb(247 255 248 / 58%);
+  font-size: 12px;
+}
+
+.leaderboard-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.leaderboard-meta .submitted {
+  color: #9be4c3;
+}
+
+.leaderboard-score {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 5px;
+  min-width: 80px;
+  font-variant-numeric: tabular-nums;
+}
+
+.leaderboard-score strong {
+  font-size: 36px;
+  line-height: 1;
+}
+
+.leaderboard-score span {
+  color: rgb(247 255 248 / 56%);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
 .specials {
   display: grid;
   gap: 12px;
@@ -1683,6 +1863,61 @@ th {
 
   .score-insights {
     grid-template-columns: 1fr;
+  }
+
+  .leaderboard-heading {
+    align-items: flex-start;
+    padding: 18px 16px 15px;
+  }
+
+  .leaderboard-heading h2 {
+    font-size: 22px;
+  }
+
+  .leaderboard-match-count {
+    padding-top: 2px;
+    font-size: 10px;
+  }
+
+  .leaderboard-row {
+    grid-template-columns: 36px minmax(0, 1fr) auto;
+    gap: 10px;
+    min-height: 88px;
+    padding: 14px 16px;
+  }
+
+  .leaderboard-rank {
+    width: 34px;
+    height: 34px;
+  }
+
+  .leaderboard-player-line {
+    gap: 6px;
+  }
+
+  .leaderboard-player-line strong {
+    font-size: 15px;
+  }
+
+  .leaderboard-meta {
+    flex-wrap: wrap;
+    gap: 3px 9px;
+    font-size: 11px;
+  }
+
+  .leaderboard-score {
+    display: grid;
+    justify-items: end;
+    gap: 0;
+    min-width: 48px;
+  }
+
+  .leaderboard-score strong {
+    font-size: 29px;
+  }
+
+  .leaderboard-score span {
+    font-size: 9px;
   }
 
   .graph-grid {

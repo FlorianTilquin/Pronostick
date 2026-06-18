@@ -1,5 +1,6 @@
 import { AppShell } from "@/components/AppShell";
 import { TeamName } from "@/components/TeamName";
+import { Check, Crown, Trophy } from "lucide-react";
 import { requireUser } from "@/lib/auth";
 import { getMatches } from "@/lib/db";
 import { maybeSyncResults } from "@/lib/resultsSync";
@@ -27,6 +28,13 @@ export default async function ClassementPage() {
   await maybeSyncResults();
   await maybeSyncTournamentFeed();
   const rows = leaderboard();
+  const leaderScore = rows[0]?.total ?? 0;
+  const rankedRows = rows.map((row, index) => ({
+    ...row,
+    rank: index > 0 && row.total === rows[index - 1].total
+      ? rows.slice(0, index).findIndex((candidate) => candidate.total === row.total) + 1
+      : index + 1,
+  }));
   const finished = getMatches().filter((match) => match.status === "finished").length;
   const impact = matchImpactStats();
   const streaks = outcomeStreaks();
@@ -56,38 +64,46 @@ export default async function ClassementPage() {
           <p className="muted">{finished} match(s) avec résultat saisi.</p>
         </div>
       </div>
-      <section className="stat-grid" style={{ marginBottom: 18 }}>
-        {rows.map((row, index) => (
-          <div className="card stat" key={row.user.id}>
-            <span className="muted">#{index + 1}</span>
-            <strong>{row.total}</strong>
-            <div>{row.user.display_name}</div>
+      <section className="leaderboard-panel">
+        <div className="leaderboard-heading">
+          <div>
+            <span className="leaderboard-kicker"><Trophy size={14} /> Classement général</span>
+            <h2>La course est lancée</h2>
           </div>
-        ))}
-      </section>
-      <section className="panel table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Rang</th>
-              <th>Joueur</th>
-              <th>Points</th>
-              <th>Pronos</th>
-              <th>Statut</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((row, index) => (
-              <tr key={row.user.id}>
-                <td>{index + 1}</td>
-                <td>{row.user.display_name}</td>
-                <td className="score">{row.total}</td>
-                <td>{row.predictions}</td>
-                <td>{row.submitted ? "Soumis" : "Brouillon"}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+          <span className="leaderboard-match-count">{finished} résultat{finished > 1 ? "s" : ""}</span>
+        </div>
+        <div className="leaderboard-list">
+          {rankedRows.map((row) => {
+            const progress = leaderScore > 0 ? Math.max(3, (row.total / leaderScore) * 100) : 0;
+            return (
+              <article className={`leaderboard-row rank-${Math.min(row.rank, 4)}`} key={row.user.id}>
+                <div className="leaderboard-rank" aria-label={`Rang ${row.rank}`}>
+                  {row.rank === 1 ? <Crown size={20} /> : row.rank}
+                </div>
+                <div className="leaderboard-player">
+                  <div className="leaderboard-player-line">
+                    <strong>{row.user.display_name}</strong>
+                    {row.user.is_system ? <span className="leaderboard-tag">Modèle</span> : null}
+                  </div>
+                  <div className="leaderboard-progress" aria-hidden="true">
+                    <span style={{ width: `${progress}%` }} />
+                  </div>
+                  <div className="leaderboard-meta">
+                    <span>{row.predictions} pronostic{row.predictions > 1 ? "s" : ""}</span>
+                    <span className={row.submitted ? "submitted" : ""}>
+                      {row.submitted ? <Check size={12} /> : null}
+                      {row.submitted ? "Validé" : "Brouillon"}
+                    </span>
+                  </div>
+                </div>
+                <div className="leaderboard-score">
+                  <strong>{row.total}</strong>
+                  <span>pts</span>
+                </div>
+              </article>
+            );
+          })}
+        </div>
       </section>
       {finished ? (
         <section className="score-insights">
