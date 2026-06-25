@@ -1,15 +1,18 @@
 import { KeyRound, Plus, Save, ShieldCheck, Trash2 } from "lucide-react";
-import { changeUserPasswordAction, createUserAction, deleteUserAction, updateResultAction, updateUserDisplayNameAction } from "@/app/actions";
+import { changeUserPasswordAction, createUserAction, deleteUserAction, updateResultAction, updateUserColorAction, updateUserDisplayNameAction } from "@/app/actions";
 import { AppShell } from "@/components/AppShell";
 import { PasswordInput } from "@/components/PasswordInput";
 import { TeamName } from "@/components/TeamName";
 import { requireAdmin } from "@/lib/auth";
+import { colorForUser } from "@/lib/chartColors";
 import { getMatches, getUsers } from "@/lib/db";
 
 export default async function AdminPage() {
   const user = await requireAdmin();
   const matches = getMatches();
-  const users = getUsers().filter((item) => !item.is_system);
+  const allUsers = getUsers();
+  const users = allUsers.filter((item) => !item.is_system);
+  const graphUsers = allUsers.filter((item) => item.role === "player");
   const groups = Array.from(new Set(matches.map((match) => match.group_name)));
 
   return (
@@ -83,6 +86,31 @@ export default async function AdminPage() {
               Ajouter
             </button>
           </form>
+        </section>
+
+        <section className="panel">
+          <div className="section-title">
+            <div>
+              <h2>Couleurs des graphiques</h2>
+              <p className="muted">Choisis une couleur par joueur, modèle et books pour rendre les courbes lisibles.</p>
+            </div>
+          </div>
+          <div className="color-admin-list">
+            {graphUsers.map((item, index) => (
+              <form action={updateUserColorAction} className="color-admin-row" key={item.id}>
+                <input type="hidden" name="userId" value={item.id} />
+                <span className="color-dot" style={{ background: colorForUser(item, index) }} aria-hidden="true" />
+                <div>
+                  <strong>{item.display_name}</strong>
+                  <p className="muted">{item.system_type === "bookmaker" ? "Bookmakers" : item.system_type === "model" ? "Modèle" : "Joueur"}</p>
+                </div>
+                <input className="color-input" type="color" name="color" defaultValue={colorForUser(item, index)} aria-label={`Couleur de ${item.display_name}`} />
+                <button className="icon-button neutral" type="submit" title="Sauvegarder la couleur">
+                  <Save size={17} />
+                </button>
+              </form>
+            ))}
+          </div>
         </section>
 
         <section className="panel">

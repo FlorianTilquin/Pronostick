@@ -4,6 +4,7 @@ export type User = {
   id: number;
   username: string;
   display_name: string;
+  display_color?: string;
   role: Role;
   is_system?: boolean;
   system_type?: "model" | "bookmaker";

@@ -1,9 +1,11 @@
 import { bookmakerOddsByMatchId } from "@/lib/bookmakerOdds";
+import { colorForUser } from "@/lib/chartColors";
 import { getPredictions, getUsers } from "@/lib/db";
 import type { Prediction } from "@/lib/types";
 
 export type RidgeOddsRow = {
   name: string;
+  color: string;
   values: number[];
   average: number | null;
   highRiskShare: number;
@@ -11,6 +13,7 @@ export type RidgeOddsRow = {
 
 export type MdsPoint = {
   name: string;
+  color: string;
   x: number;
   y: number;
   averageDistance: number;
@@ -145,7 +148,7 @@ export function predictionOddsDistribution(): RidgeOddsRow[] {
   const predictions = getPredictions();
   const markets = bookmakerOddsByMatchId();
 
-  return users.map((user) => {
+  return users.map((user, index) => {
     const values = predictions
       .filter((prediction) => prediction.user_id === user.id)
       .map((prediction) => {
@@ -157,6 +160,7 @@ export function predictionOddsDistribution(): RidgeOddsRow[] {
 
     return {
       name: user.display_name,
+      color: colorForUser(user, index),
       values,
       average: values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : null,
       highRiskShare: values.length ? values.filter((value) => value >= 4).length / values.length : 0
@@ -181,6 +185,7 @@ export function predictionMdsProjection(): MdsPoint[] {
     const averageDistance = row.length > 1 ? row.reduce((sum, value) => sum + value, 0) / (row.length - 1) : 0;
     return {
       name: user.display_name,
+      color: colorForUser(user, index),
       x: coordinates[index]?.x ?? 0,
       y: coordinates[index]?.y ?? 0,
       averageDistance,

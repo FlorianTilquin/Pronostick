@@ -2,8 +2,6 @@
 
 import type { MdsPoint } from "@/lib/graphStats";
 
-const palette = ["#34d399", "#60a5fa", "#fb7185", "#a78bfa", "#facc15", "#2dd4bf", "#f97316", "#c084fc"];
-
 export function MdsProjectionChart({ points }: { points: MdsPoint[] }) {
   const activePoints = points.filter((point) => point.predictions > 0);
   const width = 760;
@@ -36,7 +34,7 @@ export function MdsProjectionChart({ points }: { points: MdsPoint[] }) {
         </g>
         {activePoints.map((point, index) => {
           const radius = 10 + (point.averageDistance / maxDistance) * 10;
-          const color = palette[index % palette.length];
+          const color = point.color;
           const x = xFor(point.x);
           const y = yFor(point.y);
           const labelOnLeft = x > width - 150;

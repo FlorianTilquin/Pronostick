@@ -332,6 +332,14 @@ export function updateUserDisplayName(userId: number, displayName: string) {
   });
 }
 
+export function updateUserDisplayColor(userId: number, color: string) {
+  updateStore((store) => {
+    const user = store.users.find((item) => item.id === userId);
+    if (!user || user.role !== "player") return;
+    user.display_color = color;
+  });
+}
+
 export function deleteUser(userId: number) {
   updateStore((store) => {
     const user = store.users.find((item) => item.id === userId);

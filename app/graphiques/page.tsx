@@ -4,6 +4,7 @@ import { MdsProjectionChart } from "@/components/MdsProjectionChart";
 import { RidgeOddsChart } from "@/components/RidgeOddsChart";
 import { ScoringBreakdownChart } from "@/components/ScoringBreakdownChart";
 import { requireUser } from "@/lib/auth";
+import { chartSeriesForUsers } from "@/lib/chartColors";
 import { maybeSyncResults } from "@/lib/resultsSync";
 import { getUsers } from "@/lib/db";
 import { predictionMdsProjection, predictionOddsDistribution } from "@/lib/graphStats";
@@ -13,9 +14,9 @@ import { scoringBreakdownTimeline, timeline } from "@/lib/scoring";
 export default async function GraphiquesPage() {
   const user = await requireUser();
   await maybeSyncResults();
-  const names = getUsers()
-    .filter((item) => item.role === "player")
-    .map((item) => item.display_name);
+  const graphUsers = getUsers().filter((item) => item.role === "player");
+  const series = chartSeriesForUsers(graphUsers);
+  const names = series.map((item) => item.name);
   const playerTimeline = timeline();
   const randomTimeline = randomBaselineTimeline();
   const data = playerTimeline.map((row, index) => ({ ...row, ...(randomTimeline[index] ?? {}) }));
@@ -43,7 +44,7 @@ export default async function GraphiquesPage() {
             <p className="muted">Score cumulé après chaque résultat saisi, en ordre chronologique réel des matchs.</p>
           </div>
         </div>
-        {data.length ? <TimelineChart data={data} names={chartNames} /> : <p className="muted">Aucun résultat saisi pour le moment.</p>}
+        {data.length ? <TimelineChart data={data} names={chartNames} series={series} /> : <p className="muted">Aucun résultat saisi pour le moment.</p>}
         {randomDistribution ? (
           <p className="muted">
             Hasard : {randomDistribution.simulations.toLocaleString("fr-FR")} grilles tirées depuis {randomDistribution.source.matches.toLocaleString("fr-FR")} matchs de coupes internationales
@@ -58,7 +59,7 @@ export default async function GraphiquesPage() {
             <p className="muted">Compteurs cumulés de bons résultats, bonnes différences de buts et scores exacts.</p>
           </div>
         </div>
-        {breakdownTimeline.length ? <ScoringBreakdownChart data={breakdownTimeline} names={names} /> : <p className="muted">Aucun résultat saisi pour le moment.</p>}
+        {breakdownTimeline.length ? <ScoringBreakdownChart data={breakdownTimeline} series={series} /> : <p className="muted">Aucun résultat saisi pour le moment.</p>}
       </section>
       <section className="graph-grid">
         <article className="panel graph-panel">

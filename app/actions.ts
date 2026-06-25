@@ -16,10 +16,12 @@ import {
   hasSubmitted,
   submitUser,
   updateMatchResult,
+  updateUserDisplayColor,
   updateUserDisplayName,
   upsertPrediction,
   upsertSpecialPrediction
 } from "@/lib/db";
+import { isValidChartColor } from "@/lib/chartColors";
 import { clearLoginFailures, loginBlockedMinutes, recordLoginFailure } from "@/lib/loginRateLimit";
 import { specialBets } from "@/lib/specials";
 
@@ -132,6 +134,16 @@ export async function updateUserDisplayNameAction(formData: FormData) {
   revalidatePath("/admin");
   revalidatePath("/classement");
   revalidatePath("/tableau");
+  revalidatePath("/graphiques");
+}
+
+export async function updateUserColorAction(formData: FormData) {
+  await requireAdmin();
+  const userId = z.coerce.number().int().parse(formData.get("userId"));
+  const color = String(formData.get("color") ?? "").trim();
+  if (!isValidChartColor(color)) return;
+  updateUserDisplayColor(userId, color);
+  revalidatePath("/admin");
   revalidatePath("/graphiques");
 }
 

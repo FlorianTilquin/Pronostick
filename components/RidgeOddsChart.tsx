@@ -2,8 +2,6 @@
 
 import type { RidgeOddsRow } from "@/lib/graphStats";
 
-const palette = ["#34d399", "#60a5fa", "#fb7185", "#a78bfa", "#facc15", "#2dd4bf", "#f97316", "#c084fc"];
-
 function logOdds(value: number) {
   return Math.log(Math.max(1.01, value));
 }
@@ -62,7 +60,7 @@ export function RidgeOddsChart({ rows }: { rows: RidgeOddsRow[] }) {
             })
             .join(" ");
           const fillPath = `${left},${baseline} ${areaPoints} ${left + plotWidth},${baseline}`;
-          const color = palette[rowIndex % palette.length];
+          const color = row.color;
 
           return (
             <g key={row.name}>
