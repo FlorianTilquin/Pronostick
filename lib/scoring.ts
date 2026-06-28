@@ -1,8 +1,8 @@
 import { readConfig } from "@/lib/config";
 import { bookmakerOddsByMatchId, type BookmakerMarket } from "@/lib/bookmakerOdds";
-import { getMatches, getPredictions, getSubmittedUserIds, getUsers } from "@/lib/db";
+import { getActiveRoundId, getMatches, getPredictions, getSubmittedUserIds, getUsers } from "@/lib/db";
 import { teamName } from "@/lib/teams";
-import type { Match, Prediction, User } from "@/lib/types";
+import type { Match, Prediction, PredictionRoundId, User } from "@/lib/types";
 
 type PredictionWithMatch = Prediction & { match: Match };
 
@@ -88,7 +88,14 @@ export function scorePrediction(prediction: Prediction, match: Match, allPredict
     }
   }
 
-  return { base, odds, total: base + odds, details: parts.join(", ") || "proximite" };
+  const multiplier = match.points_multiplier ?? 1;
+  const totalBase = base * multiplier;
+  return {
+    base: totalBase,
+    odds,
+    total: totalBase + odds,
+    details: `${parts.join(", ") || "proximite"}${multiplier > 1 ? ` x${multiplier}` : ""}`,
+  };
 }
 
 export function leaderboard() {
@@ -213,12 +220,12 @@ export function scoringBreakdownTimeline() {
   });
 }
 
-export function predictionsByMatchForUserVisibility(viewer: User) {
-  const matches = getMatches();
+export function predictionsByMatchForUserVisibility(viewer: User, roundId: PredictionRoundId | "all" = getActiveRoundId()) {
+  const matches = getMatches().filter((match) => roundId === "all" || (match.prediction_round_id ?? match.stage ?? "group") === roundId);
   const users = getUsers().filter((user) => user.role === "player");
   const humanUsers = users.filter((user) => !user.is_system);
   const predictions = getPredictions();
-  const submitted = getSubmittedUserIds();
+  const submitted = getSubmittedUserIds(roundId === "all" ? "group" : roundId);
   const viewerCanSeeAll = viewer.role === "admin" || submitted.has(viewer.id);
   const bookmakerMarkets = bookmakerOddsByMatchId();
 

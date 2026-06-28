@@ -9,11 +9,16 @@ import {
   addUser,
   changeUserPassword,
   deleteUser,
+  getActiveRoundId,
   getMatches,
+  getRoundMatches,
   getPredictions,
   getSpecialPredictions,
   getUserByUsername,
   hasSubmitted,
+  setActiveRound,
+  setKnockoutSeed,
+  setThirdPlaceAssignment,
   submitUser,
   updateMatchResult,
   updateUserDisplayColor,
@@ -22,13 +27,16 @@ import {
   upsertSpecialPrediction
 } from "@/lib/db";
 import { isValidChartColor } from "@/lib/chartColors";
+import { roundOrder } from "@/lib/knockout";
 import { clearLoginFailures, loginBlockedMinutes, recordLoginFailure } from "@/lib/loginRateLimit";
 import { specialBets } from "@/lib/specials";
+import type { PredictionRoundId } from "@/lib/types";
 
 const score = z.coerce.number().int().min(0).max(30);
 
 function persistPredictionForm(userId: number, formData: FormData) {
-  const matches = getMatches();
+  const roundId = getActiveRoundId();
+  const matches = getRoundMatches(roundId);
   for (const match of matches) {
     const homeRaw = formData.get(`home_${match.id}`);
     const awayRaw = formData.get(`away_${match.id}`);
@@ -40,10 +48,12 @@ function persistPredictionForm(userId: number, formData: FormData) {
     }
   }
 
-  for (const { category } of specialBets) {
-    const value = String(formData.get(category) ?? "").trim();
-    if (value) {
-      upsertSpecialPrediction(userId, category, value);
+  if (roundId === "group") {
+    for (const { category } of specialBets) {
+      const value = String(formData.get(category) ?? "").trim();
+      if (value) {
+        upsertSpecialPrediction(userId, category, value);
+      }
     }
   }
 }
@@ -72,7 +82,8 @@ export async function logoutAction() {
 
 export async function savePredictionsAction(formData: FormData) {
   const user = await requireUser();
-  if (hasSubmitted(user.id)) return;
+  const roundId = getActiveRoundId();
+  if (hasSubmitted(user.id, roundId)) return;
   persistPredictionForm(user.id, formData);
   revalidatePath("/predict");
   redirect("/predict?sauvegarde=1");
@@ -80,13 +91,15 @@ export async function savePredictionsAction(formData: FormData) {
 
 export async function submitPredictionsAction(formData: FormData) {
   const user = await requireUser();
-  if (hasSubmitted(user.id)) return;
+  const roundId = getActiveRoundId();
+  if (hasSubmitted(user.id, roundId)) return;
   persistPredictionForm(user.id, formData);
-  const totalMatches = getMatches().length;
-  const count = getPredictions(user.id).length;
+  const totalMatches = getRoundMatches(roundId).length;
+  const roundMatchIds = new Set(getRoundMatches(roundId).map((match) => match.id));
+  const count = getPredictions(user.id).filter((prediction) => roundMatchIds.has(prediction.match_id)).length;
   const specials = getSpecialPredictions(user.id).length;
-  if (count === totalMatches && specials === specialBets.length) {
-    submitUser(user.id);
+  if (count === totalMatches && (roundId !== "group" || specials === specialBets.length)) {
+    submitUser(user.id, roundId);
   }
   revalidatePath("/");
   revalidatePath("/tableau");
@@ -98,12 +111,46 @@ export async function updateResultAction(formData: FormData) {
   const matchId = z.coerce.number().int().parse(formData.get("matchId"));
   const home = formData.get("homeScore");
   const away = formData.get("awayScore");
+  const winner = String(formData.get("winnerTeam") ?? "");
   const homeScore = home === "" || home === null ? null : score.parse(home);
   const awayScore = away === "" || away === null ? null : score.parse(away);
-  updateMatchResult(matchId, homeScore, awayScore);
+  updateMatchResult(matchId, homeScore, awayScore, winner || null);
   revalidatePath("/admin");
   revalidatePath("/classement");
   revalidatePath("/graphiques");
+  revalidatePath("/tableau");
+  revalidatePath("/predict");
+}
+
+export async function updateKnockoutSeedAction(formData: FormData) {
+  await requireAdmin();
+  const source = String(formData.get("source") ?? "").trim();
+  const team = String(formData.get("team") ?? "").trim();
+  setKnockoutSeed(source, team);
+  revalidatePath("/admin");
+  revalidatePath("/predict");
+  revalidatePath("/tableau");
+}
+
+export async function updateThirdPlaceAssignmentAction(formData: FormData) {
+  await requireAdmin();
+  const matchNo = z.coerce.number().int().parse(formData.get("matchNo"));
+  const side = String(formData.get("side") ?? "") === "home" ? "home" : "away";
+  const source = String(formData.get("source") ?? "").trim();
+  setThirdPlaceAssignment(matchNo, side, source);
+  revalidatePath("/admin");
+  revalidatePath("/predict");
+  revalidatePath("/tableau");
+}
+
+export async function openRoundAction(formData: FormData) {
+  await requireAdmin();
+  const roundId = String(formData.get("roundId") ?? "") as PredictionRoundId;
+  if (!roundOrder.includes(roundId)) return;
+  setActiveRound(roundId);
+  revalidatePath("/admin");
+  revalidatePath("/predict");
+  revalidatePath("/tableau");
 }
 
 export async function createUserAction(formData: FormData) {

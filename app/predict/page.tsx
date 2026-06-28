@@ -3,7 +3,8 @@ import { savePredictionsAction, submitPredictionsAction } from "@/app/actions";
 import { AppShell } from "@/components/AppShell";
 import { TeamName } from "@/components/TeamName";
 import { requireUser } from "@/lib/auth";
-import { getMatches, getPredictions, getSpecialPredictions, hasSubmitted } from "@/lib/db";
+import { getActiveRoundId, getPredictions, getRoundMatches, getSpecialPredictions, hasSubmitted } from "@/lib/db";
+import { roundLabels } from "@/lib/knockout";
 import { specialBets } from "@/lib/specials";
 
 type PredictPageProps = {
@@ -14,16 +15,19 @@ export default async function PredictPage({ searchParams }: PredictPageProps) {
   const user = await requireUser();
   const params = await searchParams;
   const justSaved = params?.sauvegarde === "1";
-  const matches = getMatches();
+  const activeRound = getActiveRoundId();
+  const matches = getRoundMatches(activeRound);
   const predictions = new Map(getPredictions(user.id).map((prediction) => [prediction.match_id, prediction]));
-  const submitted = hasSubmitted(user.id);
+  const submitted = hasSubmitted(user.id, activeRound);
   const specials = getSpecialPredictions(user.id);
   const specialMap = new Map(specials.map((item) => [item.category, item.value]));
-  const completed = predictions.size;
+  const activeMatchIds = new Set(matches.map((match) => match.id));
+  const completed = [...predictions.values()].filter((prediction) => activeMatchIds.has(prediction.match_id)).length;
   const missingMatches = Math.max(0, matches.length - completed);
-  const missingSpecials = Math.max(0, specialBets.length - specials.length);
-  const canSubmit = missingMatches === 0 && missingSpecials === 0 && !submitted;
+  const missingSpecials = activeRound === "group" ? Math.max(0, specialBets.length - specials.length) : 0;
+  const canSubmit = matches.length > 0 && missingMatches === 0 && missingSpecials === 0 && !submitted;
   const groups = Array.from(new Set(matches.map((match) => match.group_name)));
+  const isGroupRound = activeRound === "group";
 
   return (
     <AppShell user={user}>
@@ -33,8 +37,8 @@ export default async function PredictPage({ searchParams }: PredictPageProps) {
           <h1>Mes pronostics</h1>
           <p className="muted">
             {submitted
-              ? "Pronostics soumis et verrouillés. Le tableau des autres est maintenant visible."
-              : `${completed}/${matches.length} matchs remplis. Sauvegarde autant que tu veux, puis soumets quand tout est prêt.`}
+              ? `${roundLabels[activeRound]} soumis et verrouillé. Le tableau des autres est maintenant visible pour ce round.`
+              : `${roundLabels[activeRound]} : ${completed}/${matches.length} match(s) rempli(s). Sauvegarde autant que tu veux, puis soumets quand tout est prêt.`}
           </p>
         </div>
         <span className="badge">{submitted ? "Soumis" : "Brouillon"}</span>
@@ -44,13 +48,14 @@ export default async function PredictPage({ searchParams }: PredictPageProps) {
         <section className="panel">
           <div className="section-title">
             <div>
-              <h2>Matchs de poule</h2>
-              <p className="muted">Un groupe à la fois, deux scores, pas de tableur déguisé.</p>
+              <h2>{roundLabels[activeRound]}</h2>
+              <p className="muted">{isGroupRound ? "Un groupe à la fois, deux scores, pas de tableur déguisé." : "Un round frais : tu pronostiques uniquement les affiches ouvertes."}</p>
             </div>
           </div>
 
-          <div className="result-groups prediction-groups">
-            {groups.map((group) => (
+          {matches.length ? (
+            <div className="result-groups prediction-groups">
+              {groups.map((group) => (
               <section className="result-group" key={group}>
                 <h3>Groupe {group}</h3>
                 <div className="result-list">
@@ -88,11 +93,17 @@ export default async function PredictPage({ searchParams }: PredictPageProps) {
                           </span>
                         </div>
                       );
-                    })}
+                  })}
                 </div>
               </section>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="locked-panel compact-locked">
+              <h3>Round pas encore prêt</h3>
+              <p className="muted">L’admin doit renseigner les affiches puis ouvrir le round de pronostics.</p>
+            </div>
+          )}
         </section>
 
         <aside className={`grid prediction-side${!submitted ? " has-sticky-actions" : ""}`}>
@@ -112,7 +123,9 @@ export default async function PredictPage({ searchParams }: PredictPageProps) {
                 <p className="muted">
                   {canSubmit
                     ? "Une fois soumis, tes pronostics sont verrouillés et tu peux voir ceux des autres."
-                    : `Il manque ${missingMatches} match(s) et ${missingSpecials} pari(s) bonus. Le bouton sauvegarde aussi avant de vérifier.`}
+                    : isGroupRound
+                      ? `Il manque ${missingMatches} match(s) et ${missingSpecials} pari(s) bonus. Le bouton sauvegarde aussi avant de vérifier.`
+                      : `Il manque ${missingMatches} match(s) pour ce round. Le bouton sauvegarde aussi avant de vérifier.`}
                 </p>
                 <button formAction={submitPredictionsAction} className="button warn" type="submit" disabled={!canSubmit}>
                   <CheckCircle2 size={18} />
@@ -121,15 +134,17 @@ export default async function PredictPage({ searchParams }: PredictPageProps) {
               </section>
             </div>
           ) : null}
-          <section className="panel specials">
-            <h2>Paris bonus</h2>
-            {specialBets.map((bet) => (
-              <label key={bet.category}>
-                <span className="muted">{bet.label}</span>
-                <input disabled={submitted} className="compact-input" name={bet.category} defaultValue={specialMap.get(bet.category) ?? ""} />
-              </label>
-            ))}
-          </section>
+          {isGroupRound ? (
+            <section className="panel specials">
+              <h2>Paris bonus</h2>
+              {specialBets.map((bet) => (
+                <label key={bet.category}>
+                  <span className="muted">{bet.label}</span>
+                  <input disabled={submitted} className="compact-input" name={bet.category} defaultValue={specialMap.get(bet.category) ?? ""} />
+                </label>
+              ))}
+            </section>
+          ) : null}
         </aside>
       </form>
     </AppShell>

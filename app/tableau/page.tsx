@@ -3,10 +3,12 @@ import { AppShell } from "@/components/AppShell";
 import { ScrollToMatch } from "@/components/ScrollToMatch";
 import { TeamName } from "@/components/TeamName";
 import { requireUser } from "@/lib/auth";
-import { getSpecialPredictions, getSubmittedUserIds, getUsers } from "@/lib/db";
+import { getActiveRoundId, getAvailableRounds, getSpecialPredictions, getSubmittedUserIds, getUsers } from "@/lib/db";
+import { roundLabels, roundOrder } from "@/lib/knockout";
 import { maybeSyncResults } from "@/lib/resultsSync";
 import { predictionsByMatchForUserVisibility } from "@/lib/scoring";
 import { specialBets } from "@/lib/specials";
+import type { PredictionRoundId } from "@/lib/types";
 
 function formatKickoff(value: string) {
   return new Intl.DateTimeFormat("fr-FR", {
@@ -20,7 +22,7 @@ function formatKickoff(value: string) {
 }
 
 type TableauPageProps = {
-  searchParams?: Promise<{ ordre?: string }>;
+  searchParams?: Promise<{ ordre?: string; round?: string }>;
 };
 
 export default async function TableauPage({ searchParams }: TableauPageProps) {
@@ -28,12 +30,17 @@ export default async function TableauPage({ searchParams }: TableauPageProps) {
   await maybeSyncResults();
   const params = await searchParams;
   const isChronological = params?.ordre !== "groupes";
-  const rows = predictionsByMatchForUserVisibility(user);
+  const activeRound = getActiveRoundId();
+  const availableRounds = getAvailableRounds();
+  const requestedRound = params?.round as PredictionRoundId | undefined;
+  const selectedRound = requestedRound && roundOrder.includes(requestedRound) ? requestedRound : activeRound;
+  const rows = predictionsByMatchForUserVisibility(user, selectedRound);
   const groups = Array.from(new Set(rows.map((row) => row.match.group_name)));
   const chronologicalRows = [...rows].sort((a, b) => Date.parse(a.match.kickoff_at) - Date.parse(b.match.kickoff_at) || a.match.match_no - b.match.match_no);
   const lastPlayedMatch = [...chronologicalRows].reverse().find(({ match }) => match.home_score !== null && match.away_score !== null)?.match ?? null;
-  const submitted = getSubmittedUserIds();
-  const canSeeSpecials = user.role === "admin" || submitted.has(user.id);
+  const submitted = getSubmittedUserIds(selectedRound);
+  const groupSubmitted = getSubmittedUserIds("group");
+  const canSeeSpecials = user.role === "admin" || groupSubmitted.has(user.id);
   const specialPlayers = getUsers().filter((player) => player.role === "player" && !player.is_system);
   const specialRows = specialPlayers.map((player) => {
     const predictions = new Map(getSpecialPredictions(player.id).map((prediction) => [prediction.category, prediction.value]));
@@ -45,7 +52,7 @@ export default async function TableauPage({ searchParams }: TableauPageProps) {
       <div className="tableau-main">
         <div className="tableau-meta">
           <span className="match-no">#{match.match_no}</span>
-          <span>Groupe {match.group_name}</span>
+          <span>{match.stage === "group" ? `Groupe ${match.group_name}` : match.group_name}</span>
           <time dateTime={match.kickoff_at}>{formatKickoff(match.kickoff_at)}</time>
         </div>
         <p className="tableau-venue">{match.venue}</p>
@@ -97,24 +104,36 @@ export default async function TableauPage({ searchParams }: TableauPageProps) {
       <ScrollToMatch matchId={lastPlayedMatch?.id ?? null} />
       <div className="topline">
         <div>
-          <p className="eyebrow">Comparaison</p>
+          <p className="eyebrow">Comparaison · {roundLabels[selectedRound]}</p>
           <h1>Tableau des pronos</h1>
-          <p className="muted">Les autres pronostics se dévoilent quand tu as soumis tous les tiens.</p>
+          <p className="muted">Par défaut, le tableau reste sur le round actif pour éviter les kilomètres de scroll.</p>
         </div>
       </div>
       <section className="panel">
         <div className="tableau-toolbar">
           <span>Affichage</span>
           <nav className="view-switch" aria-label="Ordre d'affichage du tableau">
-            <Link className={`view-switch-item ${isChronological ? "active" : ""}`} href="/tableau" aria-current={isChronological ? "page" : undefined}>
+            <Link className={`view-switch-item ${isChronological ? "active" : ""}`} href={`/tableau?round=${selectedRound}`} aria-current={isChronological ? "page" : undefined}>
               Chronologique
             </Link>
-            <Link className={`view-switch-item ${!isChronological ? "active" : ""}`} href="/tableau?ordre=groupes" aria-current={!isChronological ? "page" : undefined}>
+            <Link className={`view-switch-item ${!isChronological ? "active" : ""}`} href={`/tableau?round=${selectedRound}&ordre=groupes`} aria-current={!isChronological ? "page" : undefined}>
               Groupes
             </Link>
           </nav>
         </div>
-        {isChronological ? (
+        <nav className="round-switch" aria-label="Round du tableau">
+          {availableRounds.map((roundId) => (
+            <Link className={roundId === selectedRound ? "active" : ""} href={`/tableau?round=${roundId}${isChronological ? "" : "&ordre=groupes"}`} key={roundId}>
+              {roundLabels[roundId]}
+            </Link>
+          ))}
+        </nav>
+        {rows.length === 0 ? (
+          <div className="locked-panel compact-locked">
+            <h3>Aucune affiche</h3>
+            <p className="muted">Ce round n’est pas encore généré.</p>
+          </div>
+        ) : isChronological ? (
           <div className="tableau-list tableau-list-chrono">{chronologicalRows.map(renderMatch)}</div>
         ) : (
           <div className="tableau-groups">

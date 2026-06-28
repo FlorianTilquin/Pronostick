@@ -1,5 +1,9 @@
 export type Role = "admin" | "player";
 
+export type Stage = "group" | "round_of_32" | "round_of_16" | "quarter_final" | "semi_final" | "third_place" | "final";
+
+export type PredictionRoundId = Stage;
+
 export type User = {
   id: number;
   username: string;
@@ -14,12 +18,18 @@ export type Match = {
   id: number;
   match_no: number;
   group_name: string;
+  stage?: Stage;
+  prediction_round_id?: PredictionRoundId;
+  points_multiplier?: 1 | 2 | 3;
+  home_source?: string;
+  away_source?: string;
   kickoff_at: string;
   venue: string;
   home_team: string;
   away_team: string;
   home_score: number | null;
   away_score: number | null;
+  winner_team?: string | null;
   status: "scheduled" | "finished";
 };
 
