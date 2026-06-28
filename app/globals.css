@@ -901,18 +901,10 @@ th {
 
 .admin-layout {
   display: grid;
-  grid-template-columns: minmax(360px, 1fr) minmax(300px, 0.8fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 18px;
   align-items: start;
-}
-
-.admin-layout > .panel:last-child {
-  grid-column: 1 / -1;
-}
-
-.admin-layout > .panel:has(.knockout-admin),
-.admin-layout > .panel:has(.color-admin-list) {
-  grid-column: 1 / -1;
+  max-width: 1320px;
 }
 
 .section-title {
@@ -957,7 +949,7 @@ th {
 }
 
 .user-admin-actions {
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(160px, 1fr) minmax(160px, 1fr) auto;
   align-items: center;
 }
 
@@ -967,6 +959,70 @@ th {
 
 .create-user-form {
   grid-template-columns: 1fr;
+}
+
+.admin-utility-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.admin-side-tools {
+  display: grid;
+  gap: 18px;
+}
+
+.admin-compact-panel {
+  padding: 16px;
+}
+
+.admin-compact-panel .section-title {
+  margin-bottom: 12px;
+}
+
+.admin-compact-panel .section-title h2 {
+  font-size: 18px;
+}
+
+.admin-compact-panel .section-title p {
+  font-size: 13px;
+}
+
+.admin-compact-panel .admin-users {
+  gap: 8px;
+}
+
+.admin-compact-panel .user-admin-row {
+  grid-template-columns: minmax(120px, 0.45fr) minmax(0, 1.55fr);
+  gap: 10px;
+  padding: 10px;
+}
+
+.admin-compact-panel .user-admin-row strong,
+.admin-compact-panel .color-admin-row strong {
+  font-size: 14px;
+}
+
+.admin-compact-panel .user-admin-row p {
+  font-size: 12px;
+}
+
+.admin-compact-panel .compact-input {
+  padding: 8px 9px;
+}
+
+.admin-compact-panel .icon-button {
+  width: 36px;
+  height: 36px;
+}
+
+.admin-compact-panel .color-admin-list {
+  gap: 8px;
+}
+
+.admin-compact-panel .color-admin-row {
+  padding: 9px;
 }
 
 .color-admin-row {
@@ -1092,10 +1148,14 @@ th {
   font-size: 12px;
 }
 
+.result-rounds,
 .result-groups {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
-  gap: 16px;
+  gap: 14px;
+}
+
+.result-groups {
+  grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
 }
 
 .result-group {
@@ -1105,16 +1165,52 @@ th {
   background: #fbfdfb;
 }
 
+.result-group-major {
+  background: #f8fbf7;
+}
+
 .result-group h3 {
   font-size: 16px;
   margin-bottom: 12px;
 }
 
+.result-archive {
+  margin-top: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f7faf6;
+}
+
+.result-archive summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.result-archive summary::marker {
+  color: var(--green);
+}
+
+.result-archive summary small {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.result-archive .result-groups {
+  padding: 0 14px 14px;
+}
+
 .result-row {
   display: grid;
-  grid-template-columns: 42px minmax(100px, 1fr) 48px 16px 48px minmax(100px, 1fr) minmax(118px, auto) 42px;
+  grid-template-columns: 44px minmax(170px, 1fr) 52px 16px 52px minmax(170px, 1fr) minmax(150px, 180px) 38px;
   align-items: center;
   gap: 8px;
+  min-height: 52px;
   padding: 8px 0;
   border-top: 1px solid var(--line);
 }
@@ -1139,6 +1235,12 @@ th {
   text-align: right;
 }
 
+.score-separator {
+  color: var(--muted);
+  font-weight: 900;
+  text-align: center;
+}
+
 .placeholder-team {
   color: var(--muted);
   font-size: 12px;
@@ -1158,6 +1260,15 @@ th {
 
 .result-row > .icon-button {
   grid-column: -1;
+  align-self: center;
+}
+
+.winner-placeholder {
+  min-width: 0;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
 }
 
 .icon-button {
@@ -1849,6 +1960,7 @@ th {
 
   .admin-layout,
   .result-groups,
+  .admin-utility-grid,
   .user-admin-row,
   .create-user-form,
   .qualified-grid,
@@ -1858,6 +1970,11 @@ th {
 
   .user-admin-actions,
   .inline-admin-form {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-compact-panel .user-admin-row,
+  .admin-compact-panel .user-admin-actions {
     grid-template-columns: 1fr;
   }
 
@@ -1908,7 +2025,7 @@ th {
     grid-area: homeScore;
   }
 
-  .result-row .muted {
+  .result-row .score-separator {
     grid-area: separator;
     text-align: center;
   }
@@ -1929,6 +2046,10 @@ th {
   .winner-select {
     grid-area: winner;
     width: 100%;
+  }
+
+  .winner-placeholder {
+    grid-area: winner;
   }
 
   .round-switch,
@@ -2293,12 +2414,18 @@ th {
     padding: 12px;
   }
 
+  .result-archive summary {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
   .result-row {
     grid-template-columns: minmax(0, 1fr) 44px 14px 44px minmax(0, 1fr);
     grid-template-areas:
       "number number number number action"
       "home home home home home"
-      "homeScore separator awayScore away away";
+      "homeScore separator awayScore away away"
+      "winner winner winner winner winner";
   }
 
   .prediction-row {
