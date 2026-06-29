@@ -19,21 +19,45 @@ APP_STORE = ROOT / "data" / "pronostick.json"
 
 ROUND_OF_32_MATCH_IDS = {
     ("South Africa", "Canada"): 73,
-    ("Brazil", "Japan"): 74,
-    ("Germany", "Paraguay"): 75,
-    ("Netherlands", "Morocco"): 76,
-    ("Ivory Coast", "Norway"): 77,
-    ("France", "Sweden"): 78,
+    ("Germany", "Paraguay"): 74,
+    ("Netherlands", "Morocco"): 75,
+    ("Brazil", "Japan"): 76,
+    ("France", "Sweden"): 77,
+    ("Ivory Coast", "Norway"): 78,
     ("Mexico", "Ecuador"): 79,
     ("England", "DR Congo"): 80,
-    ("Belgium", "Senegal"): 81,
-    ("United States", "Bosnia and Herzegovina"): 82,
-    ("Spain", "Austria"): 83,
-    ("Portugal", "Croatia"): 84,
+    ("United States", "Bosnia and Herzegovina"): 81,
+    ("Belgium", "Senegal"): 82,
+    ("Portugal", "Croatia"): 83,
+    ("Spain", "Austria"): 84,
     ("Switzerland", "Algeria"): 85,
     ("Argentina", "Cape Verde"): 86,
     ("Colombia", "Ghana"): 87,
     ("Australia", "Egypt"): 88,
+}
+
+ROUND_OF_32_MODEL_OVERRIDES = {
+    ("South Africa", "Canada"): {
+        "date": "2026-06-28",
+        "p_home_win": 0.1592183203784048,
+        "p_draw": 0.2216850732894652,
+        "p_away_win": 0.61909660633213,
+        "expected_home_goals": 0.8890204381742355,
+        "expected_away_goals": 1.9452635251490669,
+        "modal_score": "0-1",
+        "modal_score_probability": 0.11400055213841875,
+        "source": "manual_model_reconstruction",
+    }
+}
+
+ROUND_OF_32_BOOKMAKER_PROXY_MARKETS = {
+    ("South Africa", "Canada"): {
+        "home_implied_prob": 0.1592183203784048,
+        "draw_implied_prob": 0.2216850732894652,
+        "away_implied_prob": 0.61909660633213,
+        "source": "manual_model_proxy_no_prematch_books",
+        "fetched_at": "2026-06-29T12:00:21.859473+02:00",
+    }
 }
 
 TEAM_ALIASES = {
@@ -191,6 +215,40 @@ def generate_model_asset():
             })
         if knockout_unmatched:
             raise RuntimeError(f"Unmatched knockout model fixtures: {knockout_unmatched}")
+
+    for (home, away), item in ROUND_OF_32_MODEL_OVERRIDES.items():
+        match_id = ROUND_OF_32_MATCH_IDS[(home, away)]
+        prediction_home, prediction_away = parse_score(item["modal_score"])
+        matches.append({
+            "match_id": match_id,
+            "match_no": match_id,
+            "group": "1/16e de finale",
+            "date": item["date"],
+            "city": "",
+            "country": "",
+            "neutral": True,
+            "home_team": home,
+            "away_team": away,
+            "raw_home_team": home,
+            "raw_away_team": away,
+            "p_home_win": item["p_home_win"],
+            "p_draw": item["p_draw"],
+            "p_away_win": item["p_away_win"],
+            "pick": "H" if item["p_home_win"] >= item["p_draw"] and item["p_home_win"] >= item["p_away_win"] else "D" if item["p_draw"] >= item["p_away_win"] else "A",
+            "pick_label": home if item["p_home_win"] >= item["p_draw"] and item["p_home_win"] >= item["p_away_win"] else "Draw after 120" if item["p_draw"] >= item["p_away_win"] else away,
+            "pick_confidence": max(item["p_home_win"], item["p_draw"], item["p_away_win"]),
+            "expected_home_goals": item["expected_home_goals"],
+            "expected_away_goals": item["expected_away_goals"],
+            "modal_score": item["modal_score"],
+            "modal_score_probability": item["modal_score_probability"],
+            "prediction_home_score": prediction_home,
+            "prediction_away_score": prediction_away,
+            "target": "score_after_120_minutes_before_penalties",
+            "market_type": "manual_model_reconstruction",
+            "bookmaker_count": 0,
+            "event_url": "",
+            "reversed_from_source": False,
+        })
 
     groups = []
     for group in source["groups"]:
@@ -355,6 +413,30 @@ def generate_bookmaker_odds():
             })
         if knockout_unmatched:
             raise RuntimeError(f"Unmatched knockout bookmaker fixtures: {knockout_unmatched}")
+
+    for (home, away), item in ROUND_OF_32_BOOKMAKER_PROXY_MARKETS.items():
+        match_id = ROUND_OF_32_MATCH_IDS[(home, away)]
+        home_prob = float(item["home_implied_prob"])
+        draw_prob = float(item["draw_implied_prob"])
+        away_prob = float(item["away_implied_prob"])
+        grouped.setdefault(match_id, {
+            "match_id": match_id,
+            "match_no": match_id,
+            "home_team": home,
+            "away_team": away,
+            "samples": [],
+        })["samples"].append({
+            "home_odds": 1 / home_prob,
+            "draw_odds": 1 / draw_prob,
+            "away_odds": 1 / away_prob,
+            "home_implied_prob": home_prob,
+            "draw_implied_prob": draw_prob,
+            "away_implied_prob": away_prob,
+            "bookmaker_count": 0,
+            "source": str(item["source"]),
+            "source_file": "manual_proxy",
+            "fetched_at": str(item["fetched_at"]),
+        })
 
     output_matches = []
     for match_id, item in sorted(grouped.items(), key=lambda entry: entry[1]["match_no"]):
